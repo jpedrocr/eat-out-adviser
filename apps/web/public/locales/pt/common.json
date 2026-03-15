@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Início",
+    "restaurants": "Restaurantes",
+    "about": "Sobre",
+    "login": "Entrar",
+    "register": "Registar",
+    "profile": "Perfil",
+    "logout": "Sair"
+  },
+  "buttons": {
+    "search": "Pesquisar",
+    "submit": "Submeter",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "back": "Voltar",
+    "next": "Seguinte",
+    "previous": "Anterior",
+    "close": "Fechar",
+    "loadMore": "Carregar mais"
+  },
+  "labels": {
+    "searchPlaceholder": "Pesquisar restaurantes acessíveis...",
+    "skipToContent": "Saltar para o conteúdo principal",
+    "mainNavigation": "Navegação principal",
+    "loading": "A carregar...",
+    "noResults": "Nenhum resultado encontrado.",
+    "error": "Ocorreu um erro. Por favor, tente novamente.",
+    "required": "Obrigatório"
+  },
+  "accessibility": {
+    "score": "Pontuação de acessibilidade",
+    "accessible": "Acessível",
+    "partiallyAccessible": "Parcialmente acessível",
+    "notAccessible": "Não acessível",
+    "wheelchairAccess": "Acesso para cadeira de rodas",
+    "adaptedBathroom": "Casa de banho adaptada",
+    "levelEntrance": "Entrada ao nível da rua"
+  }
+}

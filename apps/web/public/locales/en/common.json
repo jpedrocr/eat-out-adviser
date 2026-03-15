@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Home",
+    "restaurants": "Restaurants",
+    "about": "About",
+    "login": "Log in",
+    "register": "Register",
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+  "buttons": {
+    "search": "Search",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "loadMore": "Load more"
+  },
+  "labels": {
+    "searchPlaceholder": "Search accessible restaurants...",
+    "skipToContent": "Skip to main content",
+    "mainNavigation": "Main navigation",
+    "loading": "Loading...",
+    "noResults": "No results found.",
+    "error": "An error occurred. Please try again.",
+    "required": "Required"
+  },
+  "accessibility": {
+    "score": "Accessibility score",
+    "accessible": "Accessible",
+    "partiallyAccessible": "Partially accessible",
+    "notAccessible": "Not accessible",
+    "wheelchairAccess": "Wheelchair access",
+    "adaptedBathroom": "Adapted bathroom",
+    "levelEntrance": "Level entrance"
+  }
+}

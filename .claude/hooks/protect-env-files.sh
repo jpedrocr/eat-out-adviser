@@ -11,6 +11,10 @@ if [ -z "$FILE_PATH" ]; then
 fi
 
 # Block .env, .env.local, .env.production, .env.development, etc.
+# Allow .env.example (template without secrets)
+if echo "$FILE_PATH" | grep -qE '\.env\.example$'; then
+  exit 0
+fi
 if echo "$FILE_PATH" | grep -qE '(^|/)\.env(\.[a-zA-Z]+)?$'; then
   cat <<'EOF'
 {

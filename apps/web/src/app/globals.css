@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Tema personalizado para acessibilidade */
+@theme {
+  /* Cores com contraste elevado (WCAG AAA) */
+  --color-primary: #1a56db;
+  --color-primary-dark: #1e3a8a;
+  --color-secondary: #047857;
+  --color-danger: #dc2626;
+  --color-warning: #d97706;
+  --color-success: #16a34a;
+
+  /* Semáforo de acessibilidade */
+  --color-traffic-green: #16a34a;
+  --color-traffic-yellow: #d97706;
+  --color-traffic-red: #dc2626;
+
+  /* Tamanhos mínimos de toque (WCAG 2.5.5) */
+  --spacing-touch-target: 44px;
+
+  /* Tipografia acessível */
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+}
