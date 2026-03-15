@@ -9,13 +9,7 @@ import prettier from "eslint-config-prettier";
 export default tseslint.config(
   // Ficheiros ignorados
   {
-    ignores: [
-      "**/node_modules/**",
-      "**/.next/**",
-      "**/dist/**",
-      "**/coverage/**",
-      "**/.turbo/**",
-    ],
+    ignores: ["**/node_modules/**", "**/.next/**", "**/dist/**", "**/coverage/**", "**/.turbo/**"],
   },
 
   // Regras base JavaScript
@@ -26,7 +20,9 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ["*.config.ts", "*.config.js", "*.config.mjs"],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
