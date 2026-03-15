@@ -1,0 +1,41 @@
+export default {
+  extends: ["@commitlint/config-conventional"],
+  rules: {
+    "type-enum": [
+      2,
+      "always",
+      [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert",
+        "a11y",
+      ],
+    ],
+    "scope-enum": [
+      1,
+      "always",
+      [
+        "web",
+        "db",
+        "api",
+        "ai",
+        "scoring",
+        "shared",
+        "mcp",
+        "docker",
+        "ci",
+        "deps",
+      ],
+    ],
+    "subject-max-length": [2, "always", 72],
+    "body-max-line-length": [1, "always", 100],
+  },
+};

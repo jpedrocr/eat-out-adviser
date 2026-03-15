@@ -1,8 +1,8 @@
 # Eat Out Adviser - Especificacao do Modelo de Dados
 
-**Data:** Marco de 2026
-**Projecto:** Eat Out Adviser - Modelo de dados para PostgreSQL 17 + pgvector + Drizzle ORM
-**Normas de referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), EN 301 549
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Modelo de dados para PostgreSQL 17 + pgvector + Drizzle ORM
+**Normas de referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), EN
+301 549
 
 ---
 
@@ -13,7 +13,8 @@
 3. [Entidades](#3-entidades)
    - 3.1 [Utilizador (User)](#31-utilizador-user)
    - 3.2 [Restaurante (Restaurant)](#32-restaurante-restaurant)
-   - 3.3 [Perfil de Acessibilidade do Restaurante (AccessibilityProfile)](#33-perfil-de-acessibilidade-do-restaurante-accessibilityprofile)
+   - 3.3
+     [Perfil de Acessibilidade do Restaurante (AccessibilityProfile)](#33-perfil-de-acessibilidade-do-restaurante-accessibilityprofile)
    - 3.4 [Pontuacao de Acessibilidade (AccessibilityScore)](#34-pontuacao-de-acessibilidade-accessibilityscore)
    - 3.5 [Avaliacao (Review)](#35-avaliacao-review)
    - 3.6 [Fotografia (Photo)](#36-fotografia-photo)
@@ -35,11 +36,15 @@
 
 O modelo de dados do Eat Out Adviser foi desenhado com os seguintes principios:
 
-- **Acessibilidade como cidadao de primeira classe:** O perfil de acessibilidade do restaurante e a entidade mais detalhada e central do sistema, com campos derivados directamente das normas internacionais ADA, ISO 21542 e EAA.
-- **Pesquisa semantica via pgvector:** As entidades Restaurante, Avaliacao e Prato incluem campos de embedding vectorial (`vector(1024)`) para pesquisa semantica com RAG.
-- **Multilingue por desenho:** Campos textuais descritivos utilizam JSON multilingue ou a tabela de Traducao, permitindo expansao para novos idiomas sem alteracao de esquema.
+- **Acessibilidade como cidadao de primeira classe:** O perfil de acessibilidade do restaurante e a entidade mais
+  detalhada e central do sistema, com campos derivados directamente das normas internacionais ADA, ISO 21542 e EAA.
+- **Pesquisa semantica via pgvector:** As entidades Restaurante, Avaliacao e Prato incluem campos de embedding vectorial
+  (`vector(1024)`) para pesquisa semantica com RAG.
+- **Multilingue por desenho:** Campos textuais descritivos utilizam JSON multilingue ou a tabela de Traducao, permitindo
+  expansao para novos idiomas sem alteracao de esquema.
 - **Auditabilidade total:** Todas as alteracoes em dados de acessibilidade sao rastreadas via AuditLog.
-- **Compatibilidade com A11yJSON:** O modelo mapeia para o formato aberto A11yJSON (Sozialhelden/accessibility.cloud), facilitando importacao e exportacao de dados.
+- **Compatibilidade com A11yJSON:** O modelo mapeia para o formato aberto A11yJSON (Sozialhelden/accessibility.cloud),
+  facilitando importacao e exportacao de dados.
 
 **Tecnologias:**
 
@@ -53,15 +58,15 @@ O modelo de dados do Eat Out Adviser foi desenhado com os seguintes principios:
 
 ### 2.1 Convencoes de Nomenclatura
 
-| Convencao | Regra | Exemplo |
-|---|---|---|
-| Tabelas | `snake_case`, plural | `restaurants`, `accessibility_profiles` |
-| Colunas | `snake_case` | `created_at`, `wheelchair_width` |
-| Enums PostgreSQL | `snake_case` com prefixo da entidade | `mobility_type`, `price_range` |
-| Chaves primarias | `id` (UUID v7) | `id` |
-| Chaves estrangeiras | `{entidade}_id` | `restaurant_id`, `user_id` |
-| Timestamps | `created_at`, `updated_at` | ISO 8601 com timezone |
-| Booleanos | prefixo `is_` ou `has_` | `has_ramp`, `is_active` |
+| Convencao           | Regra                                | Exemplo                                 |
+| ------------------- | ------------------------------------ | --------------------------------------- |
+| Tabelas             | `snake_case`, plural                 | `restaurants`, `accessibility_profiles` |
+| Colunas             | `snake_case`                         | `created_at`, `wheelchair_width`        |
+| Enums PostgreSQL    | `snake_case` com prefixo da entidade | `mobility_type`, `price_range`          |
+| Chaves primarias    | `id` (UUID v7)                       | `id`                                    |
+| Chaves estrangeiras | `{entidade}_id`                      | `restaurant_id`, `user_id`              |
+| Timestamps          | `created_at`, `updated_at`           | ISO 8601 com timezone                   |
+| Booleanos           | prefixo `is_` ou `has_`              | `has_ramp`, `is_active`                 |
 
 ### 2.2 Tipos Base Reutilizaveis
 
@@ -82,12 +87,7 @@ export const mobilityTypeEnum = pgEnum("mobility_type", [
   "other",
 ]);
 
-export const priceRangeEnum = pgEnum("price_range", [
-  "budget",
-  "moderate",
-  "upscale",
-  "fine_dining",
-]);
+export const priceRangeEnum = pgEnum("price_range", ["budget", "moderate", "upscale", "fine_dining"]);
 
 export const verificationStatusEnum = pgEnum("verification_status", [
   "unverified",
@@ -95,20 +95,13 @@ export const verificationStatusEnum = pgEnum("verification_status", [
   "professionally_verified",
 ]);
 
-export const dataSourceEnum = pgEnum("data_source", [
-  "owner",
-  "community",
-  "import",
-  "ai_analysis",
-]);
+export const dataSourceEnum = pgEnum("data_source", ["owner", "community", "import", "ai_analysis"]);
 
 // --- Campos comuns (timestamps) ---
 // Utilizados via spread em todas as tabelas
 
 export const timestamps = {
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
     .defaultNow()
@@ -139,9 +132,12 @@ const id = uuid("id").primaryKey().defaultRandom();
 
 ### 3.1 Utilizador (User)
 
-A tabela `users` armazena os dados de cada utilizador registado. A autenticacao e gerida pelo Better Auth, que cria as suas proprias tabelas (`session`, `account`, `verification`). A tabela `users` e partilhada entre o Better Auth e a logica de negocio da aplicacao.
+A tabela `users` armazena os dados de cada utilizador registado. A autenticacao e gerida pelo Better Auth, que cria as
+suas proprias tabelas (`session`, `account`, `verification`). A tabela `users` e partilhada entre o Better Auth e a
+logica de negocio da aplicacao.
 
-O perfil de acessibilidade do utilizador e armazenado numa tabela separada (`user_accessibility_profiles`) com relacao 1:1, permitindo:
+O perfil de acessibilidade do utilizador e armazenado numa tabela separada (`user_accessibility_profiles`) com relacao
+1:1, permitindo:
 
 - Evolucao independente do esquema de acessibilidade
 - Consultas mais eficientes quando so se precisa de dados basicos do utilizador
@@ -149,16 +145,7 @@ O perfil de acessibilidade do utilizador e armazenado numa tabela separada (`use
 
 ```typescript
 // src/db/schema/users.ts
-import {
-  pgTable,
-  uuid,
-  varchar,
-  text,
-  timestamp,
-  integer,
-  real,
-  boolean,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, timestamp, integer, real, boolean } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { mobilityTypeEnum, timestamps } from "./shared";
 
@@ -182,70 +169,60 @@ export const users = pgTable("users", {
 
 // --- Tabela: user_accessibility_profiles ---
 
-export const userAccessibilityProfiles = pgTable(
-  "user_accessibility_profiles",
-  {
-    id: uuid("id").primaryKey().defaultRandom(),
-    userId: uuid("user_id")
-      .notNull()
-      .unique()
-      .references(() => users.id, { onDelete: "cascade" }),
+export const userAccessibilityProfiles = pgTable("user_accessibility_profiles", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id")
+    .notNull()
+    .unique()
+    .references(() => users.id, { onDelete: "cascade" }),
 
-    // Tipo de mobilidade
-    mobilityType: mobilityTypeEnum("mobility_type")
-      .notNull()
-      .default("electric_wheelchair"),
+  // Tipo de mobilidade
+  mobilityType: mobilityTypeEnum("mobility_type").notNull().default("electric_wheelchair"),
 
-    // Dimensoes da cadeira de rodas / dispositivo de mobilidade (cm)
-    wheelchairWidth: real("wheelchair_width"),
-    wheelchairLength: real("wheelchair_length"),
-    turningRadiusNeeded: real("turning_radius_needed"),
+  // Dimensoes da cadeira de rodas / dispositivo de mobilidade (cm)
+  wheelchairWidth: real("wheelchair_width"),
+  wheelchairLength: real("wheelchair_length"),
+  turningRadiusNeeded: real("turning_radius_needed"),
 
-    // Capacidades fisicas
-    maxRampIncline: real("max_ramp_incline"), // percentagem (ex.: 8.33 para ADA)
-    maxStepHeight: real("max_step_height"), // cm - altura maxima de degrau que consegue ultrapassar
-    needsElevator: boolean("needs_elevator").notNull().default(true),
-    needsAccessibleBathroom: boolean("needs_accessible_bathroom")
-      .notNull()
-      .default(true),
-    bathroomTransferSide: pgEnum("bathroom_transfer_side", [
-      "left",
-      "right",
-      "both",
-      "not_applicable",
-    ])("bathroom_transfer_side").default("not_applicable"),
-    doorOpeningForceLimit: real("door_opening_force_limit"), // kg
+  // Capacidades fisicas
+  maxRampIncline: real("max_ramp_incline"), // percentagem (ex.: 8.33 para ADA)
+  maxStepHeight: real("max_step_height"), // cm - altura maxima de degrau que consegue ultrapassar
+  needsElevator: boolean("needs_elevator").notNull().default(true),
+  needsAccessibleBathroom: boolean("needs_accessible_bathroom").notNull().default(true),
+  bathroomTransferSide: pgEnum("bathroom_transfer_side", ["left", "right", "both", "not_applicable"])(
+    "bathroom_transfer_side",
+  ).default("not_applicable"),
+  doorOpeningForceLimit: real("door_opening_force_limit"), // kg
 
-    // Contexto social
-    companionCount: integer("companion_count").default(1),
+  // Contexto social
+  companionCount: integer("companion_count").default(1),
 
-    // Preferencias alimentares
-    dietaryRestrictions: text("dietary_restrictions").array(),
-    allergies: text("allergies").array(),
-    preferredCuisines: text("preferred_cuisines").array(),
+  // Preferencias alimentares
+  dietaryRestrictions: text("dietary_restrictions").array(),
+  allergies: text("allergies").array(),
+  preferredCuisines: text("preferred_cuisines").array(),
 
-    // Logistica
-    maxDistanceFromParking: integer("max_distance_from_parking"), // metros
+  // Logistica
+  maxDistanceFromParking: integer("max_distance_from_parking"), // metros
 
-    // Campo aberto para necessidades nao cobertas
-    otherNeeds: text("other_needs"),
+  // Campo aberto para necessidades nao cobertas
+  otherNeeds: text("other_needs"),
 
-    ...timestamps,
-  },
-);
+  ...timestamps,
+});
 ```
 
 **Notas sobre o perfil de acessibilidade do utilizador:**
 
-| Campo | Unidade | Referencia normativa | Notas |
-|---|---|---|---|
-| `wheelchair_width` | cm | ISO 21542 | Cadeira electrica tipica: 60-75 cm |
-| `wheelchair_length` | cm | ISO 21542 | Cadeira electrica tipica: 100-130 cm |
-| `turning_radius_needed` | cm | ADA 304.3 | ADA exige minimo 152 cm (60 pol.) |
-| `max_ramp_incline` | % | ADA 405.2 | ADA: max 8.33% (1:12). Portugal (DL 163/2006): max 6% (ideal) a 8% |
-| `max_step_height` | cm | ISO 21542 | 0 = nao consegue ultrapassar qualquer degrau |
-| `door_opening_force_limit` | kg | ADA 404.2.9 | ADA: max 2.27 kg (5 lbs) para portas interiores |
-| `bathroom_transfer_side` | enum | ADA 604.2 | Lado necessario para transferencia da cadeira para a sanita |
+| Campo                      | Unidade | Referencia normativa | Notas                                                              |
+| -------------------------- | ------- | -------------------- | ------------------------------------------------------------------ |
+| `wheelchair_width`         | cm      | ISO 21542            | Cadeira electrica tipica: 60-75 cm                                 |
+| `wheelchair_length`        | cm      | ISO 21542            | Cadeira electrica tipica: 100-130 cm                               |
+| `turning_radius_needed`    | cm      | ADA 304.3            | ADA exige minimo 152 cm (60 pol.)                                  |
+| `max_ramp_incline`         | %       | ADA 405.2            | ADA: max 8.33% (1:12). Portugal (DL 163/2006): max 6% (ideal) a 8% |
+| `max_step_height`          | cm      | ISO 21542            | 0 = nao consegue ultrapassar qualquer degrau                       |
+| `door_opening_force_limit` | kg      | ADA 404.2.9          | ADA: max 2.27 kg (5 lbs) para portas interiores                    |
+| `bathroom_transfer_side`   | enum    | ADA 604.2            | Lado necessario para transferencia da cadeira para a sanita        |
 
 **Relacoes:**
 
@@ -261,48 +238,33 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   ownedRestaurants: many(restaurants),
 }));
 
-export const userAccessibilityProfilesRelations = relations(
-  userAccessibilityProfiles,
-  ({ one }) => ({
-    user: one(users, {
-      fields: [userAccessibilityProfiles.userId],
-      references: [users.id],
-    }),
+export const userAccessibilityProfilesRelations = relations(userAccessibilityProfiles, ({ one }) => ({
+  user: one(users, {
+    fields: [userAccessibilityProfiles.userId],
+    references: [users.id],
   }),
-);
+}));
 ```
 
 ---
 
 ### 3.2 Restaurante (Restaurant)
 
-A tabela `restaurants` e a entidade central de negocio. Cada restaurante possui relacoes com o perfil de acessibilidade, avaliacoes, fotografias, ementas e reservas.
+A tabela `restaurants` e a entidade central de negocio. Cada restaurante possui relacoes com o perfil de acessibilidade,
+avaliacoes, fotografias, ementas e reservas.
 
-As coordenadas geograficas sao armazenadas como campos `real` simples (latitude/longitude), evitando a dependencia da extensao PostGIS. Para consultas de proximidade, utiliza-se a formula de Haversine em SQL ou indice GiST com `cube` e `earthdistance`.
+As coordenadas geograficas sao armazenadas como campos `real` simples (latitude/longitude), evitando a dependencia da
+extensao PostGIS. Para consultas de proximidade, utiliza-se a formula de Haversine em SQL ou indice GiST com `cube` e
+`earthdistance`.
 
 ```typescript
 // src/db/schema/restaurants.ts
-import {
-  pgTable,
-  uuid,
-  varchar,
-  text,
-  real,
-  integer,
-  boolean,
-  jsonb,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, real, integer, boolean, jsonb, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { vector } from "pgvector/drizzle-orm";
 import { priceRangeEnum, timestamps } from "./shared";
 
-export const restaurantStatusEnum = pgEnum("restaurant_status", [
-  "pending",
-  "active",
-  "inactive",
-  "archived",
-]);
+export const restaurantStatusEnum = pgEnum("restaurant_status", ["pending", "active", "inactive", "archived"]);
 
 export const restaurants = pgTable(
   "restaurants",
@@ -374,14 +336,14 @@ export const restaurants = pgTable(
 {
   "mon": [
     { "open": "12:00", "close": "15:00" },
-    { "open": "19:00", "close": "23:00" }
+    { "open": "19:00", "close": "23:00" },
   ],
   "tue": [{ "open": "12:00", "close": "23:00" }],
   "wed": [{ "open": "12:00", "close": "23:00" }],
   "thu": [{ "open": "12:00", "close": "23:00" }],
   "fri": [{ "open": "12:00", "close": "00:00" }],
   "sat": [{ "open": "12:00", "close": "00:00" }],
-  "sun": [] // encerrado
+  "sun": [], // encerrado
 }
 ```
 
@@ -407,29 +369,17 @@ export const restaurantsRelations = relations(restaurants, ({ one, many }) => ({
 
 ### 3.3 Perfil de Acessibilidade do Restaurante (AccessibilityProfile)
 
-Esta e a **entidade nuclear** do Eat Out Adviser. Modela de forma granular todas as caracteristicas de acessibilidade fisica de um restaurante, alinhadas com as normas internacionais ADA, ISO 21542:2021 e EAA.
+Esta e a **entidade nuclear** do Eat Out Adviser. Modela de forma granular todas as caracteristicas de acessibilidade
+fisica de um restaurante, alinhadas com as normas internacionais ADA, ISO 21542:2021 e EAA.
 
-Cada restaurante tem exactamente um perfil de acessibilidade (relacao 1:1). Os campos estao organizados por zona do espaco: entrada/exterior, estacionamento, interior/circulacao, mesas/assentos, casa de banho e comunicacao/ementa.
+Cada restaurante tem exactamente um perfil de acessibilidade (relacao 1:1). Os campos estao organizados por zona do
+espaco: entrada/exterior, estacionamento, interior/circulacao, mesas/assentos, casa de banho e comunicacao/ementa.
 
 ```typescript
 // src/db/schema/accessibility-profiles.ts
-import {
-  pgTable,
-  uuid,
-  varchar,
-  text,
-  real,
-  integer,
-  boolean,
-  timestamp,
-  pgEnum,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, real, integer, boolean, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
-import {
-  verificationStatusEnum,
-  dataSourceEnum,
-  timestamps,
-} from "./shared";
+import { verificationStatusEnum, dataSourceEnum, timestamps } from "./shared";
 
 // --- Enums especificos de acessibilidade ---
 
@@ -442,13 +392,7 @@ export const entranceTypeEnum = pgEnum("entrance_type", [
   "open",
 ]);
 
-export const surfaceTypeEnum = pgEnum("surface_type", [
-  "smooth",
-  "cobblestone",
-  "gravel",
-  "uneven",
-  "grass",
-]);
+export const surfaceTypeEnum = pgEnum("surface_type", ["smooth", "cobblestone", "gravel", "uneven", "grass"]);
 
 export const parkingSurfaceTypeEnum = pgEnum("parking_surface_type", [
   "asphalt",
@@ -458,32 +402,13 @@ export const parkingSurfaceTypeEnum = pgEnum("parking_surface_type", [
   "other",
 ]);
 
-export const lightingEnum = pgEnum("lighting_level", [
-  "well_lit",
-  "moderate",
-  "poor",
-]);
+export const lightingEnum = pgEnum("lighting_level", ["well_lit", "moderate", "poor"]);
 
-export const floorTypeEnum = pgEnum("floor_type", [
-  "smooth_tile",
-  "carpet",
-  "wood",
-  "concrete",
-  "uneven",
-  "other",
-]);
+export const floorTypeEnum = pgEnum("floor_type", ["smooth_tile", "carpet", "wood", "concrete", "uneven", "other"]);
 
-export const grabBarSideEnum = pgEnum("grab_bar_side", [
-  "left",
-  "right",
-  "both",
-]);
+export const grabBarSideEnum = pgEnum("grab_bar_side", ["left", "right", "both"]);
 
-export const faucetTypeEnum = pgEnum("faucet_type", [
-  "lever",
-  "sensor",
-  "knob",
-]);
+export const faucetTypeEnum = pgEnum("faucet_type", ["lever", "sensor", "knob"]);
 
 // --- Tabela: accessibility_profiles ---
 
@@ -635,9 +560,7 @@ export const accessibilityProfiles = pgTable("accessibility_profiles", {
   // METADADOS DE VERIFICACAO
   // ============================================
 
-  verificationStatus: verificationStatusEnum("verification_status")
-    .notNull()
-    .default("unverified"),
+  verificationStatus: verificationStatusEnum("verification_status").notNull().default("unverified"),
   lastVerifiedAt: timestamp("last_verified_at", { withTimezone: true }),
   verifiedById: uuid("verified_by_id").references(() => users.id, {
     onDelete: "set null",
@@ -654,69 +577,62 @@ export const accessibilityProfiles = pgTable("accessibility_profiles", {
 
 **Tabela de referencia normativa para campos de acessibilidade:**
 
-| Campo | Unidade | Norma | Valor minimo recomendado |
-|---|---|---|---|
-| `entrance_door_width` | cm | ADA 404.2.3 / ISO 21542 | >= 81.3 cm (32 pol.) ADA; >= 80 cm ISO |
-| `ramp_incline` | % | ADA 405.2 / DL 163/2006 | <= 8.33% ADA; <= 6% PT (ideal) |
-| `ramp_has_handrails` | bool | ADA 405.8 | Obrigatorio se desnivel > 15 cm |
-| `parking_space_width` | cm | ADA 502.2 | >= 244 cm (96 pol.) |
-| `access_aisle_width` | cm | ADA 502.3 | >= 152 cm (60 pol.) para van |
-| `corridor_min_width` | cm | ADA 403.5.1 / ISO 21542 | >= 91.4 cm (36 pol.) ADA; >= 120 cm ISO |
-| `elevator_door_width` | cm | ADA 407.3.6 | >= 91.4 cm (36 pol.) |
-| `elevator_cabin_width` | cm | ADA 407.4.1 | >= 170 cm |
-| `elevator_cabin_depth` | cm | ADA 407.4.1 | >= 137 cm |
-| `turning_space_available` | cm | ADA 304.3.1 | >= 152 cm (diametro) |
-| `table_height` | cm | ADA 902.3 | 71-86 cm |
-| `under_table_clearance` | cm | ADA 306.3 | >= 68.5 cm (27 pol.) |
-| `space_between_tables` | cm | ISO 21542 | >= 90 cm (passagem cadeira de rodas) |
-| `bathroom_door_width` | cm | ADA 404.2.3 | >= 81.3 cm (32 pol.) |
-| `bathroom_turning_space` | cm | ADA 603.2.1 | >= 152 cm (diametro) |
-| `toilet_seat_height` | cm | ADA 604.4 | 43-48 cm |
-| `sink_height` | cm | ADA 606.3 | <= 86 cm (borda superior) |
-| `counter_height` | cm | ADA 904.4 | <= 91.4 cm (36 pol.) para balcao acessivel |
-| `doorbell_height` | cm | ADA 308 | 38-122 cm (alcance lateral) |
+| Campo                     | Unidade | Norma                   | Valor minimo recomendado                   |
+| ------------------------- | ------- | ----------------------- | ------------------------------------------ |
+| `entrance_door_width`     | cm      | ADA 404.2.3 / ISO 21542 | >= 81.3 cm (32 pol.) ADA; >= 80 cm ISO     |
+| `ramp_incline`            | %       | ADA 405.2 / DL 163/2006 | <= 8.33% ADA; <= 6% PT (ideal)             |
+| `ramp_has_handrails`      | bool    | ADA 405.8               | Obrigatorio se desnivel > 15 cm            |
+| `parking_space_width`     | cm      | ADA 502.2               | >= 244 cm (96 pol.)                        |
+| `access_aisle_width`      | cm      | ADA 502.3               | >= 152 cm (60 pol.) para van               |
+| `corridor_min_width`      | cm      | ADA 403.5.1 / ISO 21542 | >= 91.4 cm (36 pol.) ADA; >= 120 cm ISO    |
+| `elevator_door_width`     | cm      | ADA 407.3.6             | >= 91.4 cm (36 pol.)                       |
+| `elevator_cabin_width`    | cm      | ADA 407.4.1             | >= 170 cm                                  |
+| `elevator_cabin_depth`    | cm      | ADA 407.4.1             | >= 137 cm                                  |
+| `turning_space_available` | cm      | ADA 304.3.1             | >= 152 cm (diametro)                       |
+| `table_height`            | cm      | ADA 902.3               | 71-86 cm                                   |
+| `under_table_clearance`   | cm      | ADA 306.3               | >= 68.5 cm (27 pol.)                       |
+| `space_between_tables`    | cm      | ISO 21542               | >= 90 cm (passagem cadeira de rodas)       |
+| `bathroom_door_width`     | cm      | ADA 404.2.3             | >= 81.3 cm (32 pol.)                       |
+| `bathroom_turning_space`  | cm      | ADA 603.2.1             | >= 152 cm (diametro)                       |
+| `toilet_seat_height`      | cm      | ADA 604.4               | 43-48 cm                                   |
+| `sink_height`             | cm      | ADA 606.3               | <= 86 cm (borda superior)                  |
+| `counter_height`          | cm      | ADA 904.4               | <= 91.4 cm (36 pol.) para balcao acessivel |
+| `doorbell_height`         | cm      | ADA 308                 | 38-122 cm (alcance lateral)                |
 
 **Relacoes:**
 
 ```typescript
-export const accessibilityProfilesRelations = relations(
-  accessibilityProfiles,
-  ({ one }) => ({
-    restaurant: one(restaurants, {
-      fields: [accessibilityProfiles.restaurantId],
-      references: [restaurants.id],
-    }),
-    verifiedBy: one(users, {
-      fields: [accessibilityProfiles.verifiedById],
-      references: [users.id],
-      relationName: "verifiedProfiles",
-    }),
-    lastUpdatedBy: one(users, {
-      fields: [accessibilityProfiles.lastUpdatedById],
-      references: [users.id],
-      relationName: "updatedProfiles",
-    }),
+export const accessibilityProfilesRelations = relations(accessibilityProfiles, ({ one }) => ({
+  restaurant: one(restaurants, {
+    fields: [accessibilityProfiles.restaurantId],
+    references: [restaurants.id],
   }),
-);
+  verifiedBy: one(users, {
+    fields: [accessibilityProfiles.verifiedById],
+    references: [users.id],
+    relationName: "verifiedProfiles",
+  }),
+  lastUpdatedBy: one(users, {
+    fields: [accessibilityProfiles.lastUpdatedById],
+    references: [users.id],
+    relationName: "updatedProfiles",
+  }),
+}));
 ```
 
 ---
 
 ### 3.4 Pontuacao de Acessibilidade (AccessibilityScore)
 
-Tabela de scores calculados/cache para cada restaurante. Os scores sao derivados dos dados do `AccessibilityProfile` e recalculados sempre que o perfil e actualizado (via trigger ou job agendado).
+Tabela de scores calculados/cache para cada restaurante. Os scores sao derivados dos dados do `AccessibilityProfile` e
+recalculados sempre que o perfil e actualizado (via trigger ou job agendado).
 
-O campo `weighted_score_for_profile` permite pre-calcular scores ponderados para os perfis de mobilidade mais comuns, acelerando queries de listagem e ordenacao.
+O campo `weighted_score_for_profile` permite pre-calcular scores ponderados para os perfis de mobilidade mais comuns,
+acelerando queries de listagem e ordenacao.
 
 ```typescript
 // src/db/schema/accessibility-scores.ts
-import {
-  pgTable,
-  uuid,
-  real,
-  jsonb,
-  timestamp,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, real, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const accessibilityScores = pgTable("accessibility_scores", {
@@ -741,9 +657,7 @@ export const accessibilityScores = pgTable("accessibility_scores", {
   // Formato: { "electric_wheelchair": 72, "manual_wheelchair": 85, "walker": 91, ... }
   weightedScoreForProfile: jsonb("weighted_score_for_profile"),
 
-  calculatedAt: timestamp("calculated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  calculatedAt: timestamp("calculated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 ```
 
@@ -751,58 +665,44 @@ export const accessibilityScores = pgTable("accessibility_scores", {
 
 Cada categoria tem um peso base e e ajustada consoante o perfil de mobilidade do utilizador:
 
-| Categoria | Peso base | Peso para cadeira electrica | Peso para andarilho |
-|---|---|---|---|
-| Entrada | 25% | 30% | 20% |
-| Estacionamento | 10% | 15% | 10% |
-| Interior | 20% | 25% | 20% |
-| Casa de banho | 20% | 15% | 20% |
-| Comunicacao | 10% | 5% | 15% |
-| Assentos | 15% | 10% | 15% |
+| Categoria      | Peso base | Peso para cadeira electrica | Peso para andarilho |
+| -------------- | --------- | --------------------------- | ------------------- |
+| Entrada        | 25%       | 30%                         | 20%                 |
+| Estacionamento | 10%       | 15%                         | 10%                 |
+| Interior       | 20%       | 25%                         | 20%                 |
+| Casa de banho  | 20%       | 15%                         | 20%                 |
+| Comunicacao    | 10%       | 5%                          | 15%                 |
+| Assentos       | 15%       | 10%                         | 15%                 |
 
 **Relacoes:**
 
 ```typescript
-export const accessibilityScoresRelations = relations(
-  accessibilityScores,
-  ({ one }) => ({
-    restaurant: one(restaurants, {
-      fields: [accessibilityScores.restaurantId],
-      references: [restaurants.id],
-    }),
+export const accessibilityScoresRelations = relations(accessibilityScores, ({ one }) => ({
+  restaurant: one(restaurants, {
+    fields: [accessibilityScores.restaurantId],
+    references: [restaurants.id],
   }),
-);
+}));
 ```
 
 ---
 
 ### 3.5 Avaliacao (Review)
 
-Cada avaliacao e escrita por um utilizador sobre um restaurante, combinando classificacoes numericas (comida, servico, acessibilidade, global) com texto livre e metadados sobre a mobilidade no momento da visita.
+Cada avaliacao e escrita por um utilizador sobre um restaurante, combinando classificacoes numericas (comida, servico,
+acessibilidade, global) com texto livre e metadados sobre a mobilidade no momento da visita.
 
-O campo `embedding` permite pesquisa semantica sobre avaliacoes ("restaurantes com bom acesso para cadeiras electricas" encontra avaliacoes relevantes via similaridade vectorial).
+O campo `embedding` permite pesquisa semantica sobre avaliacoes ("restaurantes com bom acesso para cadeiras electricas"
+encontra avaliacoes relevantes via similaridade vectorial).
 
 ```typescript
 // src/db/schema/reviews.ts
-import {
-  pgTable,
-  uuid,
-  text,
-  real,
-  integer,
-  date,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, real, integer, date, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { vector } from "pgvector/drizzle-orm";
 import { mobilityTypeEnum, timestamps } from "./shared";
 
-export const reviewStatusEnum = pgEnum("review_status", [
-  "pending",
-  "published",
-  "flagged",
-  "removed",
-]);
+export const reviewStatusEnum = pgEnum("review_status", ["pending", "published", "flagged", "removed"]);
 
 export const reviews = pgTable(
   "reviews",
@@ -878,19 +778,13 @@ export const reviewsRelations = relations(reviews, ({ one, many }) => ({
 
 ### 3.6 Fotografia (Photo)
 
-Tabela centralizada para todas as fotografias do sistema. Cada fotografia pode pertencer a um restaurante, a uma avaliacao, ou a um relatorio de verificacao. O campo `ai_accessibility_analysis` armazena a saida estruturada do Claude Vision para deteccao automatica de elementos de acessibilidade.
+Tabela centralizada para todas as fotografias do sistema. Cada fotografia pode pertencer a um restaurante, a uma
+avaliacao, ou a um relatorio de verificacao. O campo `ai_accessibility_analysis` armazena a saida estruturada do Claude
+Vision para deteccao automatica de elementos de acessibilidade.
 
 ```typescript
 // src/db/schema/photos.ts
-import {
-  pgTable,
-  uuid,
-  text,
-  varchar,
-  integer,
-  jsonb,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, varchar, integer, jsonb, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
@@ -920,10 +814,9 @@ export const photos = pgTable(
     reviewId: uuid("review_id").references(() => reviews.id, {
       onDelete: "set null",
     }),
-    verificationReportId: uuid("verification_report_id").references(
-      () => verificationReports.id,
-      { onDelete: "set null" },
-    ),
+    verificationReportId: uuid("verification_report_id").references(() => verificationReports.id, {
+      onDelete: "set null",
+    }),
 
     // URLs (armazenamento externo: S3-compatible ou volume Docker)
     url: text("url").notNull(),
@@ -965,21 +858,21 @@ export const photos = pgTable(
       "present": true,
       "estimated_incline_percent": 7.5,
       "has_handrails": true,
-      "condition": "good"
+      "condition": "good",
     },
     {
       "type": "door",
       "present": true,
       "estimated_width_cm": 90,
       "type_detail": "automatic_sliding",
-      "condition": "good"
-    }
+      "condition": "good",
+    },
   ],
   "accessibility_issues": [
-    "Superficie exterior em calcada portuguesa - potencialmente irregular para cadeiras de rodas"
+    "Superficie exterior em calcada portuguesa - potencialmente irregular para cadeiras de rodas",
   ],
   "overall_assessment": "Entrada acessivel com rampa adequada e porta automatica",
-  "confidence": 0.85
+  "confidence": 0.85,
 }
 ```
 
@@ -1010,17 +903,12 @@ export const photosRelations = relations(photos, ({ one }) => ({
 
 ### 3.7 Ementa (Menu)
 
-Cada restaurante pode ter multiplas ementas (almoco, jantar, fim de semana, especial, etc.). Os nomes e descricoes sao multilingues (JSON).
+Cada restaurante pode ter multiplas ementas (almoco, jantar, fim de semana, especial, etc.). Os nomes e descricoes sao
+multilingues (JSON).
 
 ```typescript
 // src/db/schema/menus.ts
-import {
-  pgTable,
-  uuid,
-  jsonb,
-  boolean,
-  date,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, jsonb, boolean, date } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
@@ -1069,31 +957,18 @@ export const menusRelations = relations(menus, ({ one, many }) => ({
 
 ### 3.8 Prato (Dish)
 
-Cada prato pertence a uma ementa. Inclui informacao de alergenos e restricoes alimentares (campos criticos para utilizadores com necessidades especificas). O campo `embedding` permite pesquisa semantica de pratos ("prato vegetariano sem gluten").
+Cada prato pertence a uma ementa. Inclui informacao de alergenos e restricoes alimentares (campos criticos para
+utilizadores com necessidades especificas). O campo `embedding` permite pesquisa semantica de pratos ("prato vegetariano
+sem gluten").
 
 ```typescript
 // src/db/schema/dishes.ts
-import {
-  pgTable,
-  uuid,
-  jsonb,
-  text,
-  real,
-  boolean,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, jsonb, text, real, boolean, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { vector } from "pgvector/drizzle-orm";
 import { timestamps } from "./shared";
 
-export const dishCategoryEnum = pgEnum("dish_category", [
-  "starter",
-  "main",
-  "dessert",
-  "drink",
-  "side",
-  "other",
-]);
+export const dishCategoryEnum = pgEnum("dish_category", ["starter", "main", "dessert", "drink", "side", "other"]);
 
 export const dishes = pgTable(
   "dishes",
@@ -1160,19 +1035,12 @@ export const dishesRelations = relations(dishes, ({ one }) => ({
 
 ### 3.9 Reserva (Reservation)
 
-A reserva integra informacao de acessibilidade do perfil do utilizador, pre-preenchendo o campo `accessibility_notes` automaticamente para que o restaurante possa preparar-se.
+A reserva integra informacao de acessibilidade do perfil do utilizador, pre-preenchendo o campo `accessibility_notes`
+automaticamente para que o restaurante possa preparar-se.
 
 ```typescript
 // src/db/schema/reservations.ts
-import {
-  pgTable,
-  uuid,
-  text,
-  varchar,
-  integer,
-  timestamp,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, varchar, integer, timestamp, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
@@ -1213,9 +1081,7 @@ export const reservations = pgTable(
     status: reservationStatusEnum("status").notNull().default("pending"),
 
     // Codigo de confirmacao (gerado automaticamente, 8 caracteres alfanumericos)
-    confirmationCode: varchar("confirmation_code", { length: 20 })
-      .notNull()
-      .unique(),
+    confirmationCode: varchar("confirmation_code", { length: 20 }).notNull().unique(),
 
     ...timestamps,
   },
@@ -1248,34 +1114,18 @@ export const reservationsRelations = relations(reservations, ({ one }) => ({
 
 ### 3.10 Relatorio de Verificacao (VerificationReport)
 
-Os relatorios de verificacao documentam visitas de inspecao ao restaurante, sejam comunitarias (qualquer utilizador), profissionais (auditores certificados) ou assistidas por IA (analise de fotografias).
+Os relatorios de verificacao documentam visitas de inspecao ao restaurante, sejam comunitarias (qualquer utilizador),
+profissionais (auditores certificados) ou assistidas por IA (analise de fotografias).
 
 ```typescript
 // src/db/schema/verification-reports.ts
-import {
-  pgTable,
-  uuid,
-  text,
-  date,
-  jsonb,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, date, jsonb, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
-export const verificationTypeEnum = pgEnum("verification_type", [
-  "community",
-  "professional",
-  "ai_assisted",
-]);
+export const verificationTypeEnum = pgEnum("verification_type", ["community", "professional", "ai_assisted"]);
 
-export const reportStatusEnum = pgEnum("report_status", [
-  "draft",
-  "submitted",
-  "reviewed",
-  "accepted",
-  "rejected",
-]);
+export const reportStatusEnum = pgEnum("report_status", ["draft", "submitted", "reviewed", "accepted", "rejected"]);
 
 export const verificationReports = pgTable(
   "verification_reports",
@@ -1319,39 +1169,30 @@ export const verificationReports = pgTable(
 **Relacoes:**
 
 ```typescript
-export const verificationReportsRelations = relations(
-  verificationReports,
-  ({ one, many }) => ({
-    restaurant: one(restaurants, {
-      fields: [verificationReports.restaurantId],
-      references: [restaurants.id],
-    }),
-    verifier: one(users, {
-      fields: [verificationReports.verifierId],
-      references: [users.id],
-    }),
-    photos: many(photos),
+export const verificationReportsRelations = relations(verificationReports, ({ one, many }) => ({
+  restaurant: one(restaurants, {
+    fields: [verificationReports.restaurantId],
+    references: [restaurants.id],
   }),
-);
+  verifier: one(users, {
+    fields: [verificationReports.verifierId],
+    references: [users.id],
+  }),
+  photos: many(photos),
+}));
 ```
 
 ---
 
 ### 3.11 Traducao (Translation)
 
-Sistema de traducoes generico que permite traduzir qualquer campo de qualquer entidade para qualquer locale. Utilizado como complemento ao JSON multilingue inline, especialmente para conteudo gerado por utilizadores (avaliacoes) ou para campos que necessitam de revisao humana.
+Sistema de traducoes generico que permite traduzir qualquer campo de qualquer entidade para qualquer locale. Utilizado
+como complemento ao JSON multilingue inline, especialmente para conteudo gerado por utilizadores (avaliacoes) ou para
+campos que necessitam de revisao humana.
 
 ```typescript
 // src/db/schema/translations.ts
-import {
-  pgTable,
-  uuid,
-  varchar,
-  text,
-  boolean,
-  index,
-  uniqueIndex,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, boolean, index, uniqueIndex } from "drizzle-orm/pg-core";
 import { timestamps } from "./shared";
 
 export const translations = pgTable(
@@ -1378,12 +1219,7 @@ export const translations = pgTable(
   },
   (table) => [
     // Garantir unicidade: uma traducao por entidade+campo+locale
-    uniqueIndex("translations_unique_idx").on(
-      table.entityType,
-      table.entityId,
-      table.field,
-      table.locale,
-    ),
+    uniqueIndex("translations_unique_idx").on(table.entityType, table.entityId, table.field, table.locale),
     index("translations_entity_idx").on(table.entityType, table.entityId),
     index("translations_locale_idx").on(table.locale),
   ],
@@ -1392,28 +1228,22 @@ export const translations = pgTable(
 
 **Exemplos de utilizacao:**
 
-| entity_type | entity_id | field | locale | value |
-|---|---|---|---|---|
-| `review` | `uuid-da-avaliacao` | `text` | `en` | "Great accessible restaurant..." |
-| `review` | `uuid-da-avaliacao` | `text` | `es` | "Gran restaurante accesible..." |
-| `restaurant` | `uuid-do-restaurante` | `entrance_notes` | `en` | "Level entrance via side door" |
+| entity_type  | entity_id             | field            | locale | value                            |
+| ------------ | --------------------- | ---------------- | ------ | -------------------------------- |
+| `review`     | `uuid-da-avaliacao`   | `text`           | `en`   | "Great accessible restaurant..." |
+| `review`     | `uuid-da-avaliacao`   | `text`           | `es`   | "Gran restaurante accesible..."  |
+| `restaurant` | `uuid-do-restaurante` | `entrance_notes` | `en`   | "Level entrance via side door"   |
 
 ---
 
 ### 3.12 Registo de Auditoria (AuditLog)
 
-Regista todas as alteracoes em dados sensiveis do sistema, especialmente em perfis de acessibilidade. Essencial para rastrear quem alterou que, quando e com que valores -- fundamental para a fiabilidade dos dados de acessibilidade.
+Regista todas as alteracoes em dados sensiveis do sistema, especialmente em perfis de acessibilidade. Essencial para
+rastrear quem alterou que, quando e com que valores -- fundamental para a fiabilidade dos dados de acessibilidade.
 
 ```typescript
 // src/db/schema/audit-logs.ts
-import {
-  pgTable,
-  uuid,
-  varchar,
-  text,
-  jsonb,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, jsonb, index } from "drizzle-orm/pg-core";
 import { timestamps } from "./shared";
 
 export const auditLogs = pgTable(
@@ -1455,13 +1285,14 @@ export const auditLogs = pgTable(
 );
 ```
 
-**Politica de retencao:** Os registos de auditoria sao imutaveis e nunca eliminados. Para gestao de espaco, pode implementar-se particionamento por data (partition by range em `created_at`) apos o primeiro ano de operacao.
+**Politica de retencao:** Os registos de auditoria sao imutaveis e nunca eliminados. Para gestao de espaco, pode
+implementar-se particionamento por data (partition by range em `created_at`) apos o primeiro ano de operacao.
 
 ---
 
 ## 4. Diagrama de Relacoes entre Entidades
 
-```
+```plaintext
 +-------------------+       1:1       +-------------------------------+
 |    users          |<--------------->| user_accessibility_profiles   |
 |-------------------|                 |-------------------------------|
@@ -1565,25 +1396,25 @@ export const auditLogs = pgTable(
 
 **Resumo de cardinalidades:**
 
-| Relacao | Cardinalidade | Tipo |
-|---|---|---|
-| users <-> user_accessibility_profiles | 1:1 | Obrigatoria (apos registo) |
-| restaurants <-> accessibility_profiles | 1:1 | Opcional (pode nao ter dados ainda) |
-| restaurants <-> accessibility_scores | 1:1 | Opcional (calculado quando ha dados) |
-| users -> reviews | 1:N | Opcional |
-| restaurants -> reviews | 1:N | Opcional |
-| users -> photos | 1:N | Opcional |
-| restaurants -> photos | 1:N | Opcional |
-| reviews -> photos | 1:N | Opcional |
-| restaurants -> menus | 1:N | Opcional |
-| menus -> dishes | 1:N | Opcional |
-| restaurants -> reservations | 1:N | Opcional |
-| users -> reservations | 1:N | Opcional |
-| restaurants -> verification_reports | 1:N | Opcional |
-| users -> verification_reports | 1:N | Opcional |
-| verification_reports -> photos | 1:N | Opcional |
-| * -> translations | 1:N | Polimorfica |
-| * -> audit_logs | 1:N | Polimorfica |
+| Relacao                                | Cardinalidade | Tipo                                 |
+| -------------------------------------- | ------------- | ------------------------------------ |
+| users <-> user_accessibility_profiles  | 1:1           | Obrigatoria (apos registo)           |
+| restaurants <-> accessibility_profiles | 1:1           | Opcional (pode nao ter dados ainda)  |
+| restaurants <-> accessibility_scores   | 1:1           | Opcional (calculado quando ha dados) |
+| users -> reviews                       | 1:N           | Opcional                             |
+| restaurants -> reviews                 | 1:N           | Opcional                             |
+| users -> photos                        | 1:N           | Opcional                             |
+| restaurants -> photos                  | 1:N           | Opcional                             |
+| reviews -> photos                      | 1:N           | Opcional                             |
+| restaurants -> menus                   | 1:N           | Opcional                             |
+| menus -> dishes                        | 1:N           | Opcional                             |
+| restaurants -> reservations            | 1:N           | Opcional                             |
+| users -> reservations                  | 1:N           | Opcional                             |
+| restaurants -> verification_reports    | 1:N           | Opcional                             |
+| users -> verification_reports          | 1:N           | Opcional                             |
+| verification_reports -> photos         | 1:N           | Opcional                             |
+| \* -> translations                     | 1:N           | Polimorfica                          |
+| \* -> audit_logs                       | 1:N           | Polimorfica                          |
 
 ---
 
@@ -1591,7 +1422,8 @@ export const auditLogs = pgTable(
 
 ### 5.1 Indices para pgvector (Pesquisa Semantica)
 
-Os indices HNSW (Hierarchical Navigable Small World) sao os recomendados para pgvector em producao, oferecendo <20ms de latencia para 1M de vectores com >95% de recall.
+Os indices HNSW (Hierarchical Navigable Small World) sao os recomendados para pgvector em producao, oferecendo <20ms de
+latencia para 1M de vectores com >95% de recall.
 
 ```sql
 -- Indice HNSW para pesquisa semantica de restaurantes
@@ -1616,10 +1448,10 @@ CREATE INDEX dishes_embedding_idx
 
 **Parametros HNSW:**
 
-| Parametro | Valor | Justificacao |
-|---|---|---|
-| `m` | 16 | Numero de ligacoes por no. 16 e o valor por defeito e equilibrado para datasets < 1M |
-| `ef_construction` | 64 | Qualidade de construcao do indice. Valores maiores = melhor recall, construcao mais lenta |
+| Parametro         | Valor | Justificacao                                                                              |
+| ----------------- | ----- | ----------------------------------------------------------------------------------------- |
+| `m`               | 16    | Numero de ligacoes por no. 16 e o valor por defeito e equilibrado para datasets < 1M      |
+| `ef_construction` | 64    | Qualidade de construcao do indice. Valores maiores = melhor recall, construcao mais lenta |
 
 Em consulta, ajustar `ef_search` consoante o trade-off desejado entre velocidade e recall:
 
@@ -1633,7 +1465,8 @@ SET hnsw.ef_search = 40;
 
 ### 5.2 Indices para Consultas Geoespaciais
 
-Sem PostGIS, as consultas de proximidade utilizam a extensao `earthdistance` (incluida no PostgreSQL) ou calculo de Haversine. Para indexar, utiliza-se um indice composto ou, preferencialmente, GiST com `cube`/`earthdistance`.
+Sem PostGIS, as consultas de proximidade utilizam a extensao `earthdistance` (incluida no PostgreSQL) ou calculo de
+Haversine. Para indexar, utiliza-se um indice composto ou, preferencialmente, GiST com `cube`/`earthdistance`.
 
 ```sql
 -- Activar extensoes necessarias
@@ -1727,7 +1560,7 @@ As migracoes sao geridas pelo **Drizzle Kit** (`drizzle-kit`), a ferramenta CLI 
 
 ### 6.2 Fluxo de Trabalho
 
-```
+```plaintext
 1. Alterar esquema em src/db/schema/*.ts
 2. Gerar migracao:  pnpm drizzle-kit generate
 3. Inspeccionar SQL gerado em drizzle/migrations/
@@ -1784,7 +1617,8 @@ CREATE EXTENSION IF NOT EXISTS "earthdistance";  -- consultas de proximidade
 
 ### 6.6 Regras para Migracoes em Producao
 
-- **Nunca** remover colunas directamente. Primeiro marcar como `@deprecated`, depois remover numa migracao futura apos confirmar que nenhum codigo as utiliza.
+- **Nunca** remover colunas directamente. Primeiro marcar como `@deprecated`, depois remover numa migracao futura apos
+  confirmar que nenhum codigo as utiliza.
 - **Sempre** adicionar novas colunas com `DEFAULT` ou como `nullable` para evitar locks de tabela.
 - **Indices** concorrentes: em tabelas grandes, usar `CREATE INDEX CONCURRENTLY` para evitar bloqueio de escritas.
 - **Backfills** de dados devem correr em batch (ex.: 1000 registos por iteracao) para nao sobrecarregar a base de dados.
@@ -1795,14 +1629,14 @@ CREATE EXTENSION IF NOT EXISTS "earthdistance";  -- consultas de proximidade
 
 ### 7.1 Fontes de Dados
 
-| Fonte | Tipo de dados | Metodo de importacao |
-|---|---|---|
-| **Wheelmap / accessibility.cloud** | Dados de acessibilidade basicos (A11yJSON) | API publica + script de importacao |
-| **OpenStreetMap (OSM)** | Localizacao, nome, tipo de cozinha, horarios | API Overpass + transformacao |
-| **Google Places API** | Detalhes adicionais, fotografias, avaliacoes | API (com limites de uso) |
-| **TripAdvisor** | Avaliacoes, classificacoes | Web scraping (respeitar ToS) |
-| **Dados manuais** | Restaurantes locais nao cobertos por APIs | Formulario de contribuicao |
-| **Claude Vision** | Analise de acessibilidade a partir de fotografias | Pipeline automatizado |
+| Fonte                              | Tipo de dados                                     | Metodo de importacao               |
+| ---------------------------------- | ------------------------------------------------- | ---------------------------------- |
+| **Wheelmap / accessibility.cloud** | Dados de acessibilidade basicos (A11yJSON)        | API publica + script de importacao |
+| **OpenStreetMap (OSM)**            | Localizacao, nome, tipo de cozinha, horarios      | API Overpass + transformacao       |
+| **Google Places API**              | Detalhes adicionais, fotografias, avaliacoes      | API (com limites de uso)           |
+| **TripAdvisor**                    | Avaliacoes, classificacoes                        | Web scraping (respeitar ToS)       |
+| **Dados manuais**                  | Restaurantes locais nao cobertos por APIs         | Formulario de contribuicao         |
+| **Claude Vision**                  | Analise de acessibilidade a partir de fotografias | Pipeline automatizado              |
 
 ### 7.2 Script de Seed para Desenvolvimento
 
@@ -1900,7 +1734,7 @@ seed().catch(console.error);
 
 ### 7.3 Pipeline de Importacao OSM
 
-```
+```plaintext
 1. Query Overpass API por restaurantes em Portugal
    -> amenity=restaurant dentro de bounding box do distrito
 2. Transformar dados OSM -> formato restaurants (nome, morada, coords, cozinha)
@@ -1924,11 +1758,7 @@ import { isNull, eq } from "drizzle-orm";
 
 async function generateEmbeddings() {
   // Buscar restaurantes sem embedding
-  const pending = await db
-    .select()
-    .from(restaurants)
-    .where(isNull(restaurants.embedding))
-    .limit(100);
+  const pending = await db.select().from(restaurants).where(isNull(restaurants.embedding)).limit(100);
 
   for (const restaurant of pending) {
     // Compor texto para embedding
@@ -1951,10 +1781,7 @@ async function generateEmbeddings() {
     const { embedding } = await response.json();
 
     // Actualizar registo com o embedding gerado
-    await db
-      .update(restaurants)
-      .set({ embedding })
-      .where(eq(restaurants.id, restaurant.id));
+    await db.update(restaurants).set({ embedding }).where(eq(restaurants.id, restaurant.id));
   }
 }
 
@@ -1967,29 +1794,32 @@ generateEmbeddings().catch(console.error);
 
 ### 8.1 O que e o A11yJSON
 
-O **A11yJSON** e um formato de dados aberto criado pela Sozialhelden (a organizacao por detras do Wheelmap.org) e mantido pelo projecto accessibility.cloud. Define um esquema JSON padronizado para descrever a acessibilidade de locais fisicos.
+O **A11yJSON** e um formato de dados aberto criado pela Sozialhelden (a organizacao por detras do Wheelmap.org) e
+mantido pelo projecto accessibility.cloud. Define um esquema JSON padronizado para descrever a acessibilidade de locais
+fisicos.
 
 Repositorio: `github.com/sozialhelden/a11yjson`
 
 ### 8.2 Mapeamento AccessibilityProfile -> A11yJSON
 
-O modelo de dados do Eat Out Adviser foi desenhado para ser compativel com A11yJSON, permitindo importacao e exportacao de dados sem perda significativa de informacao.
+O modelo de dados do Eat Out Adviser foi desenhado para ser compativel com A11yJSON, permitindo importacao e exportacao
+de dados sem perda significativa de informacao.
 
-| Campo Eat Out Adviser | Campo A11yJSON | Notas |
-|---|---|---|
-| `has_accessible_entrance` | `accessibility.entrances[0].isLevel` | A11yJSON usa array de entradas |
-| `entrance_door_width` | `accessibility.entrances[0].door.width` | Em metros no A11yJSON (converter de cm) |
-| `entrance_type` | `accessibility.entrances[0].door.isAutomatic` | A11yJSON usa booleano, nao enum |
-| `has_ramp` | `accessibility.entrances[0].hasFixedRamp` | |
-| `ramp_incline` | `accessibility.entrances[0].ramp.incline` | Mesmo formato (percentagem) |
-| `has_accessible_parking` | `accessibility.parking.forWheelchairUsers.isAvailable` | |
-| `accessible_parking_spaces` | `accessibility.parking.forWheelchairUsers.count` | |
-| `corridor_min_width` | `accessibility.areas[0].pathways[0].width` | Em metros no A11yJSON |
-| `has_elevator` | `accessibility.areas[0].lifts[0].isAvailable` | |
-| `has_accessible_bathroom` | `accessibility.restrooms[0].isAccessibleWithWheelchair` | |
-| `bathroom_door_width` | `accessibility.restrooms[0].entrance.door.width` | Em metros no A11yJSON |
-| `has_grab_bars` | `accessibility.restrooms[0].hasGrabBars` | |
-| `toilet_seat_height` | `accessibility.restrooms[0].toilet.heightOfBase` | Em metros no A11yJSON |
+| Campo Eat Out Adviser       | Campo A11yJSON                                          | Notas                                   |
+| --------------------------- | ------------------------------------------------------- | --------------------------------------- |
+| `has_accessible_entrance`   | `accessibility.entrances[0].isLevel`                    | A11yJSON usa array de entradas          |
+| `entrance_door_width`       | `accessibility.entrances[0].door.width`                 | Em metros no A11yJSON (converter de cm) |
+| `entrance_type`             | `accessibility.entrances[0].door.isAutomatic`           | A11yJSON usa booleano, nao enum         |
+| `has_ramp`                  | `accessibility.entrances[0].hasFixedRamp`               |                                         |
+| `ramp_incline`              | `accessibility.entrances[0].ramp.incline`               | Mesmo formato (percentagem)             |
+| `has_accessible_parking`    | `accessibility.parking.forWheelchairUsers.isAvailable`  |                                         |
+| `accessible_parking_spaces` | `accessibility.parking.forWheelchairUsers.count`        |                                         |
+| `corridor_min_width`        | `accessibility.areas[0].pathways[0].width`              | Em metros no A11yJSON                   |
+| `has_elevator`              | `accessibility.areas[0].lifts[0].isAvailable`           |                                         |
+| `has_accessible_bathroom`   | `accessibility.restrooms[0].isAccessibleWithWheelchair` |                                         |
+| `bathroom_door_width`       | `accessibility.restrooms[0].entrance.door.width`        | Em metros no A11yJSON                   |
+| `has_grab_bars`             | `accessibility.restrooms[0].hasGrabBars`                |                                         |
+| `toilet_seat_height`        | `accessibility.restrooms[0].toilet.heightOfBase`        | Em metros no A11yJSON                   |
 
 ### 8.3 Funcao de Exportacao para A11yJSON
 
@@ -2039,10 +1869,7 @@ interface A11yJSONPlace {
   };
 }
 
-export function toA11yJSON(
-  restaurant: Restaurant,
-  profile: AccessibilityProfile,
-): A11yJSONPlace {
+export function toA11yJSON(restaurant: Restaurant, profile: AccessibilityProfile): A11yJSONPlace {
   return {
     properties: {
       name: restaurant.name,
@@ -2063,9 +1890,7 @@ export function toA11yJSON(
         {
           isLevel: profile.hasLevelEntrance ?? undefined,
           hasFixedRamp: profile.hasRamp ?? undefined,
-          ramp: profile.rampIncline
-            ? { incline: profile.rampIncline }
-            : undefined,
+          ramp: profile.rampIncline ? { incline: profile.rampIncline } : undefined,
           door: {
             width: profile.entranceDoorWidth
               ? profile.entranceDoorWidth / 100 // cm -> metros
@@ -2085,17 +1910,11 @@ export function toA11yJSON(
             {
               isAccessibleWithWheelchair: profile.hasAccessibleBathroom,
               entrance: {
-                door: profile.bathroomDoorWidth
-                  ? { width: profile.bathroomDoorWidth / 100 }
-                  : undefined,
+                door: profile.bathroomDoorWidth ? { width: profile.bathroomDoorWidth / 100 } : undefined,
               },
               hasGrabBars: profile.hasGrabBars ?? undefined,
-              toilet: profile.toiletSeatHeight
-                ? { heightOfBase: profile.toiletSeatHeight / 100 }
-                : undefined,
-              turningSpaceDiameter: profile.bathroomTurningSpace
-                ? profile.bathroomTurningSpace / 100
-                : undefined,
+              toilet: profile.toiletSeatHeight ? { heightOfBase: profile.toiletSeatHeight / 100 } : undefined,
+              turningSpaceDiameter: profile.bathroomTurningSpace ? profile.bathroomTurningSpace / 100 : undefined,
             },
           ]
         : undefined,
@@ -2109,9 +1928,7 @@ export function toA11yJSON(
 ```typescript
 // src/lib/a11yjson-import.ts
 
-export function fromA11yJSON(
-  place: A11yJSONPlace,
-): Partial<AccessibilityProfile> {
+export function fromA11yJSON(place: A11yJSONPlace): Partial<AccessibilityProfile> {
   const entrance = place.accessibility?.entrances?.[0];
   const parking = place.accessibility?.parking?.forWheelchairUsers;
   const restroom = place.accessibility?.restrooms?.[0];
@@ -2119,8 +1936,7 @@ export function fromA11yJSON(
   return {
     // Entrada
     hasLevelEntrance: entrance?.isLevel,
-    hasAccessibleEntrance:
-      entrance?.isLevel || entrance?.hasFixedRamp || undefined,
+    hasAccessibleEntrance: entrance?.isLevel || entrance?.hasFixedRamp || undefined,
     hasRamp: entrance?.hasFixedRamp,
     rampIncline: entrance?.ramp?.incline,
     entranceDoorWidth: entrance?.door?.width
@@ -2134,16 +1950,10 @@ export function fromA11yJSON(
 
     // Casa de banho
     hasAccessibleBathroom: restroom?.isAccessibleWithWheelchair,
-    bathroomDoorWidth: restroom?.entrance?.door?.width
-      ? restroom.entrance.door.width * 100
-      : undefined,
+    bathroomDoorWidth: restroom?.entrance?.door?.width ? restroom.entrance.door.width * 100 : undefined,
     hasGrabBars: restroom?.hasGrabBars,
-    toiletSeatHeight: restroom?.toilet?.heightOfBase
-      ? restroom.toilet.heightOfBase * 100
-      : undefined,
-    bathroomTurningSpace: restroom?.turningSpaceDiameter
-      ? restroom.turningSpaceDiameter * 100
-      : undefined,
+    toiletSeatHeight: restroom?.toilet?.heightOfBase ? restroom.toilet.heightOfBase * 100 : undefined,
+    bathroomTurningSpace: restroom?.turningSpaceDiameter ? restroom.turningSpaceDiameter * 100 : undefined,
 
     // Metadados
     dataSource: "import",
@@ -2162,6 +1972,8 @@ O modelo de dados do Eat Out Adviser e **mais granular** que o A11yJSON em varia
 - **Assentos e mesas** (altura, espaco entre mesas, esplanada -- nao coberto no A11yJSON)
 - **Comunicacao/ementa** (menu Braille, menu digital, formacao de staff -- nao coberto no A11yJSON)
 
-Na exportacao para A11yJSON, estes campos adicionais podem ser incluidos no campo `extensions` do A11yJSON (previsto na especificacao para dados especificos de aplicacao).
+Na exportacao para A11yJSON, estes campos adicionais podem ser incluidos no campo `extensions` do A11yJSON (previsto na
+especificacao para dados especificos de aplicacao).
 
-Na importacao de A11yJSON, os campos nao mapeados ficam como `null` (nao preenchidos) e sao marcados como `verification_status = 'unverified'` para posterior complemento pela comunidade ou por analise de IA.
+Na importacao de A11yJSON, os campos nao mapeados ficam como `null` (nao preenchidos) e sao marcados como
+`verification_status = 'unverified'` para posterior complemento pela comunidade ou por analise de IA.

@@ -1,0 +1,75 @@
+{
+  "name": "eat-out-adviser",
+  "private": true,
+  "packageManager": "pnpm@10.6.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "turbo type-check",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
+    "test:a11y": "turbo test:a11y",
+    "test:coverage": "turbo test -- --coverage",
+    "db:generate": "turbo db:generate --filter=@eat-out-adviser/db",
+    "db:migrate": "turbo db:migrate --filter=@eat-out-adviser/db",
+    "db:push": "turbo db:push --filter=@eat-out-adviser/db",
+    "db:studio": "pnpm --filter @eat-out-adviser/db drizzle-kit studio",
+    "db:seed": "tsx scripts/seed-db.ts",
+    "ai:embed": "tsx scripts/generate-embeddings.ts",
+    "ai:health": "tsx scripts/health-check.ts",
+    "import:osm": "tsx scripts/import-osm.ts",
+    "import:wheelmap": "tsx scripts/import-wheelmap.ts",
+    "docker:build": "docker buildx build --platform linux/amd64,linux/arm64 -f docker/Dockerfile.app .",
+    "docker:up": "docker compose -f docker/docker-compose.yml up -d",
+    "docker:up:dev": "docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d",
+    "docker:down": "docker compose -f docker/docker-compose.yml down",
+    "clean": "turbo clean && rm -rf node_modules",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,yaml,yml}": [
+      "prettier --write"
+    ],
+    "*.md": [
+      "markdownlint-cli2 --fix",
+      "prettier --write"
+    ],
+    "*.css": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@eslint/js": "^10.0.1",
+    "@next/eslint-plugin-next": "^16.1.6",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "markdownlint-cli2": "^0.17.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "tsx": "^4.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.57.0"
+  }
+}

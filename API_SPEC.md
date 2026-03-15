@@ -1,8 +1,7 @@
 # Eat Out Adviser - Especificacao da API
 
-**Data:** Marco de 2026
-**Projecto:** Eat Out Adviser - API tRPC para plataforma de recomendacao de restaurantes com foco em acessibilidade
-**Stack:** Next.js 16 + tRPC + PostgreSQL 17 + pgvector + Drizzle ORM + Better Auth + Claude API
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - API tRPC para plataforma de recomendacao de restaurantes com
+foco em acessibilidade **Stack:** Next.js 16 + tRPC + PostgreSQL 17 + pgvector + Drizzle ORM + Better Auth + Claude API
 **Normas:** ADA, ISO 21542:2021, EAA, RGPD, WCAG 2.1 AA
 
 ---
@@ -32,7 +31,7 @@
 
 ### 1.1 Estrutura de Routers
 
-```
+```plaintext
 src/server/
   trpc.ts                    # Inicializacao do tRPC, contexto, middleware base
   routers/
@@ -109,8 +108,7 @@ const t = initTRPC.context<Context>().create({
       ...shape,
       data: {
         ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
+        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
     };
   },
@@ -125,15 +123,15 @@ export const middleware = t.middleware;
 
 Todos os erros seguem o formato padrao do tRPC com codigos HTTP mapeados:
 
-| Codigo tRPC | HTTP | Utilizacao |
-|---|---|---|
-| `BAD_REQUEST` | 400 | Input invalido (falha de validacao Zod) |
-| `UNAUTHORIZED` | 401 | Sessao expirada ou ausente |
-| `FORBIDDEN` | 403 | Sem permissao para o recurso |
-| `NOT_FOUND` | 404 | Recurso inexistente |
-| `CONFLICT` | 409 | Duplicacao (ex.: email ja registado) |
-| `TOO_MANY_REQUESTS` | 429 | Rate limit excedido |
-| `INTERNAL_SERVER_ERROR` | 500 | Erro inesperado do servidor |
+| Codigo tRPC             | HTTP | Utilizacao                              |
+| ----------------------- | ---- | --------------------------------------- |
+| `BAD_REQUEST`           | 400  | Input invalido (falha de validacao Zod) |
+| `UNAUTHORIZED`          | 401  | Sessao expirada ou ausente              |
+| `FORBIDDEN`             | 403  | Sem permissao para o recurso            |
+| `NOT_FOUND`             | 404  | Recurso inexistente                     |
+| `CONFLICT`              | 409  | Duplicacao (ex.: email ja registado)    |
+| `TOO_MANY_REQUESTS`     | 429  | Rate limit excedido                     |
+| `INTERNAL_SERVER_ERROR` | 500  | Erro inesperado do servidor             |
 
 ```typescript
 // Exemplo de erro estruturado
@@ -146,7 +144,8 @@ throw new TRPCError({
 
 ### 1.5 Versionamento
 
-A API nao utiliza versionamento explicito no path (ex.: `/v1/`). O tRPC garante compatibilidade via type-safety entre cliente e servidor. Alteracoes incompativeis sao geridas por:
+A API nao utiliza versionamento explicito no path (ex.: `/v1/`). O tRPC garante compatibilidade via type-safety entre
+cliente e servidor. Alteracoes incompativeis sao geridas por:
 
 - Deprecacao gradual de campos (manter campo antigo + adicionar novo)
 - Feature flags para funcionalidades experimentais
@@ -154,14 +153,14 @@ A API nao utiliza versionamento explicito no path (ex.: `/v1/`). O tRPC garante 
 
 ### 1.6 Rate Limiting Global
 
-| Categoria | Limite | Janela |
-|---|---|---|
-| Publico (sem auth) | 30 pedidos | 1 minuto |
-| Autenticado | 120 pedidos | 1 minuto |
-| Escrita (mutations) | 30 pedidos | 1 minuto |
-| IA (ai router) | 10 pedidos | 1 minuto |
-| Upload de ficheiros | 5 pedidos | 1 minuto |
-| Admin | 300 pedidos | 1 minuto |
+| Categoria           | Limite      | Janela   |
+| ------------------- | ----------- | -------- |
+| Publico (sem auth)  | 30 pedidos  | 1 minuto |
+| Autenticado         | 120 pedidos | 1 minuto |
+| Escrita (mutations) | 30 pedidos  | 1 minuto |
+| IA (ai router)      | 10 pedidos  | 1 minuto |
+| Upload de ficheiros | 5 pedidos   | 1 minuto |
+| Admin               | 300 pedidos | 1 minuto |
 
 ---
 
@@ -169,7 +168,7 @@ A API nao utiliza versionamento explicito no path (ex.: `/v1/`). O tRPC garante 
 
 A ordem de execucao dos middleware e determinante. Cada pedido tRPC atravessa a seguinte cadeia:
 
-```
+```plaintext
 Pedido HTTP
   -> CORS (Next.js config)
   -> Rate Limiting (por IP + userId)
@@ -220,15 +219,9 @@ export const requireRole = (...roles: Role[]) =>
     return next({ ctx });
   });
 
-export const ownerProcedure = authenticatedProcedure.use(
-  requireRole("owner", "admin"),
-);
-export const adminProcedure = authenticatedProcedure.use(
-  requireRole("admin"),
-);
-export const verifierProcedure = authenticatedProcedure.use(
-  requireRole("verifier", "admin"),
-);
+export const ownerProcedure = authenticatedProcedure.use(requireRole("owner", "admin"));
+export const adminProcedure = authenticatedProcedure.use(requireRole("admin"));
+export const verifierProcedure = authenticatedProcedure.use(requireRole("verifier", "admin"));
 ```
 
 ### 2.3 Middleware de Rate Limiting
@@ -258,10 +251,7 @@ export const rateLimit = (tier: RateLimitTier) =>
     const config = limits[tier];
 
     // Verificacao de rate limit (implementacao simplificada)
-    const { success, remaining, reset } = await checkRateLimit(
-      identifier,
-      config,
-    );
+    const { success, remaining, reset } = await checkRateLimit(identifier, config);
 
     if (!success) {
       throw new TRPCError({
@@ -348,26 +338,24 @@ export const coordinatesSchema = z.object({
   longitude: z.number().min(-180).max(180),
 });
 
-export const multilingualText = z.record(
-  z.enum(["pt", "en", "es", "fr"]),
-  z.string(),
-);
+export const multilingualText = z.record(z.enum(["pt", "en", "es", "fr"]), z.string());
 ```
 
 ---
 
 ### 3.1 Auth Router
 
-O router `auth` actua como camada fina sobre o Better Auth, expondo operacoes de autenticacao via tRPC para manter a consistencia da API.
+O router `auth` actua como camada fina sobre o Better Auth, expondo operacoes de autenticacao via tRPC para manter a
+consistencia da API.
 
 #### `auth.register`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Regista um novo utilizador com email/password ou inicia fluxo OAuth. |
+| Campo            | Valor                                                                |
+| ---------------- | -------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                           |
+| **Autenticacao** | Publica                                                              |
+| **Rate limit**   | `write` (30/min)                                                     |
+| **Descricao**    | Regista um novo utilizador com email/password ou inicia fluxo OAuth. |
 
 ```typescript
 // Input
@@ -375,7 +363,9 @@ const registerInput = z.discriminatedUnion("method", [
   z.object({
     method: z.literal("credentials"),
     email: z.string().email("Email invalido."),
-    password: z.string().min(8, "Password deve ter no minimo 8 caracteres.")
+    password: z
+      .string()
+      .min(8, "Password deve ter no minimo 8 caracteres.")
       .regex(/[A-Z]/, "Deve conter pelo menos uma letra maiuscula.")
       .regex(/[0-9]/, "Deve conter pelo menos um numero."),
     name: z.string().min(2).max(255),
@@ -404,6 +394,7 @@ const registerOutput = z.object({
 ```
 
 **Exemplo de pedido:**
+
 ```typescript
 const result = await trpc.auth.register.mutate({
   method: "credentials",
@@ -415,6 +406,7 @@ const result = await trpc.auth.register.mutate({
 ```
 
 **Exemplo de resposta:**
+
 ```json
 {
   "user": {
@@ -432,21 +424,21 @@ const result = await trpc.auth.register.mutate({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
-| `CONFLICT` | Email ja registado |
+| Codigo        | Condicao                       |
+| ------------- | ------------------------------ |
+| `CONFLICT`    | Email ja registado             |
 | `BAD_REQUEST` | Password nao cumpre requisitos |
 
 ---
 
 #### `auth.login`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Inicia sessao com email/password ou OAuth. |
+| Campo            | Valor                                      |
+| ---------------- | ------------------------------------------ |
+| **Tipo**         | `mutation`                                 |
+| **Autenticacao** | Publica                                    |
+| **Rate limit**   | `write` (30/min)                           |
+| **Descricao**    | Inicia sessao com email/password ou OAuth. |
 
 ```typescript
 const loginInput = z.discriminatedUnion("method", [
@@ -478,21 +470,21 @@ const loginOutput = z.object({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
+| Codigo         | Condicao              |
+| -------------- | --------------------- |
 | `UNAUTHORIZED` | Credenciais invalidas |
-| `NOT_FOUND` | Conta nao encontrada |
+| `NOT_FOUND`    | Conta nao encontrada  |
 
 ---
 
 #### `auth.logout`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Termina a sessao actual e invalida o token. |
+| Campo            | Valor                                       |
+| ---------------- | ------------------------------------------- |
+| **Tipo**         | `mutation`                                  |
+| **Autenticacao** | Autenticado                                 |
+| **Rate limit**   | `authenticated` (120/min)                   |
+| **Descricao**    | Termina a sessao actual e invalida o token. |
 
 ```typescript
 const logoutInput = z.void();
@@ -503,12 +495,12 @@ const logoutOutput = z.object({ success: z.literal(true) });
 
 #### `auth.refreshSession`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Renova o token de sessao antes de expirar. |
+| Campo            | Valor                                      |
+| ---------------- | ------------------------------------------ |
+| **Tipo**         | `mutation`                                 |
+| **Autenticacao** | Autenticado                                |
+| **Rate limit**   | `authenticated` (120/min)                  |
+| **Descricao**    | Renova o token de sessao antes de expirar. |
 
 ```typescript
 const refreshSessionOutput = z.object({
@@ -523,12 +515,12 @@ const refreshSessionOutput = z.object({
 
 #### `auth.requestPasswordReset`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Envia email com link de reposicao de password. Responde sempre com sucesso para nao revelar se o email existe. |
+| Campo            | Valor                                                                                                          |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                                                     |
+| **Autenticacao** | Publica                                                                                                        |
+| **Rate limit**   | `write` (30/min)                                                                                               |
+| **Descricao**    | Envia email com link de reposicao de password. Responde sempre com sucesso para nao revelar se o email existe. |
 
 ```typescript
 const requestPasswordResetInput = z.object({
@@ -544,17 +536,19 @@ const requestPasswordResetOutput = z.object({
 
 #### `auth.resetPassword`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Publica (com token de reset) |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Redefine a password usando o token recebido por email. |
+| Campo            | Valor                                                  |
+| ---------------- | ------------------------------------------------------ |
+| **Tipo**         | `mutation`                                             |
+| **Autenticacao** | Publica (com token de reset)                           |
+| **Rate limit**   | `write` (30/min)                                       |
+| **Descricao**    | Redefine a password usando o token recebido por email. |
 
 ```typescript
 const resetPasswordInput = z.object({
   token: z.string(),
-  newPassword: z.string().min(8)
+  newPassword: z
+    .string()
+    .min(8)
     .regex(/[A-Z]/, "Deve conter pelo menos uma letra maiuscula.")
     .regex(/[0-9]/, "Deve conter pelo menos um numero."),
 });
@@ -564,8 +558,8 @@ const resetPasswordOutput = z.object({ success: z.literal(true) });
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
+| Codigo        | Condicao                   |
+| ------------- | -------------------------- |
 | `BAD_REQUEST` | Token invalido ou expirado |
 
 ---
@@ -574,12 +568,12 @@ const resetPasswordOutput = z.object({ success: z.literal(true) });
 
 #### `user.getProfile`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Devolve o perfil completo do utilizador autenticado. |
+| Campo            | Valor                                                |
+| ---------------- | ---------------------------------------------------- |
+| **Tipo**         | `query`                                              |
+| **Autenticacao** | Autenticado                                          |
+| **Rate limit**   | `authenticated` (120/min)                            |
+| **Descricao**    | Devolve o perfil completo do utilizador autenticado. |
 
 ```typescript
 const userProfileOutput = z.object({
@@ -599,12 +593,12 @@ const userProfileOutput = z.object({
 
 #### `user.updateProfile`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza dados basicos do perfil (nome, idioma, avatar). |
+| Campo            | Valor                                                     |
+| ---------------- | --------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                |
+| **Autenticacao** | Autenticado                                               |
+| **Rate limit**   | `write` (30/min)                                          |
+| **Descricao**    | Actualiza dados basicos do perfil (nome, idioma, avatar). |
 
 ```typescript
 const updateProfileInput = z.object({
@@ -620,19 +614,25 @@ const updateProfileOutput = userProfileOutput;
 
 #### `user.getAccessibilityProfile`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Devolve o perfil de acessibilidade do utilizador. |
+| Campo            | Valor                                             |
+| ---------------- | ------------------------------------------------- |
+| **Tipo**         | `query`                                           |
+| **Autenticacao** | Autenticado                                       |
+| **Rate limit**   | `authenticated` (120/min)                         |
+| **Descricao**    | Devolve o perfil de acessibilidade do utilizador. |
 
 ```typescript
 const userAccessibilityProfileOutput = z.object({
   id: z.string().uuid(),
   mobilityType: z.enum([
-    "electric_wheelchair", "manual_wheelchair", "walker",
-    "crutches", "cane", "scooter", "none", "other",
+    "electric_wheelchair",
+    "manual_wheelchair",
+    "walker",
+    "crutches",
+    "cane",
+    "scooter",
+    "none",
+    "other",
   ]),
   wheelchairWidth: z.number().nullable(),
   wheelchairLength: z.number().nullable(),
@@ -656,19 +656,18 @@ const userAccessibilityProfileOutput = z.object({
 
 #### `user.updateAccessibilityProfile`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Cria ou actualiza o perfil de acessibilidade. Upsert (cria se nao existir). |
+| Campo            | Valor                                                                       |
+| ---------------- | --------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                  |
+| **Autenticacao** | Autenticado                                                                 |
+| **Rate limit**   | `write` (30/min)                                                            |
+| **Descricao**    | Cria ou actualiza o perfil de acessibilidade. Upsert (cria se nao existir). |
 
 ```typescript
 const updateAccessibilityProfileInput = z.object({
-  mobilityType: z.enum([
-    "electric_wheelchair", "manual_wheelchair", "walker",
-    "crutches", "cane", "scooter", "none", "other",
-  ]).optional(),
+  mobilityType: z
+    .enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "cane", "scooter", "none", "other"])
+    .optional(),
   wheelchairWidth: z.number().min(0).max(200).nullable().optional(),
   wheelchairLength: z.number().min(0).max(300).nullable().optional(),
   turningRadiusNeeded: z.number().min(0).max(500).nullable().optional(),
@@ -688,6 +687,7 @@ const updateAccessibilityProfileInput = z.object({
 ```
 
 **Exemplo de pedido:**
+
 ```typescript
 await trpc.user.updateAccessibilityProfile.mutate({
   mobilityType: "electric_wheelchair",
@@ -704,12 +704,12 @@ await trpc.user.updateAccessibilityProfile.mutate({
 
 #### `user.getPreferences`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Devolve preferencias de notificacao e interface. |
+| Campo            | Valor                                            |
+| ---------------- | ------------------------------------------------ |
+| **Tipo**         | `query`                                          |
+| **Autenticacao** | Autenticado                                      |
+| **Rate limit**   | `authenticated` (120/min)                        |
+| **Descricao**    | Devolve preferencias de notificacao e interface. |
 
 ```typescript
 const preferencesOutput = z.object({
@@ -732,12 +732,12 @@ const preferencesOutput = z.object({
 
 #### `user.updatePreferences`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza preferencias de notificacao e interface. |
+| Campo            | Valor                                              |
+| ---------------- | -------------------------------------------------- |
+| **Tipo**         | `mutation`                                         |
+| **Autenticacao** | Autenticado                                        |
+| **Rate limit**   | `write` (30/min)                                   |
+| **Descricao**    | Actualiza preferencias de notificacao e interface. |
 
 ```typescript
 const updatePreferencesInput = preferencesOutput.deepPartial();
@@ -747,12 +747,12 @@ const updatePreferencesInput = preferencesOutput.deepPartial();
 
 #### `user.deleteAccount`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Elimina a conta e todos os dados pessoais (RGPD Art. 17). Avaliacoes sao anonimizadas. |
+| Campo            | Valor                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                             |
+| **Autenticacao** | Autenticado                                                                            |
+| **Rate limit**   | `write` (30/min)                                                                       |
+| **Descricao**    | Elimina a conta e todos os dados pessoais (RGPD Art. 17). Avaliacoes sao anonimizadas. |
 
 ```typescript
 const deleteAccountInput = z.object({
@@ -767,8 +767,8 @@ const deleteAccountOutput = z.object({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
+| Codigo        | Condicao                        |
+| ------------- | ------------------------------- |
 | `BAD_REQUEST` | Frase de confirmacao incorrecta |
 
 ---
@@ -777,12 +777,12 @@ const deleteAccountOutput = z.object({
 
 #### `restaurant.getById`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Devolve todos os dados de um restaurante pelo ID. |
+| Campo            | Valor                                             |
+| ---------------- | ------------------------------------------------- |
+| **Tipo**         | `query`                                           |
+| **Autenticacao** | Publica                                           |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)    |
+| **Descricao**    | Devolve todos os dados de um restaurante pelo ID. |
 
 ```typescript
 const getByIdInput = z.object({
@@ -806,10 +806,17 @@ const restaurantOutput = z.object({
   website: z.string().url().nullable(),
   cuisineTypes: z.array(z.string()).nullable(),
   priceRange: z.enum(["budget", "moderate", "upscale", "fine_dining"]).nullable(),
-  openingHours: z.record(z.string(), z.array(z.object({
-    open: z.string(),
-    close: z.string(),
-  }))).nullable(),
+  openingHours: z
+    .record(
+      z.string(),
+      z.array(
+        z.object({
+          open: z.string(),
+          close: z.string(),
+        }),
+      ),
+    )
+    .nullable(),
   capacity: z.number().int().nullable(),
   isClaimedByOwner: z.boolean(),
   status: z.enum(["pending", "active", "inactive", "archived"]),
@@ -824,12 +831,16 @@ const restaurantOutput = z.object({
 ```
 
 **Exemplo de resposta:**
+
 ```json
 {
   "id": "019505a0-7c1e-7000-8000-aabb11223344",
   "name": "Trattoria da Maria",
   "slug": "trattoria-da-maria-porto",
-  "description": { "pt": "Cozinha italiana autentica no coracao do Porto.", "en": "Authentic Italian cuisine in the heart of Porto." },
+  "description": {
+    "pt": "Cozinha italiana autentica no coracao do Porto.",
+    "en": "Authentic Italian cuisine in the heart of Porto."
+  },
   "address": "Rua das Flores 123",
   "city": "Porto",
   "postalCode": "4050-262",
@@ -851,12 +862,12 @@ const restaurantOutput = z.object({
 
 #### `restaurant.getBySlug`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Devolve um restaurante pelo slug (para URLs amigas). |
+| Campo            | Valor                                                |
+| ---------------- | ---------------------------------------------------- |
+| **Tipo**         | `query`                                              |
+| **Autenticacao** | Publica                                              |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)       |
+| **Descricao**    | Devolve um restaurante pelo slug (para URLs amigas). |
 
 ```typescript
 const getBySlugInput = z.object({
@@ -869,32 +880,33 @@ const getBySlugInput = z.object({
 
 #### `restaurant.list`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Lista restaurantes com paginacao, filtros e ordenacao. |
+| Campo            | Valor                                                  |
+| ---------------- | ------------------------------------------------------ |
+| **Tipo**         | `query`                                                |
+| **Autenticacao** | Publica                                                |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)         |
+| **Descricao**    | Lista restaurantes com paginacao, filtros e ordenacao. |
 
 ```typescript
 const listInput = z.object({
   ...paginationInput.shape,
-  filters: z.object({
-    city: z.string().optional(),
-    district: z.string().optional(),
-    cuisineTypes: z.array(z.string()).optional(),
-    priceRange: z.array(z.enum(["budget", "moderate", "upscale", "fine_dining"])).optional(),
-    status: z.enum(["active", "pending"]).default("active"),
-    minAccessibilityScore: z.number().min(0).max(5).optional(),
-    hasRamp: z.boolean().optional(),
-    hasAccessibleBathroom: z.boolean().optional(),
-    hasParking: z.boolean().optional(),
-    minDoorWidthCm: z.number().optional(),
-  }).optional(),
-  sortBy: z.enum([
-    "name", "averageAccessibilityScore", "averageFoodRating",
-    "reviewCount", "distance", "createdAt",
-  ]).default("averageAccessibilityScore"),
+  filters: z
+    .object({
+      city: z.string().optional(),
+      district: z.string().optional(),
+      cuisineTypes: z.array(z.string()).optional(),
+      priceRange: z.array(z.enum(["budget", "moderate", "upscale", "fine_dining"])).optional(),
+      status: z.enum(["active", "pending"]).default("active"),
+      minAccessibilityScore: z.number().min(0).max(5).optional(),
+      hasRamp: z.boolean().optional(),
+      hasAccessibleBathroom: z.boolean().optional(),
+      hasParking: z.boolean().optional(),
+      minDoorWidthCm: z.number().optional(),
+    })
+    .optional(),
+  sortBy: z
+    .enum(["name", "averageAccessibilityScore", "averageFoodRating", "reviewCount", "distance", "createdAt"])
+    .default("averageAccessibilityScore"),
   sortOrder,
 });
 
@@ -905,12 +917,12 @@ const listInput = z.object({
 
 #### `restaurant.search`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Pesquisa textual em nome, descricao e morada (full-text PostgreSQL `tsvector`). |
+| Campo            | Valor                                                                           |
+| ---------------- | ------------------------------------------------------------------------------- |
+| **Tipo**         | `query`                                                                         |
+| **Autenticacao** | Publica                                                                         |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)                                  |
+| **Descricao**    | Pesquisa textual em nome, descricao e morada (full-text PostgreSQL `tsvector`). |
 
 ```typescript
 const searchInput = z.object({
@@ -929,12 +941,12 @@ const searchResultItem = restaurantOutput.extend({
 
 #### `restaurant.getNearby`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Devolve restaurantes proximos a coordenadas (formula Haversine). |
+| Campo            | Valor                                                            |
+| ---------------- | ---------------------------------------------------------------- |
+| **Tipo**         | `query`                                                          |
+| **Autenticacao** | Publica                                                          |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)                   |
+| **Descricao**    | Devolve restaurantes proximos a coordenadas (formula Haversine). |
 
 ```typescript
 const getNearbyInput = z.object({
@@ -960,12 +972,12 @@ const getNearbyOutput = z.object({
 
 #### `restaurant.create`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Cria um novo restaurante. O slug e gerado automaticamente a partir do nome e cidade. |
+| Campo            | Valor                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| **Tipo**         | `mutation`                                                                           |
+| **Autenticacao** | Owner / Admin                                                                        |
+| **Rate limit**   | `write` (30/min)                                                                     |
+| **Descricao**    | Cria um novo restaurante. O slug e gerado automaticamente a partir do nome e cidade. |
 
 ```typescript
 const createRestaurantInput = z.object({
@@ -983,10 +995,17 @@ const createRestaurantInput = z.object({
   website: z.string().url().optional(),
   cuisineTypes: z.array(z.string()).optional(),
   priceRange: z.enum(["budget", "moderate", "upscale", "fine_dining"]).optional(),
-  openingHours: z.record(z.string(), z.array(z.object({
-    open: z.string().regex(/^\d{2}:\d{2}$/),
-    close: z.string().regex(/^\d{2}:\d{2}$/),
-  }))).optional(),
+  openingHours: z
+    .record(
+      z.string(),
+      z.array(
+        z.object({
+          open: z.string().regex(/^\d{2}:\d{2}$/),
+          close: z.string().regex(/^\d{2}:\d{2}$/),
+        }),
+      ),
+    )
+    .optional(),
   capacity: z.number().int().min(1).optional(),
 });
 
@@ -997,12 +1016,12 @@ const createRestaurantInput = z.object({
 
 #### `restaurant.update`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner (do restaurante) / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza os dados de um restaurante existente. |
+| Campo            | Valor                                           |
+| ---------------- | ----------------------------------------------- |
+| **Tipo**         | `mutation`                                      |
+| **Autenticacao** | Owner (do restaurante) / Admin                  |
+| **Rate limit**   | `write` (30/min)                                |
+| **Descricao**    | Actualiza os dados de um restaurante existente. |
 
 ```typescript
 const updateRestaurantInput = z.object({
@@ -1013,30 +1032,27 @@ const updateRestaurantInput = z.object({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
-| `NOT_FOUND` | Restaurante nao encontrado |
+| Codigo      | Condicao                        |
+| ----------- | ------------------------------- |
+| `NOT_FOUND` | Restaurante nao encontrado      |
 | `FORBIDDEN` | Utilizador nao e dono nem admin |
 
 ---
 
 #### `restaurant.uploadPhoto`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `upload` (5/min) |
-| **Descricao** | Faz upload de fotografia de um restaurante. Ficheiro enviado via FormData separado; esta mutation regista os metadados. |
+| Campo            | Valor                                                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                                                              |
+| **Autenticacao** | Autenticado                                                                                                             |
+| **Rate limit**   | `upload` (5/min)                                                                                                        |
+| **Descricao**    | Faz upload de fotografia de um restaurante. Ficheiro enviado via FormData separado; esta mutation regista os metadados. |
 
 ```typescript
 const uploadPhotoInput = z.object({
   restaurantId: z.string().uuid(),
   caption: z.string().max(500).optional(),
-  spaceType: z.enum([
-    "entrance", "interior", "bathroom", "parking",
-    "menu", "exterior", "food", "other",
-  ]),
+  spaceType: z.enum(["entrance", "interior", "bathroom", "parking", "menu", "exterior", "food", "other"]),
   fileUrl: z.string().url(), // URL apos upload para storage
   fileSizeBytes: z.number().int().max(10_485_760), // max 10MB
   mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
@@ -1058,20 +1074,17 @@ const photoOutput = z.object({
 
 #### `restaurant.getPhotos`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Devolve fotografias de um restaurante, com filtro opcional por tipo de espaco. |
+| Campo            | Valor                                                                          |
+| ---------------- | ------------------------------------------------------------------------------ |
+| **Tipo**         | `query`                                                                        |
+| **Autenticacao** | Publica                                                                        |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)                                 |
+| **Descricao**    | Devolve fotografias de um restaurante, com filtro opcional por tipo de espaco. |
 
 ```typescript
 const getPhotosInput = z.object({
   restaurantId: z.string().uuid(),
-  spaceType: z.enum([
-    "entrance", "interior", "bathroom", "parking",
-    "menu", "exterior", "food", "other",
-  ]).optional(),
+  spaceType: z.enum(["entrance", "interior", "bathroom", "parking", "menu", "exterior", "food", "other"]).optional(),
   ...paginationInput.shape,
 });
 
@@ -1082,12 +1095,12 @@ const getPhotosInput = z.object({
 
 #### `restaurant.getAccessibilityProfile`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Devolve o perfil de acessibilidade completo de um restaurante. |
+| Campo            | Valor                                                          |
+| ---------------- | -------------------------------------------------------------- |
+| **Tipo**         | `query`                                                        |
+| **Autenticacao** | Publica                                                        |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)                 |
+| **Descricao**    | Devolve o perfil de acessibilidade completo de um restaurante. |
 
 ```typescript
 const getAccessibilityProfileInput = z.object({
@@ -1147,6 +1160,7 @@ const restaurantAccessibilityOutput = z.object({
 ```
 
 **Exemplo de resposta:**
+
 ```json
 {
   "id": "019505b1-...",
@@ -1172,12 +1186,12 @@ const restaurantAccessibilityOutput = z.object({
 
 #### `restaurant.updateAccessibilityProfile`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Verifier / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza o perfil de acessibilidade. Regista alteracao no AuditLog. |
+| Campo            | Valor                                                                |
+| ---------------- | -------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                           |
+| **Autenticacao** | Owner / Verifier / Admin                                             |
+| **Rate limit**   | `write` (30/min)                                                     |
+| **Descricao**    | Actualiza o perfil de acessibilidade. Regista alteracao no AuditLog. |
 
 ```typescript
 const updateAccessibilityProfileInput = z.object({
@@ -1186,13 +1200,18 @@ const updateAccessibilityProfileInput = z.object({
   // verificationStatus, dataSource, scores e timestamps
   ...restaurantAccessibilityOutput
     .omit({
-      id: true, restaurantId: true, verificationStatus: true,
-      dataSource: true, overallScore: true, entranceScore: true,
-      interiorScore: true, bathroomScore: true, updatedAt: true,
+      id: true,
+      restaurantId: true,
+      verificationStatus: true,
+      dataSource: true,
+      overallScore: true,
+      entranceScore: true,
+      interiorScore: true,
+      bathroomScore: true,
+      updatedAt: true,
       lastVerifiedAt: true,
     })
-    .partial()
-    .shape,
+    .partial().shape,
 });
 ```
 
@@ -1200,12 +1219,12 @@ const updateAccessibilityProfileInput = z.object({
 
 #### `restaurant.claimOwnership`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Submete um pedido de reivindicacao de propriedade. Requer verificacao por admin. |
+| Campo            | Valor                                                                            |
+| ---------------- | -------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                       |
+| **Autenticacao** | Autenticado                                                                      |
+| **Rate limit**   | `write` (30/min)                                                                 |
+| **Descricao**    | Submete um pedido de reivindicacao de propriedade. Requer verificacao por admin. |
 
 ```typescript
 const claimOwnershipInput = z.object({
@@ -1230,12 +1249,12 @@ const claimOwnershipOutput = z.object({
 
 #### `review.create`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Cria uma avaliacao de um restaurante. Um utilizador so pode ter uma avaliacao por restaurante. |
+| Campo            | Valor                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                                     |
+| **Autenticacao** | Autenticado                                                                                    |
+| **Rate limit**   | `write` (30/min)                                                                               |
+| **Descricao**    | Cria uma avaliacao de um restaurante. Um utilizador so pode ter uma avaliacao por restaurante. |
 
 ```typescript
 const createReviewInput = z.object({
@@ -1247,11 +1266,21 @@ const createReviewInput = z.object({
   visitDate: z.date(),
   accessibilityComment: z.string().max(2000).optional(),
   // Tags de acessibilidade observadas durante a visita
-  accessibilityTags: z.array(z.enum([
-    "step_free_entrance", "ramp_available", "accessible_bathroom",
-    "wide_doors", "accessible_parking", "lowered_counter",
-    "braille_menu", "staff_assistance", "accessible_tables",
-  ])).optional(),
+  accessibilityTags: z
+    .array(
+      z.enum([
+        "step_free_entrance",
+        "ramp_available",
+        "accessible_bathroom",
+        "wide_doors",
+        "accessible_parking",
+        "lowered_counter",
+        "braille_menu",
+        "staff_assistance",
+        "accessible_tables",
+      ]),
+    )
+    .optional(),
 });
 
 const reviewOutput = z.object({
@@ -1275,21 +1304,21 @@ const reviewOutput = z.object({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
-| `CONFLICT` | Utilizador ja avaliou este restaurante |
-| `NOT_FOUND` | Restaurante nao encontrado |
+| Codigo      | Condicao                               |
+| ----------- | -------------------------------------- |
+| `CONFLICT`  | Utilizador ja avaliou este restaurante |
+| `NOT_FOUND` | Restaurante nao encontrado             |
 
 ---
 
 #### `review.update`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado (autor) |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza uma avaliacao propria. |
+| Campo            | Valor                            |
+| ---------------- | -------------------------------- |
+| **Tipo**         | `mutation`                       |
+| **Autenticacao** | Autenticado (autor)              |
+| **Rate limit**   | `write` (30/min)                 |
+| **Descricao**    | Actualiza uma avaliacao propria. |
 
 ```typescript
 const updateReviewInput = z.object({
@@ -1300,20 +1329,20 @@ const updateReviewInput = z.object({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
+| Codigo      | Condicao                   |
+| ----------- | -------------------------- |
 | `FORBIDDEN` | Nao e o autor da avaliacao |
 
 ---
 
 #### `review.delete`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado (autor) |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Elimina uma avaliacao propria. |
+| Campo            | Valor                          |
+| ---------------- | ------------------------------ |
+| **Tipo**         | `mutation`                     |
+| **Autenticacao** | Autenticado (autor)            |
+| **Rate limit**   | `write` (30/min)               |
+| **Descricao**    | Elimina uma avaliacao propria. |
 
 ```typescript
 const deleteReviewInput = z.object({
@@ -1326,12 +1355,12 @@ const deleteReviewOutput = z.object({ success: z.literal(true) });
 
 #### `review.getByRestaurant`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Lista avaliacoes de um restaurante, paginadas. |
+| Campo            | Valor                                          |
+| ---------------- | ---------------------------------------------- |
+| **Tipo**         | `query`                                        |
+| **Autenticacao** | Publica                                        |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min) |
+| **Descricao**    | Lista avaliacoes de um restaurante, paginadas. |
 
 ```typescript
 const getByRestaurantInput = z.object({
@@ -1348,12 +1377,12 @@ const getByRestaurantInput = z.object({
 
 #### `review.getByUser`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Lista as avaliacoes do utilizador autenticado. |
+| Campo            | Valor                                          |
+| ---------------- | ---------------------------------------------- |
+| **Tipo**         | `query`                                        |
+| **Autenticacao** | Autenticado                                    |
+| **Rate limit**   | `authenticated` (120/min)                      |
+| **Descricao**    | Lista as avaliacoes do utilizador autenticado. |
 
 ```typescript
 const getByUserInput = z.object({
@@ -1366,12 +1395,12 @@ const getByUserInput = z.object({
 
 #### `review.markHelpful`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Marca uma avaliacao como util. Toggle (marca/desmarca). |
+| Campo            | Valor                                                   |
+| ---------------- | ------------------------------------------------------- |
+| **Tipo**         | `mutation`                                              |
+| **Autenticacao** | Autenticado                                             |
+| **Rate limit**   | `write` (30/min)                                        |
+| **Descricao**    | Marca uma avaliacao como util. Toggle (marca/desmarca). |
 
 ```typescript
 const markHelpfulInput = z.object({
@@ -1387,20 +1416,17 @@ const markHelpfulOutput = z.object({
 
 #### `review.report`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Denuncia uma avaliacao por conteudo inadequado. |
+| Campo            | Valor                                           |
+| ---------------- | ----------------------------------------------- |
+| **Tipo**         | `mutation`                                      |
+| **Autenticacao** | Autenticado                                     |
+| **Rate limit**   | `write` (30/min)                                |
+| **Descricao**    | Denuncia uma avaliacao por conteudo inadequado. |
 
 ```typescript
 const reportReviewInput = z.object({
   reviewId: z.string().uuid(),
-  reason: z.enum([
-    "spam", "offensive", "misleading",
-    "not_about_restaurant", "other",
-  ]),
+  reason: z.enum(["spam", "offensive", "misleading", "not_about_restaurant", "other"]),
   details: z.string().max(1000).optional(),
 });
 const reportReviewOutput = z.object({
@@ -1415,12 +1441,12 @@ const reportReviewOutput = z.object({
 
 #### `menu.getByRestaurant`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Devolve a ementa activa de um restaurante com todos os pratos. |
+| Campo            | Valor                                                          |
+| ---------------- | -------------------------------------------------------------- |
+| **Tipo**         | `query`                                                        |
+| **Autenticacao** | Publica                                                        |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)                 |
+| **Descricao**    | Devolve a ementa activa de um restaurante com todos os pratos. |
 
 ```typescript
 const getMenuInput = z.object({
@@ -1435,15 +1461,25 @@ const dishOutput = z.object({
   price: z.number().positive(),
   currency: z.string().length(3).default("EUR"),
   category: z.string(),
-  allergens: z.array(z.enum([
-    "gluten", "crustaceans", "eggs", "fish", "peanuts", "soy",
-    "milk", "nuts", "celery", "mustard", "sesame", "sulphites",
-    "lupin", "molluscs",
-  ])),
-  dietaryFlags: z.array(z.enum([
-    "vegetarian", "vegan", "gluten_free", "lactose_free",
-    "halal", "kosher", "organic",
-  ])),
+  allergens: z.array(
+    z.enum([
+      "gluten",
+      "crustaceans",
+      "eggs",
+      "fish",
+      "peanuts",
+      "soy",
+      "milk",
+      "nuts",
+      "celery",
+      "mustard",
+      "sesame",
+      "sulphites",
+      "lupin",
+      "molluscs",
+    ]),
+  ),
+  dietaryFlags: z.array(z.enum(["vegetarian", "vegan", "gluten_free", "lactose_free", "halal", "kosher", "organic"])),
   isAvailable: z.boolean(),
   photoUrl: z.string().url().nullable(),
 });
@@ -1462,12 +1498,12 @@ const menuOutput = z.object({
 
 #### `menu.create`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Cria uma nova ementa para um restaurante. |
+| Campo            | Valor                                     |
+| ---------------- | ----------------------------------------- |
+| **Tipo**         | `mutation`                                |
+| **Autenticacao** | Owner / Admin                             |
+| **Rate limit**   | `write` (30/min)                          |
+| **Descricao**    | Cria uma nova ementa para um restaurante. |
 
 ```typescript
 const createMenuInput = z.object({
@@ -1482,12 +1518,12 @@ const createMenuInput = z.object({
 
 #### `menu.update`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza metadados de uma ementa. |
+| Campo            | Valor                              |
+| ---------------- | ---------------------------------- |
+| **Tipo**         | `mutation`                         |
+| **Autenticacao** | Owner / Admin                      |
+| **Rate limit**   | `write` (30/min)                   |
+| **Descricao**    | Actualiza metadados de uma ementa. |
 
 ```typescript
 const updateMenuInput = z.object({
@@ -1501,12 +1537,12 @@ const updateMenuInput = z.object({
 
 #### `menu.addDish`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Adiciona um prato a uma ementa. |
+| Campo            | Valor                           |
+| ---------------- | ------------------------------- |
+| **Tipo**         | `mutation`                      |
+| **Autenticacao** | Owner / Admin                   |
+| **Rate limit**   | `write` (30/min)                |
+| **Descricao**    | Adiciona um prato a uma ementa. |
 
 ```typescript
 const addDishInput = z.object({
@@ -1516,15 +1552,29 @@ const addDishInput = z.object({
   price: z.number().positive().multipleOf(0.01),
   currency: z.string().length(3).default("EUR"),
   category: z.string().min(1).max(100),
-  allergens: z.array(z.enum([
-    "gluten", "crustaceans", "eggs", "fish", "peanuts", "soy",
-    "milk", "nuts", "celery", "mustard", "sesame", "sulphites",
-    "lupin", "molluscs",
-  ])).default([]),
-  dietaryFlags: z.array(z.enum([
-    "vegetarian", "vegan", "gluten_free", "lactose_free",
-    "halal", "kosher", "organic",
-  ])).default([]),
+  allergens: z
+    .array(
+      z.enum([
+        "gluten",
+        "crustaceans",
+        "eggs",
+        "fish",
+        "peanuts",
+        "soy",
+        "milk",
+        "nuts",
+        "celery",
+        "mustard",
+        "sesame",
+        "sulphites",
+        "lupin",
+        "molluscs",
+      ]),
+    )
+    .default([]),
+  dietaryFlags: z
+    .array(z.enum(["vegetarian", "vegan", "gluten_free", "lactose_free", "halal", "kosher", "organic"]))
+    .default([]),
   photoUrl: z.string().url().optional(),
 });
 // Output: dishOutput
@@ -1534,12 +1584,12 @@ const addDishInput = z.object({
 
 #### `menu.updateDish`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Actualiza um prato existente. |
+| Campo            | Valor                         |
+| ---------------- | ----------------------------- |
+| **Tipo**         | `mutation`                    |
+| **Autenticacao** | Owner / Admin                 |
+| **Rate limit**   | `write` (30/min)              |
+| **Descricao**    | Actualiza um prato existente. |
 
 ```typescript
 const updateDishInput = z.object({
@@ -1552,12 +1602,12 @@ const updateDishInput = z.object({
 
 #### `menu.removeDish`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Remove um prato de uma ementa. |
+| Campo            | Valor                          |
+| ---------------- | ------------------------------ |
+| **Tipo**         | `mutation`                     |
+| **Autenticacao** | Owner / Admin                  |
+| **Rate limit**   | `write` (30/min)               |
+| **Descricao**    | Remove um prato de uma ementa. |
 
 ```typescript
 const removeDishInput = z.object({
@@ -1572,12 +1622,12 @@ const removeDishOutput = z.object({ success: z.literal(true) });
 
 #### `reservation.create`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Cria uma reserva num restaurante. Inclui necessidades de acessibilidade automaticamente do perfil. |
+| Campo            | Valor                                                                                              |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                                         |
+| **Autenticacao** | Autenticado                                                                                        |
+| **Rate limit**   | `write` (30/min)                                                                                   |
+| **Descricao**    | Cria uma reserva num restaurante. Inclui necessidades de acessibilidade automaticamente do perfil. |
 
 ```typescript
 const createReservationInput = z.object({
@@ -1587,11 +1637,13 @@ const createReservationInput = z.object({
   }),
   partySize: z.number().int().min(1).max(20),
   specialRequests: z.string().max(1000).optional(),
-  accessibilityNeeds: z.object({
-    needsAccessibleTable: z.boolean().default(false),
-    needsWheelchairSpace: z.boolean().default(false),
-    specificNeeds: z.string().max(500).optional(),
-  }).optional(),
+  accessibilityNeeds: z
+    .object({
+      needsAccessibleTable: z.boolean().default(false),
+      needsWheelchairSpace: z.boolean().default(false),
+      specificNeeds: z.string().max(500).optional(),
+    })
+    .optional(),
 });
 
 const reservationOutput = z.object({
@@ -1603,17 +1655,20 @@ const reservationOutput = z.object({
   partySize: z.number().int(),
   status: z.enum(["pending", "confirmed", "cancelled", "completed", "no_show"]),
   specialRequests: z.string().nullable(),
-  accessibilityNeeds: z.object({
-    needsAccessibleTable: z.boolean(),
-    needsWheelchairSpace: z.boolean(),
-    specificNeeds: z.string().nullable(),
-  }).nullable(),
+  accessibilityNeeds: z
+    .object({
+      needsAccessibleTable: z.boolean(),
+      needsWheelchairSpace: z.boolean(),
+      specificNeeds: z.string().nullable(),
+    })
+    .nullable(),
   confirmationCode: z.string(),
   createdAt: z.date(),
 });
 ```
 
 **Exemplo de pedido:**
+
 ```typescript
 await trpc.reservation.create.mutate({
   restaurantId: "019505a0-...",
@@ -1632,12 +1687,12 @@ await trpc.reservation.create.mutate({
 
 #### `reservation.cancel`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado (dono da reserva) |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Cancela uma reserva pendente ou confirmada. |
+| Campo            | Valor                                       |
+| ---------------- | ------------------------------------------- |
+| **Tipo**         | `mutation`                                  |
+| **Autenticacao** | Autenticado (dono da reserva)               |
+| **Rate limit**   | `write` (30/min)                            |
+| **Descricao**    | Cancela uma reserva pendente ou confirmada. |
 
 ```typescript
 const cancelReservationInput = z.object({
@@ -1654,12 +1709,12 @@ const cancelReservationOutput = z.object({
 
 #### `reservation.getByUser`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Lista reservas do utilizador autenticado. |
+| Campo            | Valor                                     |
+| ---------------- | ----------------------------------------- |
+| **Tipo**         | `query`                                   |
+| **Autenticacao** | Autenticado                               |
+| **Rate limit**   | `authenticated` (120/min)                 |
+| **Descricao**    | Lista reservas do utilizador autenticado. |
 
 ```typescript
 const getByUserInput = z.object({
@@ -1674,12 +1729,12 @@ const getByUserInput = z.object({
 
 #### `reservation.getByRestaurant`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Owner (do restaurante) / Admin |
-| **Rate limit** | `authenticated` (120/min) |
-| **Descricao** | Lista reservas de um restaurante (visivel apenas para o dono). |
+| Campo            | Valor                                                          |
+| ---------------- | -------------------------------------------------------------- |
+| **Tipo**         | `query`                                                        |
+| **Autenticacao** | Owner (do restaurante) / Admin                                 |
+| **Rate limit**   | `authenticated` (120/min)                                      |
+| **Descricao**    | Lista reservas de um restaurante (visivel apenas para o dono). |
 
 ```typescript
 const getByRestaurantInput = z.object({
@@ -1695,12 +1750,12 @@ const getByRestaurantInput = z.object({
 
 #### `reservation.updateStatus`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Altera o estado de uma reserva (confirmar, marcar como concluida, no-show). |
+| Campo            | Valor                                                                       |
+| ---------------- | --------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                  |
+| **Autenticacao** | Owner / Admin                                                               |
+| **Rate limit**   | `write` (30/min)                                                            |
+| **Descricao**    | Altera o estado de uma reserva (confirmar, marcar como concluida, no-show). |
 
 ```typescript
 const updateStatusInput = z.object({
@@ -1715,16 +1770,18 @@ const updateStatusOutput = reservationOutput;
 
 ### 3.7 AI Router
 
-Todos os procedimentos do router de IA utilizam a API Claude (Sonnet 4.6 para a maioria, Opus 4.5 para tarefas que requerem raciocinio avancado) e estao sujeitos ao rate limit mais restritivo (10 pedidos/minuto) devido ao custo e latencia das chamadas de IA.
+Todos os procedimentos do router de IA utilizam a API Claude (Sonnet 4.6 para a maioria, Opus 4.5 para tarefas que
+requerem raciocinio avancado) e estao sujeitos ao rate limit mais restritivo (10 pedidos/minuto) devido ao custo e
+latencia das chamadas de IA.
 
 #### `ai.search`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica (resultados limitados) / Autenticado (personalizados) |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Pesquisa em linguagem natural com pipeline RAG: Claude interpreta a query, gera embedding, busca hibrida (vectorial + full-text), re-ranking personalizado. |
+| Campo            | Valor                                                                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `query`                                                                                                                                                     |
+| **Autenticacao** | Publica (resultados limitados) / Autenticado (personalizados)                                                                                               |
+| **Rate limit**   | `ai` (10/min)                                                                                                                                               |
+| **Descricao**    | Pesquisa em linguagem natural com pipeline RAG: Claude interpreta a query, gera embedding, busca hibrida (vectorial + full-text), re-ranking personalizado. |
 
 ```typescript
 const aiSearchInput = z.object({
@@ -1755,6 +1812,7 @@ const aiSearchOutput = z.object({
 ```
 
 **Exemplo de pedido:**
+
 ```typescript
 const results = await trpc.ai.search.query({
   query: "restaurante italiano acessivel no centro do Porto com estacionamento",
@@ -1763,11 +1821,12 @@ const results = await trpc.ai.search.query({
 ```
 
 **Exemplo de resposta:**
+
 ```json
 {
   "results": [
     {
-      "restaurant": { "id": "...", "name": "Trattoria da Maria", "..." : "..." },
+      "restaurant": { "id": "...", "name": "Trattoria da Maria", "...": "..." },
       "matchScore": 0.94,
       "explanation": "Cozinha italiana autentica com entrada ao nivel da rua, porta de 90cm e estacionamento proprio com lugar reservado a 15m.",
       "accessibilityMatch": {
@@ -1792,21 +1851,21 @@ const results = await trpc.ai.search.query({
 
 **Erros:**
 
-| Codigo | Condicao |
-|---|---|
-| `BAD_REQUEST` | Query demasiado vaga para interpretar |
+| Codigo                  | Condicao                                        |
+| ----------------------- | ----------------------------------------------- |
+| `BAD_REQUEST`           | Query demasiado vaga para interpretar           |
 | `INTERNAL_SERVER_ERROR` | Falha na API Claude ou no servico de embeddings |
 
 ---
 
 #### `ai.analyzePhoto`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Analisa fotografias de um restaurante com Claude Vision para avaliar acessibilidade. |
+| Campo            | Valor                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| **Tipo**         | `mutation`                                                                           |
+| **Autenticacao** | Autenticado                                                                          |
+| **Rate limit**   | `ai` (10/min)                                                                        |
+| **Descricao**    | Analisa fotografias de um restaurante com Claude Vision para avaliar acessibilidade. |
 
 ```typescript
 const analyzePhotoInput = z.object({
@@ -1816,22 +1875,28 @@ const analyzePhotoInput = z.object({
 });
 
 const photoAnalysisOutput = z.object({
-  analyses: z.array(z.object({
-    photoUrl: z.string().url(),
-    spaceType: z.enum(["entrance", "interior", "bathroom", "parking", "menu", "exterior", "other"]),
-    overallAssessment: z.enum(["accessible", "partially_accessible", "not_accessible", "unknown"]),
-    overallConfidence: z.number().min(0).max(1),
-    findings: z.array(z.object({
-      feature: z.string(),
-      observation: z.string(),
-      estimatedMeasurement: z.object({
-        valueCm: z.number(),
-        marginErrorCm: z.number(),
-      }).nullable(),
-      assessment: z.enum(["accessible", "partially_accessible", "not_accessible", "unknown"]),
-      confidence: z.number().min(0).max(1),
-    })),
-  })),
+  analyses: z.array(
+    z.object({
+      photoUrl: z.string().url(),
+      spaceType: z.enum(["entrance", "interior", "bathroom", "parking", "menu", "exterior", "other"]),
+      overallAssessment: z.enum(["accessible", "partially_accessible", "not_accessible", "unknown"]),
+      overallConfidence: z.number().min(0).max(1),
+      findings: z.array(
+        z.object({
+          feature: z.string(),
+          observation: z.string(),
+          estimatedMeasurement: z
+            .object({
+              valueCm: z.number(),
+              marginErrorCm: z.number(),
+            })
+            .nullable(),
+          assessment: z.enum(["accessible", "partially_accessible", "not_accessible", "unknown"]),
+          confidence: z.number().min(0).max(1),
+        }),
+      ),
+    }),
+  ),
   suggestedProfileUpdates: z.record(z.string(), z.unknown()).nullable(),
 });
 ```
@@ -1840,12 +1905,12 @@ const photoAnalysisOutput = z.object({
 
 #### `ai.getRecommendations`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Gera recomendacoes personalizadas com base no perfil de acessibilidade, historico de avaliacoes e preferencias. |
+| Campo            | Valor                                                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `query`                                                                                                         |
+| **Autenticacao** | Autenticado                                                                                                     |
+| **Rate limit**   | `ai` (10/min)                                                                                                   |
+| **Descricao**    | Gera recomendacoes personalizadas com base no perfil de acessibilidade, historico de avaliacoes e preferencias. |
 
 ```typescript
 const getRecommendationsInput = z.object({
@@ -1877,12 +1942,12 @@ const getRecommendationsOutput = z.object({
 
 #### `ai.summarizeReviews`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Gera um resumo inteligente das avaliacoes de um restaurante, com foco em acessibilidade. |
+| Campo            | Valor                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------- |
+| **Tipo**         | `query`                                                                                  |
+| **Autenticacao** | Publica                                                                                  |
+| **Rate limit**   | `ai` (10/min)                                                                            |
+| **Descricao**    | Gera um resumo inteligente das avaliacoes de um restaurante, com foco em acessibilidade. |
 
 ```typescript
 const summarizeReviewsInput = z.object({
@@ -1909,22 +1974,21 @@ const summarizeReviewsOutput = z.object({
 
 #### `ai.generateAccessibilityReport`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Gera relatorio de acessibilidade detalhado para um restaurante, cruzando dados estruturados, avaliacoes e analises de fotografias. |
+| Campo            | Valor                                                                                                                              |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `query`                                                                                                                            |
+| **Autenticacao** | Autenticado                                                                                                                        |
+| **Rate limit**   | `ai` (10/min)                                                                                                                      |
+| **Descricao**    | Gera relatorio de acessibilidade detalhado para um restaurante, cruzando dados estruturados, avaliacoes e analises de fotografias. |
 
 ```typescript
 const generateReportInput = z.object({
   restaurantId: z.string().uuid(),
   includePhotos: z.boolean().default(true),
   includeReviews: z.boolean().default(true),
-  targetProfile: z.enum([
-    "electric_wheelchair", "manual_wheelchair", "walker",
-    "crutches", "visual_impairment", "general",
-  ]).default("general"),
+  targetProfile: z
+    .enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "visual_impairment", "general"])
+    .default("general"),
   locale: z.enum(["pt", "en", "es", "fr"]).default("pt"),
 });
 
@@ -1934,13 +1998,15 @@ const accessibilityReportOutput = z.object({
   generatedAt: z.date(),
   overallAssessment: z.enum(["accessible", "partially_accessible", "not_accessible"]),
   overallScore: z.number().min(0).max(5),
-  sections: z.array(z.object({
-    area: z.enum(["entrance", "parking", "interior", "tables", "bathroom", "menu"]),
-    score: z.number().min(0).max(5),
-    assessment: z.string(),
-    details: z.array(z.string()),
-    suggestions: z.array(z.string()), // Sugestoes de melhoria para o dono
-  })),
+  sections: z.array(
+    z.object({
+      area: z.enum(["entrance", "parking", "interior", "tables", "bathroom", "menu"]),
+      score: z.number().min(0).max(5),
+      assessment: z.string(),
+      details: z.array(z.string()),
+      suggestions: z.array(z.string()), // Sugestoes de melhoria para o dono
+    }),
+  ),
   compatibilityNote: z.string(), // Nota especifica para o perfil alvo
   dataSources: z.array(z.enum(["profile", "reviews", "photos", "verification"])),
   confidence: z.number().min(0).max(1),
@@ -1951,12 +2017,12 @@ const accessibilityReportOutput = z.object({
 
 #### `ai.translateContent`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Traduz conteudo de restaurante (descricao, ementas) para outros idiomas via Claude. |
+| Campo            | Valor                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                          |
+| **Autenticacao** | Owner / Admin                                                                       |
+| **Rate limit**   | `ai` (10/min)                                                                       |
+| **Descricao**    | Traduz conteudo de restaurante (descricao, ementas) para outros idiomas via Claude. |
 
 ```typescript
 const translateContentInput = z.object({
@@ -1967,10 +2033,7 @@ const translateContentInput = z.object({
 });
 
 const translateContentOutput = z.object({
-  translations: z.record(
-    z.enum(["pt", "en", "es", "fr"]),
-    z.string(),
-  ),
+  translations: z.record(z.enum(["pt", "en", "es", "fr"]), z.string()),
   sourceLocale: z.string(),
 });
 ```
@@ -1979,12 +2042,12 @@ const translateContentOutput = z.object({
 
 #### `ai.chat`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `subscription` (SSE) |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `ai` (10/min) |
-| **Descricao** | Assistente conversacional com streaming. Mantendo contexto da conversa, responde a perguntas sobre restaurantes, acessibilidade e recomendacoes. |
+| Campo            | Valor                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Tipo**         | `subscription` (SSE)                                                                                                                             |
+| **Autenticacao** | Autenticado                                                                                                                                      |
+| **Rate limit**   | `ai` (10/min)                                                                                                                                    |
+| **Descricao**    | Assistente conversacional com streaming. Mantendo contexto da conversa, responde a perguntas sobre restaurantes, acessibilidade e recomendacoes. |
 
 ```typescript
 const chatInput = z.object({
@@ -2006,20 +2069,25 @@ const chatChunk = z.object({
 const chatOutput = z.object({
   conversationId: z.string().uuid(),
   response: z.string(),
-  referencedRestaurants: z.array(z.object({
-    id: z.string().uuid(),
-    name: z.string(),
-    slug: z.string(),
-  })),
-  suggestedActions: z.array(z.object({
-    type: z.enum(["view_restaurant", "search", "make_reservation", "view_map"]),
-    label: z.string(),
-    params: z.record(z.string(), z.string()),
-  })),
+  referencedRestaurants: z.array(
+    z.object({
+      id: z.string().uuid(),
+      name: z.string(),
+      slug: z.string(),
+    }),
+  ),
+  suggestedActions: z.array(
+    z.object({
+      type: z.enum(["view_restaurant", "search", "make_reservation", "view_map"]),
+      label: z.string(),
+      params: z.record(z.string(), z.string()),
+    }),
+  ),
 });
 ```
 
 **Exemplo de interaccao:**
+
 ```typescript
 // Cliente (React)
 const subscription = trpc.ai.chat.subscribe({
@@ -2040,26 +2108,32 @@ subscription.on("data", (chunk) => {
 
 #### `verification.submitReport`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Submete um relatorio de verificacao de acessibilidade. Qualquer utilizador autenticado pode submeter; verificadores certificados tem peso maior. |
+| Campo            | Valor                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Tipo**         | `mutation`                                                                                                                                       |
+| **Autenticacao** | Autenticado                                                                                                                                      |
+| **Rate limit**   | `write` (30/min)                                                                                                                                 |
+| **Descricao**    | Submete um relatorio de verificacao de acessibilidade. Qualquer utilizador autenticado pode submeter; verificadores certificados tem peso maior. |
 
 ```typescript
 const submitReportInput = z.object({
   restaurantId: z.string().uuid(),
   visitDate: z.date(),
-  sections: z.array(z.object({
-    area: z.enum(["entrance", "parking", "interior", "tables", "bathroom", "menu", "other"]),
-    findings: z.array(z.object({
-      feature: z.string(),
-      value: z.union([z.string(), z.number(), z.boolean()]),
-      notes: z.string().max(500).optional(),
-      confidence: z.number().min(0).max(1),
-    })),
-  })).min(1),
+  sections: z
+    .array(
+      z.object({
+        area: z.enum(["entrance", "parking", "interior", "tables", "bathroom", "menu", "other"]),
+        findings: z.array(
+          z.object({
+            feature: z.string(),
+            value: z.union([z.string(), z.number(), z.boolean()]),
+            notes: z.string().max(500).optional(),
+            confidence: z.number().min(0).max(1),
+          }),
+        ),
+      }),
+    )
+    .min(1),
   overallNotes: z.string().max(2000).optional(),
   photoIds: z.array(z.string().uuid()).optional(), // Fotos ja submetidas
 });
@@ -2070,15 +2144,19 @@ const verificationReportOutput = z.object({
   userId: z.string().uuid(),
   status: z.enum(["pending", "approved", "rejected"]),
   visitDate: z.date(),
-  sections: z.array(z.object({
-    area: z.string(),
-    findings: z.array(z.object({
-      feature: z.string(),
-      value: z.union([z.string(), z.number(), z.boolean()]),
-      notes: z.string().nullable(),
-      confidence: z.number(),
-    })),
-  })),
+  sections: z.array(
+    z.object({
+      area: z.string(),
+      findings: z.array(
+        z.object({
+          feature: z.string(),
+          value: z.union([z.string(), z.number(), z.boolean()]),
+          notes: z.string().nullable(),
+          confidence: z.number(),
+        }),
+      ),
+    }),
+  ),
   createdAt: z.date(),
 });
 ```
@@ -2087,12 +2165,12 @@ const verificationReportOutput = z.object({
 
 #### `verification.getReportsByRestaurant`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Publica |
-| **Rate limit** | `public` (30/min) ou `authenticated` (120/min) |
-| **Descricao** | Lista relatorios de verificacao aprovados para um restaurante. |
+| Campo            | Valor                                                          |
+| ---------------- | -------------------------------------------------------------- |
+| **Tipo**         | `query`                                                        |
+| **Autenticacao** | Publica                                                        |
+| **Rate limit**   | `public` (30/min) ou `authenticated` (120/min)                 |
+| **Descricao**    | Lista relatorios de verificacao aprovados para um restaurante. |
 
 ```typescript
 const getReportsByRestaurantInput = z.object({
@@ -2106,12 +2184,12 @@ const getReportsByRestaurantInput = z.object({
 
 #### `verification.reviewReport`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Aprova ou rejeita um relatorio de verificacao. Se aprovado, actualiza o perfil de acessibilidade do restaurante. |
+| Campo            | Valor                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                                                                       |
+| **Autenticacao** | Admin                                                                                                            |
+| **Rate limit**   | `write` (30/min)                                                                                                 |
+| **Descricao**    | Aprova ou rejeita um relatorio de verificacao. Se aprovado, actualiza o perfil de acessibilidade do restaurante. |
 
 ```typescript
 const reviewReportInput = z.object({
@@ -2132,12 +2210,12 @@ const reviewReportOutput = z.object({
 
 #### `verification.requestVerification`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Owner / Admin |
-| **Rate limit** | `write` (30/min) |
-| **Descricao** | Solicita verificacao profissional de acessibilidade para um restaurante. |
+| Campo            | Valor                                                                    |
+| ---------------- | ------------------------------------------------------------------------ |
+| **Tipo**         | `mutation`                                                               |
+| **Autenticacao** | Owner / Admin                                                            |
+| **Rate limit**   | `write` (30/min)                                                         |
+| **Descricao**    | Solicita verificacao profissional de acessibilidade para um restaurante. |
 
 ```typescript
 const requestVerificationInput = z.object({
@@ -2164,12 +2242,12 @@ Todos os procedimentos do router de administracao requerem o papel `admin`.
 
 #### `admin.getDashboard`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `admin` (300/min) |
-| **Descricao** | Devolve metricas gerais do sistema para o painel de administracao. |
+| Campo            | Valor                                                              |
+| ---------------- | ------------------------------------------------------------------ |
+| **Tipo**         | `query`                                                            |
+| **Autenticacao** | Admin                                                              |
+| **Rate limit**   | `admin` (300/min)                                                  |
+| **Descricao**    | Devolve metricas gerais do sistema para o painel de administracao. |
 
 ```typescript
 const dashboardOutput = z.object({
@@ -2206,12 +2284,12 @@ const dashboardOutput = z.object({
 
 #### `admin.getUsers`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `admin` (300/min) |
-| **Descricao** | Lista utilizadores com filtros e paginacao. |
+| Campo            | Valor                                       |
+| ---------------- | ------------------------------------------- |
+| **Tipo**         | `query`                                     |
+| **Autenticacao** | Admin                                       |
+| **Rate limit**   | `admin` (300/min)                           |
+| **Descricao**    | Lista utilizadores com filtros e paginacao. |
 
 ```typescript
 const getUsersInput = z.object({
@@ -2240,12 +2318,12 @@ const adminUserOutput = z.object({
 
 #### `admin.getRestaurants`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `admin` (300/min) |
-| **Descricao** | Lista restaurantes com filtros adicionais de administracao. |
+| Campo            | Valor                                                       |
+| ---------------- | ----------------------------------------------------------- |
+| **Tipo**         | `query`                                                     |
+| **Autenticacao** | Admin                                                       |
+| **Rate limit**   | `admin` (300/min)                                           |
+| **Descricao**    | Lista restaurantes com filtros adicionais de administracao. |
 
 ```typescript
 const getRestaurantsInput = z.object({
@@ -2264,12 +2342,12 @@ const getRestaurantsInput = z.object({
 
 #### `admin.moderateReview`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `admin` (300/min) |
-| **Descricao** | Modera uma avaliacao denunciada. |
+| Campo            | Valor                            |
+| ---------------- | -------------------------------- |
+| **Tipo**         | `mutation`                       |
+| **Autenticacao** | Admin                            |
+| **Rate limit**   | `admin` (300/min)                |
+| **Descricao**    | Modera uma avaliacao denunciada. |
 
 ```typescript
 const moderateReviewInput = z.object({
@@ -2290,12 +2368,12 @@ const moderateReviewOutput = z.object({
 
 #### `admin.moderatePhoto`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `admin` (300/min) |
-| **Descricao** | Modera uma fotografia (aprovar, remover). |
+| Campo            | Valor                                     |
+| ---------------- | ----------------------------------------- |
+| **Tipo**         | `mutation`                                |
+| **Autenticacao** | Admin                                     |
+| **Rate limit**   | `admin` (300/min)                         |
+| **Descricao**    | Modera uma fotografia (aprovar, remover). |
 
 ```typescript
 const moderatePhotoInput = z.object({
@@ -2315,12 +2393,12 @@ const moderatePhotoOutput = z.object({
 
 #### `admin.getSystemStats`
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `query` |
-| **Autenticacao** | Admin |
-| **Rate limit** | `admin` (300/min) |
-| **Descricao** | Devolve estatisticas tecnicas do sistema (DB, IA, performance). |
+| Campo            | Valor                                                           |
+| ---------------- | --------------------------------------------------------------- |
+| **Tipo**         | `query`                                                         |
+| **Autenticacao** | Admin                                                           |
+| **Rate limit**   | `admin` (300/min)                                               |
+| **Descricao**    | Devolve estatisticas tecnicas do sistema (DB, IA, performance). |
 
 ```typescript
 const systemStatsOutput = z.object({
@@ -2349,26 +2427,27 @@ const systemStatsOutput = z.object({
 
 ## 4. Eventos em Tempo Real (SSE)
 
-A aplicacao utiliza Server-Sent Events (SSE) via Next.js Route Handlers para comunicacao unidireccional servidor-para-cliente. O tRPC suporta subscriptions que mapeiam para SSE.
+A aplicacao utiliza Server-Sent Events (SSE) via Next.js Route Handlers para comunicacao unidireccional
+servidor-para-cliente. O tRPC suporta subscriptions que mapeiam para SSE.
 
 ### 4.1 Canais de Eventos
 
-| Canal | Descricao | Autenticacao |
-|---|---|---|
-| `restaurant.availability` | Actualizacoes de disponibilidade de mesas | Publica |
-| `review.new` | Notificacao de nova avaliacao num restaurante | Autenticado (donos) |
-| `ai.stream` | Streaming de respostas do Claude (chat, resumos) | Autenticado |
-| `verification.status` | Actualizacoes de estado de verificacao | Autenticado (donos) |
-| `reservation.update` | Actualizacoes de estado de reservas | Autenticado |
+| Canal                     | Descricao                                        | Autenticacao        |
+| ------------------------- | ------------------------------------------------ | ------------------- |
+| `restaurant.availability` | Actualizacoes de disponibilidade de mesas        | Publica             |
+| `review.new`              | Notificacao de nova avaliacao num restaurante    | Autenticado (donos) |
+| `ai.stream`               | Streaming de respostas do Claude (chat, resumos) | Autenticado         |
+| `verification.status`     | Actualizacoes de estado de verificacao           | Autenticado (donos) |
+| `reservation.update`      | Actualizacoes de estado de reservas              | Autenticado         |
 
 ### 4.2 Formato dos Eventos SSE
 
 ```typescript
 // Formato padrao de evento SSE
 interface SSEEvent<T> {
-  id: string;       // UUID do evento
-  type: string;     // Nome do canal
-  data: T;          // Payload tipado
+  id: string; // UUID do evento
+  type: string; // Nome do canal
+  data: T; // Payload tipado
   timestamp: Date;
 }
 
@@ -2382,18 +2461,13 @@ interface SSEEvent<T> {
 
 ```typescript
 // src/app/api/events/[channel]/route.ts
-export async function GET(
-  request: Request,
-  { params }: { params: { channel: string } },
-) {
+export async function GET(request: Request, { params }: { params: { channel: string } }) {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
       const send = (event: SSEEvent<unknown>) => {
         controller.enqueue(
-          encoder.encode(
-            `event: ${event.type}\nid: ${event.id}\ndata: ${JSON.stringify(event.data)}\n\n`,
-          ),
+          encoder.encode(`event: ${event.type}\nid: ${event.id}\ndata: ${JSON.stringify(event.data)}\n\n`),
         );
       };
 
@@ -2423,12 +2497,12 @@ export async function GET(
 
 ### 5.1 Google Places API (free tier)
 
-| Campo | Valor |
-|---|---|
+| Campo          | Valor                                                                                     |
+| -------------- | ----------------------------------------------------------------------------------------- |
 | **Utilizacao** | Enriquecimento de dados basicos de restaurantes (nome, morada, telefone, horarios, fotos) |
-| **Endpoint** | `https://places.googleapis.com/v1/places:searchText` |
-| **Limite** | Tier gratuito: ate 5.000 pedidos/mes para Place Details |
-| **Trigger** | Quando um restaurante e criado, buscar dados complementares |
+| **Endpoint**   | `https://places.googleapis.com/v1/places:searchText`                                      |
+| **Limite**     | Tier gratuito: ate 5.000 pedidos/mes para Place Details                                   |
+| **Trigger**    | Quando um restaurante e criado, buscar dados complementares                               |
 
 ```typescript
 interface GooglePlacesIntegration {
@@ -2440,12 +2514,12 @@ interface GooglePlacesIntegration {
 
 ### 5.2 OpenStreetMap Nominatim
 
-| Campo | Valor |
-|---|---|
+| Campo          | Valor                                                           |
+| -------------- | --------------------------------------------------------------- |
 | **Utilizacao** | Geocodificacao (morada -> coordenadas) e geocodificacao inversa |
-| **Endpoint** | `https://nominatim.openstreetmap.org/search` |
-| **Limite** | 1 pedido/segundo (requisito de fair use) |
-| **Custo** | Gratuito |
+| **Endpoint**   | `https://nominatim.openstreetmap.org/search`                    |
+| **Limite**     | 1 pedido/segundo (requisito de fair use)                        |
+| **Custo**      | Gratuito                                                        |
 
 ```typescript
 interface NominatimIntegration {
@@ -2456,12 +2530,12 @@ interface NominatimIntegration {
 
 ### 5.3 Wheelmap API
 
-| Campo | Valor |
-|---|---|
+| Campo          | Valor                                                               |
+| -------------- | ------------------------------------------------------------------- |
 | **Utilizacao** | Importacao de dados de acessibilidade existentes (formato A11yJSON) |
-| **Endpoint** | `https://wheelmap.org/api/nodes` |
-| **Limite** | API key necessaria, limite nao publicado |
-| **Trigger** | Batch import semanal para novos restaurantes na area do Porto |
+| **Endpoint**   | `https://wheelmap.org/api/nodes`                                    |
+| **Limite**     | API key necessaria, limite nao publicado                            |
+| **Trigger**    | Batch import semanal para novos restaurantes na area do Porto       |
 
 ```typescript
 interface WheelmapIntegration {
@@ -2473,12 +2547,12 @@ interface WheelmapIntegration {
 
 ### 5.4 Claude API (Anthropic)
 
-| Campo | Valor |
-|---|---|
+| Campo          | Valor                                                                       |
+| -------------- | --------------------------------------------------------------------------- |
 | **Utilizacao** | Todas as funcionalidades de IA (pesquisa, analise de fotos, chat, traducao) |
-| **SDK** | `@anthropic-ai/sdk` |
-| **Modelos** | Sonnet 4.6 (producao), Opus 4.5 (raciocinio avancado) |
-| **Limite** | Rate limit da API Anthropic (varia por tier) |
+| **SDK**        | `@anthropic-ai/sdk`                                                         |
+| **Modelos**    | Sonnet 4.6 (producao), Opus 4.5 (raciocinio avancado)                       |
+| **Limite**     | Rate limit da API Anthropic (varia por tier)                                |
 
 ```typescript
 interface ClaudeIntegration {
@@ -2491,14 +2565,14 @@ interface ClaudeIntegration {
 
 **Custos estimados por operacao (Sonnet 4.6):**
 
-| Operacao | Input tokens | Output tokens | Custo estimado |
-|---|---|---|---|
-| Interpretacao de query | ~500 | ~200 | ~$0.002 |
-| Re-ranking de resultados | ~3000 | ~500 | ~$0.012 |
-| Analise de fotografia | ~1500 | ~500 | ~$0.007 |
-| Resumo de avaliacoes | ~5000 | ~800 | ~$0.020 |
-| Traducao de conteudo | ~500 | ~500 | ~$0.003 |
-| Chat (por mensagem) | ~2000 | ~500 | ~$0.008 |
+| Operacao                 | Input tokens | Output tokens | Custo estimado |
+| ------------------------ | ------------ | ------------- | -------------- |
+| Interpretacao de query   | ~500         | ~200          | ~$0.002        |
+| Re-ranking de resultados | ~3000        | ~500          | ~$0.012        |
+| Analise de fotografia    | ~1500        | ~500          | ~$0.007        |
+| Resumo de avaliacoes     | ~5000        | ~800          | ~$0.020        |
+| Traducao de conteudo     | ~500         | ~500          | ~$0.003        |
+| Chat (por mensagem)      | ~2000        | ~500          | ~$0.008        |
 
 ---
 
@@ -2508,7 +2582,7 @@ Os webhooks sao implementados como Next.js Route Handlers (nao tRPC) por serem c
 
 ### 6.1 Confirmacao de Reserva
 
-```
+```plaintext
 POST /api/webhooks/reservation-confirmation
 ```
 
@@ -2529,7 +2603,7 @@ const webhookPayload = z.object({
 
 ### 6.2 Verificacao de Reivindicacao de Restaurante
 
-```
+```plaintext
 POST /api/webhooks/claim-verification
 ```
 
@@ -2555,11 +2629,7 @@ Todos os webhooks verificam a assinatura HMAC-SHA256:
 ```typescript
 import { createHmac, timingSafeEqual } from "crypto";
 
-function verifyWebhookSignature(
-  payload: string,
-  signature: string,
-  secret: string,
-): boolean {
+function verifyWebhookSignature(payload: string, signature: string, secret: string): boolean {
   const expected = createHmac("sha256", secret).update(payload).digest("hex");
   return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
 }
@@ -2571,26 +2641,24 @@ function verifyWebhookSignature(
 
 ### 7.1 Endpoints RGPD
 
-O Regulamento Geral de Proteccao de Dados (RGPD) exige que os utilizadores possam exercer os seus direitos. Estes endpoints estao incluidos no router `user`.
+O Regulamento Geral de Proteccao de Dados (RGPD) exige que os utilizadores possam exercer os seus direitos. Estes
+endpoints estao incluidos no router `user`.
 
 #### `user.exportData` (RGPD Art. 20 - Portabilidade)
 
-| Campo | Valor |
-|---|---|
-| **Tipo** | `mutation` |
-| **Autenticacao** | Autenticado |
-| **Rate limit** | 1 pedido por 24 horas |
-| **Descricao** | Exporta todos os dados pessoais do utilizador em formato JSON. |
+| Campo            | Valor                                                          |
+| ---------------- | -------------------------------------------------------------- |
+| **Tipo**         | `mutation`                                                     |
+| **Autenticacao** | Autenticado                                                    |
+| **Rate limit**   | 1 pedido por 24 horas                                          |
+| **Descricao**    | Exporta todos os dados pessoais do utilizador em formato JSON. |
 
 ```typescript
 const exportDataOutput = z.object({
   downloadUrl: z.string().url(), // URL temporario (expira em 24h)
   expiresAt: z.date(),
   format: z.literal("json"),
-  includes: z.array(z.enum([
-    "profile", "accessibility_profile", "reviews",
-    "photos", "reservations", "preferences",
-  ])),
+  includes: z.array(z.enum(["profile", "accessibility_profile", "reviews", "photos", "reservations", "preferences"])),
 });
 ```
 
@@ -2615,7 +2683,10 @@ O tRPC com Zod valida todos os inputs automaticamente. Adicionalmente:
 import DOMPurify from "isomorphic-dompurify";
 
 const sanitizedString = (maxLength: number) =>
-  z.string().max(maxLength).transform((val) => DOMPurify.sanitize(val));
+  z
+    .string()
+    .max(maxLength)
+    .transform((val) => DOMPurify.sanitize(val));
 ```
 
 ### 7.3 Prevencao de SQL Injection
@@ -2624,10 +2695,7 @@ O Drizzle ORM utiliza prepared statements para todas as queries, prevenindo SQL 
 
 ```typescript
 // Drizzle gera automaticamente prepared statements
-const result = await db
-  .select()
-  .from(restaurants)
-  .where(eq(restaurants.id, input.id)); // input.id e parametrizado
+const result = await db.select().from(restaurants).where(eq(restaurants.id, input.id)); // input.id e parametrizado
 ```
 
 ### 7.4 Proteccao CSRF
@@ -2650,7 +2718,8 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(self)" },
   {
     key: "Content-Security-Policy",
-    value: "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
+    value:
+      "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
   },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
 ];
@@ -2658,17 +2727,17 @@ const securityHeaders = [
 
 ### 7.6 Rate Limiting por Categoria de Endpoint
 
-| Categoria | Endpoints | Limite | Identificador |
-|---|---|---|---|
-| Publica | `restaurant.list`, `restaurant.getById`, `restaurant.search` | 30/min | IP |
-| Autenticada (leitura) | `user.getProfile`, `review.getByUser` | 120/min | userId |
-| Autenticada (escrita) | `review.create`, `reservation.create` | 30/min | userId |
-| IA | `ai.search`, `ai.chat`, `ai.analyzePhoto` | 10/min | userId |
-| Upload | `restaurant.uploadPhoto` | 5/min | userId |
-| Autenticacao | `auth.login`, `auth.register` | 10/min | IP |
-| Reset password | `auth.requestPasswordReset` | 3/min | IP |
-| Admin | Todos os endpoints `admin.*` | 300/min | userId |
-| Exportacao RGPD | `user.exportData` | 1/dia | userId |
+| Categoria             | Endpoints                                                    | Limite  | Identificador |
+| --------------------- | ------------------------------------------------------------ | ------- | ------------- |
+| Publica               | `restaurant.list`, `restaurant.getById`, `restaurant.search` | 30/min  | IP            |
+| Autenticada (leitura) | `user.getProfile`, `review.getByUser`                        | 120/min | userId        |
+| Autenticada (escrita) | `review.create`, `reservation.create`                        | 30/min  | userId        |
+| IA                    | `ai.search`, `ai.chat`, `ai.analyzePhoto`                    | 10/min  | userId        |
+| Upload                | `restaurant.uploadPhoto`                                     | 5/min   | userId        |
+| Autenticacao          | `auth.login`, `auth.register`                                | 10/min  | IP            |
+| Reset password        | `auth.requestPasswordReset`                                  | 3/min   | IP            |
+| Admin                 | Todos os endpoints `admin.*`                                 | 300/min | userId        |
+| Exportacao RGPD       | `user.exportData`                                            | 1/dia   | userId        |
 
 ### 7.7 Logging e Auditoria
 
@@ -2692,10 +2761,13 @@ const auditLogEntry = z.object({
   ]),
   entityType: z.string(),
   entityId: z.string().uuid(),
-  changes: z.record(z.string(), z.object({
-    old: z.unknown(),
-    new: z.unknown(),
-  })),
+  changes: z.record(
+    z.string(),
+    z.object({
+      old: z.unknown(),
+      new: z.unknown(),
+    }),
+  ),
   ip: z.string(),
   userAgent: z.string(),
   createdAt: z.date(),

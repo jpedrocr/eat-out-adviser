@@ -1,8 +1,7 @@
 # Eat Out Adviser - Estrutura do Projecto e Arquitectura
 
-**Data:** Marco de 2026
-**Projecto:** Eat Out Adviser - Plataforma de acessibilidade para restaurantes
-**Stack:** Next.js 16, tRPC, PostgreSQL 17 + pgvector, Drizzle ORM, Better Auth, Claude API, Docker multi-arch, Coolify
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Plataforma de acessibilidade para restaurantes **Stack:**
+Next.js 16, tRPC, PostgreSQL 17 + pgvector, Drizzle ORM, Better Auth, Claude API, Docker multi-arch, Coolify
 **Ambientes:** MacBook Air M1 16GB (desenvolvimento) | Proxmox Intel N5105 16GB (producao)
 
 ---
@@ -20,7 +19,7 @@
 
 ## 1. Estrutura Completa de Directorios
 
-```
+```plaintext
 eat-out-adviser/
 ├── .github/
 │   ├── workflows/
@@ -221,14 +220,14 @@ eat-out-adviser/
 
 **Proposito:** Automatizacao de CI/CD, templates de issues/PRs e gestao de dependencias.
 
-| Ficheiro | Funcao | Ligacao |
-|---|---|---|
-| `workflows/ci.yml` | Pipeline principal: lint, type-check, testes unitarios, E2E, build | Executa em cada push e PR |
-| `workflows/deploy.yml` | Deploy automatico via webhook Coolify quando merge em `main` | Depende de `ci.yml` passar |
-| `workflows/codeql.yml` | Analise estatica de seguranca (JavaScript/TypeScript) | Executa semanalmente e em PRs |
-| `ISSUE_TEMPLATE/` | Templates YAML para bugs, features e relatorios de acessibilidade | Padroniza contribuicoes |
+| Ficheiro                   | Funcao                                                                | Ligacao                       |
+| -------------------------- | --------------------------------------------------------------------- | ----------------------------- |
+| `workflows/ci.yml`         | Pipeline principal: lint, type-check, testes unitarios, E2E, build    | Executa em cada push e PR     |
+| `workflows/deploy.yml`     | Deploy automatico via webhook Coolify quando merge em `main`          | Depende de `ci.yml` passar    |
+| `workflows/codeql.yml`     | Analise estatica de seguranca (JavaScript/TypeScript)                 | Executa semanalmente e em PRs |
+| `ISSUE_TEMPLATE/`          | Templates YAML para bugs, features e relatorios de acessibilidade     | Padroniza contribuicoes       |
 | `PULL_REQUEST_TEMPLATE.md` | Checklist para revisao de PRs incluindo verificacao de acessibilidade | Obrigatorio para todas as PRs |
-| `dependabot.yml` | Actualizacao automatica de dependencias npm e GitHub Actions | Verifica semanalmente |
+| `dependabot.yml`           | Actualizacao automatica de dependencias npm e GitHub Actions          | Verifica semanalmente         |
 
 ### 2.2 `.husky/` - Git Hooks
 
@@ -241,25 +240,26 @@ eat-out-adviser/
 
 ### 2.3 `apps/web/` - Aplicacao Next.js 16
 
-**Proposito:** Aplicacao principal do Eat Out Adviser. Contem toda a interface de utilizador, routing e ponto de entrada da API tRPC.
+**Proposito:** Aplicacao principal do Eat Out Adviser. Contem toda a interface de utilizador, routing e ponto de entrada
+da API tRPC.
 
 #### `src/app/` - App Router
 
 Utiliza o App Router do Next.js 16 com grupos de rotas e routing internacionalizado.
 
-| Directorio | Proposito | Notas |
-|---|---|---|
-| `[locale]/` | Segmento dinamico para idioma (`pt`, `en`) | Middleware redireciona com base no Accept-Language |
-| `(auth)/` | Paginas de autenticacao (login, registo, recuperacao) | Layout proprio sem sidebar/nav principal |
-| `(app)/` | Area principal da aplicacao autenticada | Layout com header, sidebar, nav |
-| `(app)/dashboard/` | Painel principal com resumo personalizado | Mostra restaurantes recomendados e avaliacoes recentes |
-| `(app)/search/` | Pesquisa em linguagem natural com IA | Integra com router `ai` do tRPC |
-| `(app)/restaurants/[slug]/` | Pagina detalhada de restaurante | Sub-rotas para avaliacoes, ementa, acessibilidade, reserva |
-| `(app)/map/` | Mapa interactivo com filtros de acessibilidade | Utiliza componentes do directorio `components/map/` |
-| `(app)/profile/` | Perfil do utilizador com configuracao de acessibilidade | Sub-rotas para perfil de acessibilidade e definicoes |
-| `(app)/ai-assistant/` | Assistente conversacional de IA | Streaming via SSE |
-| `(admin)/` | Area de administracao com RBAC | Gestao de restaurantes, utilizadores, avaliacoes, verificacoes |
-| `api/trpc/[trpc]/route.ts` | Handler HTTP para o endpoint tRPC | Liga o Next.js ao pacote `packages/api` |
+| Directorio                  | Proposito                                               | Notas                                                          |
+| --------------------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
+| `[locale]/`                 | Segmento dinamico para idioma (`pt`, `en`)              | Middleware redireciona com base no Accept-Language             |
+| `(auth)/`                   | Paginas de autenticacao (login, registo, recuperacao)   | Layout proprio sem sidebar/nav principal                       |
+| `(app)/`                    | Area principal da aplicacao autenticada                 | Layout com header, sidebar, nav                                |
+| `(app)/dashboard/`          | Painel principal com resumo personalizado               | Mostra restaurantes recomendados e avaliacoes recentes         |
+| `(app)/search/`             | Pesquisa em linguagem natural com IA                    | Integra com router `ai` do tRPC                                |
+| `(app)/restaurants/[slug]/` | Pagina detalhada de restaurante                         | Sub-rotas para avaliacoes, ementa, acessibilidade, reserva     |
+| `(app)/map/`                | Mapa interactivo com filtros de acessibilidade          | Utiliza componentes do directorio `components/map/`            |
+| `(app)/profile/`            | Perfil do utilizador com configuracao de acessibilidade | Sub-rotas para perfil de acessibilidade e definicoes           |
+| `(app)/ai-assistant/`       | Assistente conversacional de IA                         | Streaming via SSE                                              |
+| `(admin)/`                  | Area de administracao com RBAC                          | Gestao de restaurantes, utilizadores, avaliacoes, verificacoes |
+| `api/trpc/[trpc]/route.ts`  | Handler HTTP para o endpoint tRPC                       | Liga o Next.js ao pacote `packages/api`                        |
 
 #### `src/components/` - Componentes React
 
@@ -269,26 +269,26 @@ Organizados por dominio funcional. Convencoes:
 - Exports com `PascalCase` (ex.: `RestaurantCard`)
 - Cada componente pode ter ficheiro de testes adjacente (`restaurant-card.test.tsx`)
 
-| Directorio | Conteudo | Exemplos |
-|---|---|---|
-| `ui/` | Componentes shadcn/ui copiados para o projecto | `button.tsx`, `dialog.tsx`, `input.tsx` |
-| `layout/` | Estrutura visual da aplicacao | `header.tsx`, `footer.tsx`, `sidebar.tsx`, `mobile-nav.tsx` |
-| `restaurant/` | Componentes especificos de restaurantes | `restaurant-card.tsx`, `restaurant-gallery.tsx`, `restaurant-info.tsx` |
-| `accessibility/` | Componentes de visualizacao de acessibilidade | `accessibility-badge.tsx`, `accessibility-score.tsx`, `accessibility-checklist.tsx` |
-| `review/` | Componentes de avaliacoes | `review-form.tsx`, `review-list.tsx`, `review-summary.tsx` |
-| `map/` | Componentes de mapa interactivo | `map-view.tsx`, `map-marker.tsx`, `map-filters.tsx` |
-| `ai/` | Interface do assistente IA | `chat-panel.tsx`, `message-bubble.tsx`, `suggestion-chips.tsx` |
-| `forms/` | Formularios reutilizaveis | `search-form.tsx`, `reservation-form.tsx`, `report-form.tsx` |
+| Directorio       | Conteudo                                       | Exemplos                                                                            |
+| ---------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `ui/`            | Componentes shadcn/ui copiados para o projecto | `button.tsx`, `dialog.tsx`, `input.tsx`                                             |
+| `layout/`        | Estrutura visual da aplicacao                  | `header.tsx`, `footer.tsx`, `sidebar.tsx`, `mobile-nav.tsx`                         |
+| `restaurant/`    | Componentes especificos de restaurantes        | `restaurant-card.tsx`, `restaurant-gallery.tsx`, `restaurant-info.tsx`              |
+| `accessibility/` | Componentes de visualizacao de acessibilidade  | `accessibility-badge.tsx`, `accessibility-score.tsx`, `accessibility-checklist.tsx` |
+| `review/`        | Componentes de avaliacoes                      | `review-form.tsx`, `review-list.tsx`, `review-summary.tsx`                          |
+| `map/`           | Componentes de mapa interactivo                | `map-view.tsx`, `map-marker.tsx`, `map-filters.tsx`                                 |
+| `ai/`            | Interface do assistente IA                     | `chat-panel.tsx`, `message-bubble.tsx`, `suggestion-chips.tsx`                      |
+| `forms/`         | Formularios reutilizaveis                      | `search-form.tsx`, `reservation-form.tsx`, `report-form.tsx`                        |
 
 #### `src/lib/` - Bibliotecas e Utilitarios
 
-| Directorio | Proposito |
-|---|---|
-| `trpc/` | Configuracao do cliente tRPC (React Query provider, links) |
-| `auth/` | Instancia do cliente Better Auth para o browser |
-| `i18n/` | Configuracao de internacionalizacao (middleware, dicionarios, helpers) |
-| `utils/` | Funcoes utilitarias puras (formatacao de datas, URLs, strings) |
-| `hooks/` | Custom hooks React (`useAccessibilityProfile`, `useDebounce`, `useMediaQuery`) |
+| Directorio | Proposito                                                                      |
+| ---------- | ------------------------------------------------------------------------------ |
+| `trpc/`    | Configuracao do cliente tRPC (React Query provider, links)                     |
+| `auth/`    | Instancia do cliente Better Auth para o browser                                |
+| `i18n/`    | Configuracao de internacionalizacao (middleware, dicionarios, helpers)         |
+| `utils/`   | Funcoes utilitarias puras (formatacao de datas, URLs, strings)                 |
+| `hooks/`   | Custom hooks React (`useAccessibilityProfile`, `useDebounce`, `useMediaQuery`) |
 
 ### 2.4 `packages/db/` - Pacote de Base de Dados
 
@@ -296,23 +296,24 @@ Organizados por dominio funcional. Convencoes:
 
 **Dependencias principais:** `drizzle-orm`, `drizzle-kit`, `postgres` (driver), `@pgvector/drizzle`.
 
-| Ficheiro/Directorio | Proposito |
-|---|---|
-| `schema/user.ts` | Tabelas `users`, `sessions`, `accounts` (Better Auth) e `user_accessibility_profiles` |
-| `schema/restaurant.ts` | Tabela `restaurants` com campos de localizacao, tipo de cozinha, faixa de preco, embedding |
+| Ficheiro/Directorio       | Proposito                                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `schema/user.ts`          | Tabelas `users`, `sessions`, `accounts` (Better Auth) e `user_accessibility_profiles`                  |
+| `schema/restaurant.ts`    | Tabela `restaurants` com campos de localizacao, tipo de cozinha, faixa de preco, embedding             |
 | `schema/accessibility.ts` | Tabela `accessibility_profiles` -- a mais detalhada do sistema (entrada, interior, WC, estacionamento) |
-| `schema/review.ts` | Tabelas `reviews` e `review_accessibility_ratings` com embedding vectorial |
-| `schema/menu.ts` | Tabelas `menus` e `dishes` com alergenos, restricoes alimentares, embedding |
-| `schema/reservation.ts` | Tabela `reservations` com necessidades de acessibilidade especificas |
-| `schema/verification.ts` | Tabela `verification_reports` para relatorios profissionais e comunitarios |
-| `schema/photo.ts` | Tabela `photos` com metadados, analise IA e etiquetas de acessibilidade |
-| `schema/translation.ts` | Tabela `translations` para conteudo multilingue gerado por IA |
-| `schema/audit.ts` | Tabela `audit_logs` para rastreabilidade total de alteracoes em dados de acessibilidade |
-| `migrations/` | Ficheiros SQL gerados por `drizzle-kit generate` -- nunca editados manualmente |
-| `seed/` | Scripts de povoamento inicial com dados de restaurantes e acessibilidade |
-| `client.ts` | Exporta a instancia configurada do Drizzle com connection pooling |
+| `schema/review.ts`        | Tabelas `reviews` e `review_accessibility_ratings` com embedding vectorial                             |
+| `schema/menu.ts`          | Tabelas `menus` e `dishes` com alergenos, restricoes alimentares, embedding                            |
+| `schema/reservation.ts`   | Tabela `reservations` com necessidades de acessibilidade especificas                                   |
+| `schema/verification.ts`  | Tabela `verification_reports` para relatorios profissionais e comunitarios                             |
+| `schema/photo.ts`         | Tabela `photos` com metadados, analise IA e etiquetas de acessibilidade                                |
+| `schema/translation.ts`   | Tabela `translations` para conteudo multilingue gerado por IA                                          |
+| `schema/audit.ts`         | Tabela `audit_logs` para rastreabilidade total de alteracoes em dados de acessibilidade                |
+| `migrations/`             | Ficheiros SQL gerados por `drizzle-kit generate` -- nunca editados manualmente                         |
+| `seed/`                   | Scripts de povoamento inicial com dados de restaurantes e acessibilidade                               |
+| `client.ts`               | Exporta a instancia configurada do Drizzle com connection pooling                                      |
 
-**Convencao de nomenclatura na base de dados:** `snake_case` para tabelas (plural) e colunas. UUIDs v7 como chaves primarias. Timestamps com timezone.
+**Convencao de nomenclatura na base de dados:** `snake_case` para tabelas (plural) e colunas. UUIDs v7 como chaves
+primarias. Timestamps com timezone.
 
 ### 2.5 `packages/api/` - Routers tRPC
 
@@ -320,20 +321,20 @@ Organizados por dominio funcional. Convencoes:
 
 **Dependencias principais:** `@trpc/server`, `@trpc/client`, `zod`, `@eat-out-adviser/db`, `@eat-out-adviser/ai`.
 
-| Ficheiro | Proposito | Procedimentos principais |
-|---|---|---|
-| `routers/auth.ts` | Autenticacao e gestao de sessoes | `login`, `register`, `logout`, `forgotPassword` |
-| `routers/user.ts` | Gestao de perfil e preferencias | `getProfile`, `updateProfile`, `updateAccessibilityProfile` |
-| `routers/restaurant.ts` | CRUD de restaurantes e pesquisa | `getBySlug`, `search`, `nearby`, `create`, `update` |
-| `routers/review.ts` | Avaliacoes de restaurantes | `create`, `list`, `getByRestaurant`, `report` |
-| `routers/menu.ts` | Ementas e pratos | `getByRestaurant`, `updateMenu`, `analyzeDish` |
-| `routers/reservation.ts` | Sistema de reservas | `create`, `cancel`, `list`, `checkAvailability` |
-| `routers/ai.ts` | Interaccao com IA | `search`, `analyzePhoto`, `chat`, `summarizeReviews` |
-| `routers/verification.ts` | Verificacao de acessibilidade | `submit`, `approve`, `reject`, `getHistory` |
-| `routers/admin.ts` | Operacoes administrativas | `listUsers`, `moderateReview`, `stats`, `bulkImport` |
-| `middleware/` | Middleware de autorizacao, rate limiting, logging | Ligacao com Better Auth para verificacao de sessao |
-| `context.ts` | Fabrica de contexto tRPC | Injeccao de `db`, `session`, `user` em cada procedimento |
-| `trpc.ts` | Inicializacao do tRPC com middleware base | Define `publicProcedure`, `protectedProcedure`, `adminProcedure` |
+| Ficheiro                  | Proposito                                         | Procedimentos principais                                         |
+| ------------------------- | ------------------------------------------------- | ---------------------------------------------------------------- |
+| `routers/auth.ts`         | Autenticacao e gestao de sessoes                  | `login`, `register`, `logout`, `forgotPassword`                  |
+| `routers/user.ts`         | Gestao de perfil e preferencias                   | `getProfile`, `updateProfile`, `updateAccessibilityProfile`      |
+| `routers/restaurant.ts`   | CRUD de restaurantes e pesquisa                   | `getBySlug`, `search`, `nearby`, `create`, `update`              |
+| `routers/review.ts`       | Avaliacoes de restaurantes                        | `create`, `list`, `getByRestaurant`, `report`                    |
+| `routers/menu.ts`         | Ementas e pratos                                  | `getByRestaurant`, `updateMenu`, `analyzeDish`                   |
+| `routers/reservation.ts`  | Sistema de reservas                               | `create`, `cancel`, `list`, `checkAvailability`                  |
+| `routers/ai.ts`           | Interaccao com IA                                 | `search`, `analyzePhoto`, `chat`, `summarizeReviews`             |
+| `routers/verification.ts` | Verificacao de acessibilidade                     | `submit`, `approve`, `reject`, `getHistory`                      |
+| `routers/admin.ts`        | Operacoes administrativas                         | `listUsers`, `moderateReview`, `stats`, `bulkImport`             |
+| `middleware/`             | Middleware de autorizacao, rate limiting, logging | Ligacao com Better Auth para verificacao de sessao               |
+| `context.ts`              | Fabrica de contexto tRPC                          | Injeccao de `db`, `session`, `user` em cada procedimento         |
+| `trpc.ts`                 | Inicializacao do tRPC com middleware base         | Define `publicProcedure`, `protectedProcedure`, `adminProcedure` |
 
 ### 2.6 `packages/ai/` - Integracao de IA
 
@@ -341,17 +342,17 @@ Organizados por dominio funcional. Convencoes:
 
 **Dependencias principais:** `@anthropic-ai/sdk`, `ollama`, `@eat-out-adviser/db`.
 
-| Directorio | Funcao |
-|---|---|
-| `claude/client.ts` | Instancia configurada do SDK Anthropic com retry e rate limiting |
-| `claude/prompts/` | System prompts versionados para cada funcionalidade de IA |
-| `claude/tools/` | Definicoes de ferramentas (tool use) para o Claude invocar |
-| `embeddings/client.ts` | Cliente que abstrai Ollama (local) e API (producao) para geracao de embeddings |
-| `embeddings/pipeline.ts` | Pipeline batch para gerar embeddings de restaurantes, avaliacoes e pratos |
-| `matching/scorer.ts` | Motor de scoring que combina similaridade vectorial com pesos de acessibilidade |
-| `matching/weights.ts` | Configuracao de pesos por categoria (entrada, interior, WC, estacionamento) |
-| `rag/search.ts` | Busca hibrida: similaridade coseno via pgvector + full-text search PostgreSQL |
-| `rag/context.ts` | Construcao do contexto enriquecido para enviar ao Claude (dados estruturados + resultados vectoriais) |
+| Directorio               | Funcao                                                                                                |
+| ------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `claude/client.ts`       | Instancia configurada do SDK Anthropic com retry e rate limiting                                      |
+| `claude/prompts/`        | System prompts versionados para cada funcionalidade de IA                                             |
+| `claude/tools/`          | Definicoes de ferramentas (tool use) para o Claude invocar                                            |
+| `embeddings/client.ts`   | Cliente que abstrai Ollama (local) e API (producao) para geracao de embeddings                        |
+| `embeddings/pipeline.ts` | Pipeline batch para gerar embeddings de restaurantes, avaliacoes e pratos                             |
+| `matching/scorer.ts`     | Motor de scoring que combina similaridade vectorial com pesos de acessibilidade                       |
+| `matching/weights.ts`    | Configuracao de pesos por categoria (entrada, interior, WC, estacionamento)                           |
+| `rag/search.ts`          | Busca hibrida: similaridade coseno via pgvector + full-text search PostgreSQL                         |
+| `rag/context.ts`         | Construcao do contexto enriquecido para enviar ao Claude (dados estruturados + resultados vectoriais) |
 
 ### 2.7 `packages/scoring/` - Pontuacao de Acessibilidade
 
@@ -365,35 +366,35 @@ Organizados por dominio funcional. Convencoes:
 
 **Proposito:** Codigo partilhado entre todos os pacotes sem dependencias externas pesadas.
 
-| Directorio | Conteudo |
-|---|---|
-| `types/` | Interfaces TypeScript (`Restaurant`, `User`, `AccessibilityProfile`, etc.) |
-| `constants/` | Enumeracoes, codigos de erro, configuracoes estaticas |
-| `validators/` | Esquemas Zod para validacao em runtime (formularios, API inputs) |
-| `utils/` | Funcoes puras (slug generation, formatacao, calculo de distancias) |
+| Directorio    | Conteudo                                                                   |
+| ------------- | -------------------------------------------------------------------------- |
+| `types/`      | Interfaces TypeScript (`Restaurant`, `User`, `AccessibilityProfile`, etc.) |
+| `constants/`  | Enumeracoes, codigos de erro, configuracoes estaticas                      |
+| `validators/` | Esquemas Zod para validacao em runtime (formularios, API inputs)           |
+| `utils/`      | Funcoes puras (slug generation, formatacao, calculo de distancias)         |
 
 ### 2.9 `docker/` - Configuracao de Containers
 
-| Ficheiro | Proposito |
-|---|---|
-| `Dockerfile.app` | Build multi-stage do Next.js: deps -> build -> runner (node:22-alpine) |
-| `Dockerfile.ollama` | Container Ollama com modelo nomic-embed-text-v2 pre-carregado |
-| `docker-compose.yml` | Orquestracao de producao: app + postgres + ollama + traefik |
-| `docker-compose.dev.yml` | Override para desenvolvimento: volumes montados, hot-reload, portas expostas |
-| `.env.example` | Template de variaveis de ambiente com todos os valores necessarios documentados |
+| Ficheiro                 | Proposito                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------- |
+| `Dockerfile.app`         | Build multi-stage do Next.js: deps -> build -> runner (node:22-alpine)          |
+| `Dockerfile.ollama`      | Container Ollama com modelo nomic-embed-text-v2 pre-carregado                   |
+| `docker-compose.yml`     | Orquestracao de producao: app + postgres + ollama + traefik                     |
+| `docker-compose.dev.yml` | Override para desenvolvimento: volumes montados, hot-reload, portas expostas    |
+| `.env.example`           | Template de variaveis de ambiente com todos os valores necessarios documentados |
 
 ### 2.10 `scripts/` - Scripts de Automacao
 
 Todos executados via `tsx` (TypeScript runner). Invocados como `pnpm run` scripts ou directamente.
 
-| Script | Proposito |
-|---|---|
-| `setup.sh` | Configuracao inicial: instala dependencias, cria `.env`, configura base de dados, executa migracoes |
-| `seed-db.ts` | Povoa a base de dados com dados iniciais de restaurantes e categorias de acessibilidade |
-| `generate-embeddings.ts` | Gera embeddings vectoriais para todos os restaurantes, avaliacoes e pratos existentes |
-| `import-osm.ts` | Importa dados de restaurantes do OpenStreetMap para a zona metropolitana do Porto |
-| `import-wheelmap.ts` | Importa dados de acessibilidade do Wheelmap (formato A11yJSON) |
-| `health-check.ts` | Verifica conectividade com PostgreSQL, Ollama e Claude API |
+| Script                   | Proposito                                                                                           |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| `setup.sh`               | Configuracao inicial: instala dependencias, cria `.env`, configura base de dados, executa migracoes |
+| `seed-db.ts`             | Povoa a base de dados com dados iniciais de restaurantes e categorias de acessibilidade             |
+| `generate-embeddings.ts` | Gera embeddings vectoriais para todos os restaurantes, avaliacoes e pratos existentes               |
+| `import-osm.ts`          | Importa dados de restaurantes do OpenStreetMap para a zona metropolitana do Porto                   |
+| `import-wheelmap.ts`     | Importa dados de acessibilidade do Wheelmap (formato A11yJSON)                                      |
+| `health-check.ts`        | Verifica conectividade com PostgreSQL, Ollama e Claude API                                          |
 
 ### 2.11 `mcp/` - Servidor MCP Personalizado
 
@@ -525,20 +526,10 @@ packages:
     "typescript": "^5.7.0"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,yaml,yml}": [
-      "prettier --write"
-    ],
-    "*.md": [
-      "markdownlint-cli2 --fix",
-      "prettier --write"
-    ],
-    "*.css": [
-      "prettier --write"
-    ]
+    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,yaml,yml}": ["prettier --write"],
+    "*.md": ["markdownlint-cli2 --fix", "prettier --write"],
+    "*.css": ["prettier --write"]
   }
 }
 ```
@@ -557,13 +548,7 @@ import prettier from "eslint-config-prettier";
 export default tseslint.config(
   // Ficheiros ignorados
   {
-    ignores: [
-      "**/node_modules/**",
-      "**/.next/**",
-      "**/dist/**",
-      "**/coverage/**",
-      "**/.turbo/**",
-    ],
+    ignores: ["**/node_modules/**", "**/.next/**", "**/dist/**", "**/coverage/**", "**/.turbo/**"],
   },
 
   // Regras base JavaScript
@@ -679,34 +664,34 @@ export default {
       2,
       "always",
       [
-        "feat",     // Nova funcionalidade
-        "fix",      // Correccao de erro
-        "docs",     // Documentacao
-        "style",    // Formatacao (sem alteracao de logica)
+        "feat", // Nova funcionalidade
+        "fix", // Correccao de erro
+        "docs", // Documentacao
+        "style", // Formatacao (sem alteracao de logica)
         "refactor", // Refactoring de codigo
-        "perf",     // Melhoria de performance
-        "test",     // Testes
-        "build",    // Sistema de build ou dependencias
-        "ci",       // Configuracao de CI/CD
-        "chore",    // Tarefas diversas
-        "revert",   // Reverter commit anterior
-        "a11y",     // Melhorias de acessibilidade
+        "perf", // Melhoria de performance
+        "test", // Testes
+        "build", // Sistema de build ou dependencias
+        "ci", // Configuracao de CI/CD
+        "chore", // Tarefas diversas
+        "revert", // Reverter commit anterior
+        "a11y", // Melhorias de acessibilidade
       ],
     ],
     "scope-enum": [
       1,
       "always",
       [
-        "web",          // App Next.js
-        "db",           // Pacote de base de dados
-        "api",          // Pacote tRPC
-        "ai",           // Pacote de IA
-        "scoring",      // Pacote de pontuacao
-        "shared",       // Pacote partilhado
-        "mcp",          // Servidor MCP
-        "docker",       // Configuracao Docker
-        "ci",           // GitHub Actions
-        "deps",         // Dependencias
+        "web", // App Next.js
+        "db", // Pacote de base de dados
+        "api", // Pacote tRPC
+        "ai", // Pacote de IA
+        "scoring", // Pacote de pontuacao
+        "shared", // Pacote partilhado
+        "mcp", // Servidor MCP
+        "docker", // Configuracao Docker
+        "ci", // GitHub Actions
+        "deps", // Dependencias
       ],
     ],
     "subject-max-length": [2, "always", 72],
@@ -756,7 +741,13 @@ services:
         condition: service_started
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r => r.ok ? process.exit(0) : process.exit(1))"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000/api/health').then(r => r.ok ? process.exit(0) : process.exit(1))",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -901,9 +892,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U test -d eatoutadviser_test"
-          --health-interval 10s
-          --health-timeout 5s
+          --health-cmd "pg_isready -U test -d eatoutadviser_test" --health-interval 10s --health-timeout 5s
           --health-retries 5
 
     steps:
@@ -999,11 +988,7 @@ jobs:
       "Grep",
       "mcp__eat-out-adviser"
     ],
-    "deny": [
-      "Bash(curl:*)",
-      "Bash(wget:*)",
-      "Bash(sudo:*)"
-    ]
+    "deny": ["Bash(curl:*)", "Bash(wget:*)", "Bash(sudo:*)"]
   }
 }
 ```
@@ -1014,7 +999,7 @@ jobs:
 
 ### 4.1 Diagrama de Interaccao de Componentes
 
-```
+```plaintext
 +----------------------------------------------------------------------+
 |                          BROWSER / PWA                                |
 |  +------------------+  +------------------+  +--------------------+  |
@@ -1063,7 +1048,7 @@ jobs:
 
 ### 4.2 Diagrama de Fluxo de Dados
 
-```
+```plaintext
 UTILIZADOR
     |
     | 1. "Restaurante italiano acessivel no Porto"
@@ -1130,7 +1115,7 @@ UTILIZADOR (ve resultados a aparecer em tempo real)
 
 ### 4.3 Diagrama de Deployment
 
-```
+```plaintext
 +-----------------------------------------------+
 |          DESENVOLVIMENTO (MacBook Air M1)      |
 |                                                |
@@ -1200,7 +1185,7 @@ UTILIZADOR (ve resultados a aparecer em tempo real)
 
 ### 4.4 Diagrama da Pipeline CI/CD
 
-```
+```plaintext
 git push / PR
       |
       v
@@ -1250,68 +1235,68 @@ git push / PR
 
 ### 5.1 Ficheiros e Directorios
 
-| Contexto | Convencao | Exemplo |
-|---|---|---|
-| Ficheiros TypeScript gerais | `kebab-case.ts` | `health-check.ts`, `generate-embeddings.ts` |
-| Componentes React | `kebab-case.tsx` (ficheiro), `PascalCase` (export) | `restaurant-card.tsx` exporta `RestaurantCard` |
-| Componentes de pagina (Next.js) | `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx` | Convencao do App Router |
-| Schemas Drizzle | `kebab-case.ts` (singular) | `restaurant.ts`, `accessibility.ts` |
-| Testes | `{nome}.test.ts` ou `{nome}.spec.ts` | `scorer.test.ts`, `login.spec.ts` |
-| Testes E2E Playwright | `{funcionalidade}.spec.ts` | `search-restaurant.spec.ts` |
-| Configuracao | Nome padrao da ferramenta | `eslint.config.js`, `vitest.config.ts` |
-| Variaveis de ambiente | `.env`, `.env.local`, `.env.test` | Nunca committed ao git |
+| Contexto                        | Convencao                                            | Exemplo                                        |
+| ------------------------------- | ---------------------------------------------------- | ---------------------------------------------- |
+| Ficheiros TypeScript gerais     | `kebab-case.ts`                                      | `health-check.ts`, `generate-embeddings.ts`    |
+| Componentes React               | `kebab-case.tsx` (ficheiro), `PascalCase` (export)   | `restaurant-card.tsx` exporta `RestaurantCard` |
+| Componentes de pagina (Next.js) | `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx` | Convencao do App Router                        |
+| Schemas Drizzle                 | `kebab-case.ts` (singular)                           | `restaurant.ts`, `accessibility.ts`            |
+| Testes                          | `{nome}.test.ts` ou `{nome}.spec.ts`                 | `scorer.test.ts`, `login.spec.ts`              |
+| Testes E2E Playwright           | `{funcionalidade}.spec.ts`                           | `search-restaurant.spec.ts`                    |
+| Configuracao                    | Nome padrao da ferramenta                            | `eslint.config.js`, `vitest.config.ts`         |
+| Variaveis de ambiente           | `.env`, `.env.local`, `.env.test`                    | Nunca committed ao git                         |
 
 ### 5.2 Codigo TypeScript
 
-| Contexto | Convencao | Exemplo |
-|---|---|---|
-| Variaveis e funcoes | `camelCase` | `getUserProfile`, `accessibilityScore` |
-| Constantes | `UPPER_SNAKE_CASE` | `MAX_SEARCH_RESULTS`, `DEFAULT_LOCALE` |
-| Tipos e Interfaces | `PascalCase` | `Restaurant`, `AccessibilityProfile` |
-| Enums | `PascalCase` (nome), `PascalCase` (membros) | `MobilityType.ElectricWheelchair` |
-| Componentes React | `PascalCase` | `RestaurantCard`, `AccessibilityBadge` |
-| Custom hooks | `camelCase` com prefixo `use` | `useAccessibilityProfile`, `useDebounce` |
-| Procedimentos tRPC | `camelCase` | `restaurant.getBySlug`, `ai.search` |
-| Schemas Zod | `camelCase` com sufixo `Schema` | `createReviewSchema`, `searchQuerySchema` |
+| Contexto            | Convencao                                   | Exemplo                                   |
+| ------------------- | ------------------------------------------- | ----------------------------------------- |
+| Variaveis e funcoes | `camelCase`                                 | `getUserProfile`, `accessibilityScore`    |
+| Constantes          | `UPPER_SNAKE_CASE`                          | `MAX_SEARCH_RESULTS`, `DEFAULT_LOCALE`    |
+| Tipos e Interfaces  | `PascalCase`                                | `Restaurant`, `AccessibilityProfile`      |
+| Enums               | `PascalCase` (nome), `PascalCase` (membros) | `MobilityType.ElectricWheelchair`         |
+| Componentes React   | `PascalCase`                                | `RestaurantCard`, `AccessibilityBadge`    |
+| Custom hooks        | `camelCase` com prefixo `use`               | `useAccessibilityProfile`, `useDebounce`  |
+| Procedimentos tRPC  | `camelCase`                                 | `restaurant.getBySlug`, `ai.search`       |
+| Schemas Zod         | `camelCase` com sufixo `Schema`             | `createReviewSchema`, `searchQuerySchema` |
 
 ### 5.3 Base de Dados (PostgreSQL)
 
-| Contexto | Convencao | Exemplo |
-|---|---|---|
-| Tabelas | `snake_case`, plural | `restaurants`, `accessibility_profiles` |
-| Colunas | `snake_case` | `created_at`, `wheelchair_width` |
-| Chaves primarias | `id` (UUID v7) | `id` |
-| Chaves estrangeiras | `{entidade_singular}_id` | `restaurant_id`, `user_id` |
-| Indices | `idx_{tabela}_{colunas}` | `idx_restaurants_location` |
-| Enums PostgreSQL | `snake_case` | `mobility_type`, `price_range` |
-| Booleanos | prefixo `has_` ou `is_` | `has_ramp`, `is_active` |
-| Timestamps | `created_at`, `updated_at`, `deleted_at` | Sempre com timezone (UTC) |
+| Contexto            | Convencao                                | Exemplo                                 |
+| ------------------- | ---------------------------------------- | --------------------------------------- |
+| Tabelas             | `snake_case`, plural                     | `restaurants`, `accessibility_profiles` |
+| Colunas             | `snake_case`                             | `created_at`, `wheelchair_width`        |
+| Chaves primarias    | `id` (UUID v7)                           | `id`                                    |
+| Chaves estrangeiras | `{entidade_singular}_id`                 | `restaurant_id`, `user_id`              |
+| Indices             | `idx_{tabela}_{colunas}`                 | `idx_restaurants_location`              |
+| Enums PostgreSQL    | `snake_case`                             | `mobility_type`, `price_range`          |
+| Booleanos           | prefixo `has_` ou `is_`                  | `has_ramp`, `is_active`                 |
+| Timestamps          | `created_at`, `updated_at`, `deleted_at` | Sempre com timezone (UTC)               |
 
 ### 5.4 API (tRPC)
 
-| Contexto | Convencao | Exemplo |
-|---|---|---|
-| Routers | `camelCase` (singular) | `restaurant`, `review`, `ai` |
-| Procedures | `camelCase` (verbo + substantivo) | `getBySlug`, `createReview`, `searchRestaurants` |
-| Input schemas | Zod com `camelCase` | `z.object({ restaurantId: z.string().uuid() })` |
-| Erros | `TRPCError` com codigos HTTP semanticos | `throw new TRPCError({ code: "NOT_FOUND" })` |
+| Contexto      | Convencao                               | Exemplo                                          |
+| ------------- | --------------------------------------- | ------------------------------------------------ |
+| Routers       | `camelCase` (singular)                  | `restaurant`, `review`, `ai`                     |
+| Procedures    | `camelCase` (verbo + substantivo)       | `getBySlug`, `createReview`, `searchRestaurants` |
+| Input schemas | Zod com `camelCase`                     | `z.object({ restaurantId: z.string().uuid() })`  |
+| Erros         | `TRPCError` com codigos HTTP semanticos | `throw new TRPCError({ code: "NOT_FOUND" })`     |
 
 ### 5.5 Git
 
 **Branches:**
 
-| Tipo | Formato | Exemplo |
-|---|---|---|
-| Principal | `main` | `main` |
-| Desenvolvimento | `develop` | `develop` |
-| Feature | `feat/{scope}/{descricao}` | `feat/web/search-natural-language` |
-| Correccao | `fix/{scope}/{descricao}` | `fix/api/review-validation` |
-| Acessibilidade | `a11y/{scope}/{descricao}` | `a11y/web/keyboard-navigation` |
-| Documentacao | `docs/{descricao}` | `docs/api-reference` |
+| Tipo            | Formato                    | Exemplo                            |
+| --------------- | -------------------------- | ---------------------------------- |
+| Principal       | `main`                     | `main`                             |
+| Desenvolvimento | `develop`                  | `develop`                          |
+| Feature         | `feat/{scope}/{descricao}` | `feat/web/search-natural-language` |
+| Correccao       | `fix/{scope}/{descricao}`  | `fix/api/review-validation`        |
+| Acessibilidade  | `a11y/{scope}/{descricao}` | `a11y/web/keyboard-navigation`     |
+| Documentacao    | `docs/{descricao}`         | `docs/api-reference`               |
 
 **Commits (Conventional Commits):**
 
-```
+```plaintext
 <tipo>(<scope>): <descricao>
 
 [corpo opcional]
@@ -1321,7 +1306,7 @@ git push / PR
 
 Exemplos:
 
-```
+```plaintext
 feat(web): adicionar pesquisa em linguagem natural com Claude
 fix(api): corrigir validacao de largura de porta na avaliacao
 a11y(web): melhorar navegacao por teclado no mapa interactivo

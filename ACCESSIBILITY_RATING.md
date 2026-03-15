@@ -1,9 +1,8 @@
 # Eat Out Adviser - Sistema de Classificacao de Acessibilidade
 
-**Versao:** 1.0
-**Data:** 15 de Marco de 2026
-**Estado:** Especificacao detalhada para implementacao
-**Normas de referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), DL 163/2006 (Portugal)
+**Versao:** 1.0 **Data:** 15 de Marco de 2026 **Estado:** Especificacao detalhada para implementacao **Normas de
+referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), DL 163/2006
+(Portugal)
 
 ---
 
@@ -27,41 +26,57 @@
 
 ### 1.1 Porque e necessaria uma classificacao de acessibilidade dedicada
 
-Uma classificacao generica de restaurante (comida, servico, ambiente) responde a pergunta "vale a pena ir?". Para uma pessoa com mobilidade reduzida, a pergunta anterior e mais fundamental: "consigo entrar?". E depois de entrar: "consigo sentar-me?", "consigo usar a casa de banho?", "consigo sair com dignidade?".
+Uma classificacao generica de restaurante (comida, servico, ambiente) responde a pergunta "vale a pena ir?". Para uma
+pessoa com mobilidade reduzida, a pergunta anterior e mais fundamental: "consigo entrar?". E depois de entrar: "consigo
+sentar-me?", "consigo usar a casa de banho?", "consigo sair com dignidade?".
 
-Estas perguntas nao tem resposta possivel num sistema de 1 a 5 estrelas. Uma estrela em "acessibilidade" pode significar coisas radicalmente diferentes: para quem usa bengala, pode significar "ha dois degraus na entrada"; para quem usa cadeira de rodas electrica, pode significar "a porta tem 70 cm e nao consigo passar".
+Estas perguntas nao tem resposta possivel num sistema de 1 a 5 estrelas. Uma estrela em "acessibilidade" pode significar
+coisas radicalmente diferentes: para quem usa bengala, pode significar "ha dois degraus na entrada"; para quem usa
+cadeira de rodas electrica, pode significar "a porta tem 70 cm e nao consigo passar".
 
 ### 1.2 Insuficiencia das classificacoes genericas
 
 Os sistemas de classificacao genericos falham na acessibilidade por quatro razoes:
 
-1. **Subjectividade nao-comparavel:** Uma estrela de acessibilidade atribuida por um utilizador de muletas nao e equivalente a mesma estrela atribuida por um utilizador de cadeira electrica. As barreiras fisicas sao objectivas e mensuraveis, e o impacto depende do perfil de cada pessoa.
+1. **Subjectividade nao-comparavel:** Uma estrela de acessibilidade atribuida por um utilizador de muletas nao e
+   equivalente a mesma estrela atribuida por um utilizador de cadeira electrica. As barreiras fisicas sao objectivas e
+   mensuraveis, e o impacto depende do perfil de cada pessoa.
 
-2. **Ausencia de granularidade:** Saber que um restaurante tem "3 estrelas em acessibilidade" nao responde a nenhuma das perguntas praticas: a porta tem largura suficiente para a minha cadeira? Ha espaco de rotacao na casa de banho? A rampa tem inclinacao aceitavel?
+2. **Ausencia de granularidade:** Saber que um restaurante tem "3 estrelas em acessibilidade" nao responde a nenhuma das
+   perguntas praticas: a porta tem largura suficiente para a minha cadeira? Ha espaco de rotacao na casa de banho? A
+   rampa tem inclinacao aceitavel?
 
-3. **Falsa equivalencia:** Num sistema generico, um restaurante com entrada perfeita mas casa de banho inacessivel pode ter a mesma classificacao que um restaurante com entrada dificil mas casa de banho adaptada. Para o utilizador, estas situacoes sao fundamentalmente diferentes.
+3. **Falsa equivalencia:** Num sistema generico, um restaurante com entrada perfeita mas casa de banho inacessivel pode
+   ter a mesma classificacao que um restaurante com entrada dificil mas casa de banho adaptada. Para o utilizador, estas
+   situacoes sao fundamentalmente diferentes.
 
-4. **Impossibilidade de personalizacao:** O que e acessivel para uma pessoa pode nao ser para outra. Uma porta de 75 cm e suficiente para a maioria das cadeiras manuais (largura tipica 55-65 cm) mas insuficiente para muitas cadeiras electricas (largura tipica 60-75 cm).
+4. **Impossibilidade de personalizacao:** O que e acessivel para uma pessoa pode nao ser para outra. Uma porta de 75 cm
+   e suficiente para a maioria das cadeiras manuais (largura tipica 55-65 cm) mas insuficiente para muitas cadeiras
+   electricas (largura tipica 60-75 cm).
 
 ### 1.3 Importancia da personalizacao
 
-O Eat Out Adviser parte do principio de que acessibilidade nao e binaria nem universal. E um espectro que depende da interseccao entre as caracteristicas fisicas do espaco e as necessidades especificas de cada utilizador.
+O Eat Out Adviser parte do principio de que acessibilidade nao e binaria nem universal. E um espectro que depende da
+interseccao entre as caracteristicas fisicas do espaco e as necessidades especificas de cada utilizador.
 
 Por isso, o sistema calcula duas pontuacoes distintas:
-- **Pontuacao global:** Avaliacao objectiva do espaco contra limiares normativos (util para proprietarios, verificadores e comparacao geral)
-- **Pontuacao personalizada:** Avaliacao especifica para o perfil do utilizador (dimensoes do equipamento de mobilidade, capacidades fisicas, preferencias)
+
+- **Pontuacao global:** Avaliacao objectiva do espaco contra limiares normativos (util para proprietarios, verificadores
+  e comparacao geral)
+- **Pontuacao personalizada:** Avaliacao especifica para o perfil do utilizador (dimensoes do equipamento de mobilidade,
+  capacidades fisicas, preferencias)
 
 ### 1.4 Enquadramento normativo
 
 O sistema de pontuacao esta alinhado com as seguintes normas internacionais:
 
-| Norma | Ambito | Aplicacao no sistema |
-|---|---|---|
-| ADA (Americans with Disabilities Act) | Limiares minimos de acessibilidade | Valores de referencia para subcritrios (largura de portas, inclinacao de rampas, espacos de rotacao) |
-| ISO 21542:2021 | Construcao de edificios -- Acessibilidade e usabilidade do ambiente construido | Limiares europeus/internacionais (geralmente mais exigentes que ADA) |
-| EAA (European Accessibility Act) | Requisitos de acessibilidade para produtos e servicos na UE | Enquadramento legal para servicos de restauracao na UE (em vigor desde Junho de 2025) |
-| DL 163/2006 (Portugal) | Normas tecnicas de acessibilidade em edificios | Limiares especificos para o contexto portugues (rampas, portas, sanitarios) |
-| EN 301 549 | Requisitos de acessibilidade para TIC | Aplicavel a interface digital da aplicacao |
+| Norma                                 | Ambito                                                                         | Aplicacao no sistema                                                                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| ADA (Americans with Disabilities Act) | Limiares minimos de acessibilidade                                             | Valores de referencia para subcritrios (largura de portas, inclinacao de rampas, espacos de rotacao) |
+| ISO 21542:2021                        | Construcao de edificios -- Acessibilidade e usabilidade do ambiente construido | Limiares europeus/internacionais (geralmente mais exigentes que ADA)                                 |
+| EAA (European Accessibility Act)      | Requisitos de acessibilidade para produtos e servicos na UE                    | Enquadramento legal para servicos de restauracao na UE (em vigor desde Junho de 2025)                |
+| DL 163/2006 (Portugal)                | Normas tecnicas de acessibilidade em edificios                                 | Limiares especificos para o contexto portugues (rampas, portas, sanitarios)                          |
+| EN 301 549                            | Requisitos de acessibilidade para TIC                                          | Aplicavel a interface digital da aplicacao                                                           |
 
 ---
 
@@ -69,121 +84,130 @@ O sistema de pontuacao esta alinhado com as seguintes normas internacionais:
 
 ### 2.1 Categorias e Pesos Base
 
-A pontuacao global e uma media ponderada de seis categorias. Os pesos base reflectem a importancia relativa de cada zona para a acessibilidade geral do espaco.
+A pontuacao global e uma media ponderada de seis categorias. Os pesos base reflectem a importancia relativa de cada zona
+para a acessibilidade geral do espaco.
 
-| Categoria | Peso Base | Justificacao |
-|---|---|---|
-| Entrada (Entrance) | 25% | Sem entrada acessivel, o resto e irrelevante -- e a primeira barreira |
-| Estacionamento (Parking) | 10% | Importante para quem conduz, mas nem todos os utilizadores necessitam |
-| Interior (Interior) | 20% | Circulacao, pavimento e espaco de manobra dentro do restaurante |
-| Mesas (Seating) | 15% | Altura, espaco livre e distancia entre mesas |
-| Casa de Banho (Bathroom) | 25% | Necessidade basica frequentemente negligenciada; espaco de rotacao critico |
-| Comunicacao (Communication) | 5% | Formato da ementa, sinalizacao e formacao do pessoal |
+| Categoria                   | Peso Base | Justificacao                                                               |
+| --------------------------- | --------- | -------------------------------------------------------------------------- |
+| Entrada (Entrance)          | 25%       | Sem entrada acessivel, o resto e irrelevante -- e a primeira barreira      |
+| Estacionamento (Parking)    | 10%       | Importante para quem conduz, mas nem todos os utilizadores necessitam      |
+| Interior (Interior)         | 20%       | Circulacao, pavimento e espaco de manobra dentro do restaurante            |
+| Mesas (Seating)             | 15%       | Altura, espaco livre e distancia entre mesas                               |
+| Casa de Banho (Bathroom)    | 25%       | Necessidade basica frequentemente negligenciada; espaco de rotacao critico |
+| Comunicacao (Communication) | 5%        | Formato da ementa, sinalizacao e formacao do pessoal                       |
 
 ### 2.2 Pesos por Tipo de Mobilidade
 
-Os pesos base sao ajustados consoante o tipo de mobilidade do utilizador. Cada perfil tem necessidades distintas que alteram a importancia relativa de cada categoria.
+Os pesos base sao ajustados consoante o tipo de mobilidade do utilizador. Cada perfil tem necessidades distintas que
+alteram a importancia relativa de cada categoria.
 
 #### Cadeira de rodas electrica
 
-A cadeira electrica e mais larga (60-75 cm), mais comprida (100-120 cm), mais pesada (80-150 kg com utilizador) e necessita de maior raio de viragem (150-180 cm). Estacionamento ganha peso porque o utilizador tipicamente conduz veiculo adaptado.
+A cadeira electrica e mais larga (60-75 cm), mais comprida (100-120 cm), mais pesada (80-150 kg com utilizador) e
+necessita de maior raio de viragem (150-180 cm). Estacionamento ganha peso porque o utilizador tipicamente conduz
+veiculo adaptado.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 25% | 0% | Critica para todos os perfis |
-| Estacionamento | 10% | 0% | Maioria conduz veiculo adaptado |
-| Interior | 20% | 0% | Espacos de manobra sao criticos |
-| Mesas | 10% | -5% | Importante mas menos que WC |
-| Casa de Banho | 30% | +5% | Espaco de rotacao e a maior barreira |
-| Comunicacao | 5% | 0% | Mantido |
+| Categoria      | Peso | Delta vs base | Justificacao                         |
+| -------------- | ---- | ------------- | ------------------------------------ |
+| Entrada        | 25%  | 0%            | Critica para todos os perfis         |
+| Estacionamento | 10%  | 0%            | Maioria conduz veiculo adaptado      |
+| Interior       | 20%  | 0%            | Espacos de manobra sao criticos      |
+| Mesas          | 10%  | -5%           | Importante mas menos que WC          |
+| Casa de Banho  | 30%  | +5%           | Espaco de rotacao e a maior barreira |
+| Comunicacao    | 5%   | 0%            | Mantido                              |
 
 #### Cadeira de rodas manual
 
-A cadeira manual e mais estreita (55-65 cm), mais leve e mais manobravel. O utilizador pode necessitar de ajuda para subir rampas ingremes.
+A cadeira manual e mais estreita (55-65 cm), mais leve e mais manobravel. O utilizador pode necessitar de ajuda para
+subir rampas ingremes.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 25% | 0% | Rampas e inclinacao sao criticas |
-| Estacionamento | 10% | 0% | Pode ser transportado por terceiros |
-| Interior | 20% | 0% | Necessita de espaco mas menos que electrica |
-| Mesas | 15% | 0% | Altura e espaco livre para joelhos |
-| Casa de Banho | 25% | 0% | Importante mas raio de viragem menor |
-| Comunicacao | 5% | 0% | Mantido |
+| Categoria      | Peso | Delta vs base | Justificacao                                |
+| -------------- | ---- | ------------- | ------------------------------------------- |
+| Entrada        | 25%  | 0%            | Rampas e inclinacao sao criticas            |
+| Estacionamento | 10%  | 0%            | Pode ser transportado por terceiros         |
+| Interior       | 20%  | 0%            | Necessita de espaco mas menos que electrica |
+| Mesas          | 15%  | 0%            | Altura e espaco livre para joelhos          |
+| Casa de Banho  | 25%  | 0%            | Importante mas raio de viragem menor        |
+| Comunicacao    | 5%   | 0%            | Mantido                                     |
 
 #### Scooter motorizado
 
-O scooter e longo (120-140 cm), com raio de viragem grande (200+ cm) e dificil de manobrar em espacos apertados. Estacionamento e muito relevante.
+O scooter e longo (120-140 cm), com raio de viragem grande (200+ cm) e dificil de manobrar em espacos apertados.
+Estacionamento e muito relevante.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 20% | -5% | Importante mas menos que interior |
-| Estacionamento | 15% | +5% | Scooter necessita de estacionamento proximo |
-| Interior | 30% | +10% | Comprimento e raio de viragem elevados |
-| Mesas | 10% | -5% | Pode transferir-se para cadeira |
-| Casa de Banho | 20% | -5% | Pode nao usar WC no restaurante |
-| Comunicacao | 5% | 0% | Mantido |
+| Categoria      | Peso | Delta vs base | Justificacao                                |
+| -------------- | ---- | ------------- | ------------------------------------------- |
+| Entrada        | 20%  | -5%           | Importante mas menos que interior           |
+| Estacionamento | 15%  | +5%           | Scooter necessita de estacionamento proximo |
+| Interior       | 30%  | +10%          | Comprimento e raio de viragem elevados      |
+| Mesas          | 10%  | -5%           | Pode transferir-se para cadeira             |
+| Casa de Banho  | 20%  | -5%           | Pode nao usar WC no restaurante             |
+| Comunicacao    | 5%   | 0%            | Mantido                                     |
 
 #### Andarilho / Rollator
 
-O andarilho e compacto (55-65 cm de largura) mas o utilizador tem mobilidade limitada e necessita de superficies estaveis. Risco de queda e uma preocupacao central.
+O andarilho e compacto (55-65 cm de largura) mas o utilizador tem mobilidade limitada e necessita de superficies
+estaveis. Risco de queda e uma preocupacao central.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 20% | -5% | Degraus sao problema, mas menos critico que para cadeira |
-| Estacionamento | 10% | 0% | Pode ser transportado por terceiros |
-| Interior | 25% | +5% | Superficies anti-derrapantes e espaco sao criticos |
-| Mesas | 15% | 0% | Precisa de mesa estavel para apoio |
-| Casa de Banho | 25% | 0% | Barras de apoio sao essenciais |
-| Comunicacao | 5% | 0% | Mantido |
+| Categoria      | Peso | Delta vs base | Justificacao                                             |
+| -------------- | ---- | ------------- | -------------------------------------------------------- |
+| Entrada        | 20%  | -5%           | Degraus sao problema, mas menos critico que para cadeira |
+| Estacionamento | 10%  | 0%            | Pode ser transportado por terceiros                      |
+| Interior       | 25%  | +5%           | Superficies anti-derrapantes e espaco sao criticos       |
+| Mesas          | 15%  | 0%            | Precisa de mesa estavel para apoio                       |
+| Casa de Banho  | 25%  | 0%            | Barras de apoio sao essenciais                           |
+| Comunicacao    | 5%   | 0%            | Mantido                                                  |
 
 #### Muletas
 
-O utilizador com muletas necessita de superficies estaveis, pouco desnivel e apoios. Largura de passagem e menos critica, mas degraus e superficies irregulares sao problemticos.
+O utilizador com muletas necessita de superficies estaveis, pouco desnivel e apoios. Largura de passagem e menos
+critica, mas degraus e superficies irregulares sao problemticos.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 30% | +5% | Degraus e superficies sao a maior barreira |
-| Estacionamento | 10% | 0% | Distancia ate a entrada e relevante |
-| Interior | 20% | 0% | Superficies anti-derrapantes |
-| Mesas | 10% | -5% | Menos restricoes de espaco |
-| Casa de Banho | 25% | 0% | Barras de apoio essenciais |
-| Comunicacao | 5% | 0% | Mantido |
+| Categoria      | Peso | Delta vs base | Justificacao                               |
+| -------------- | ---- | ------------- | ------------------------------------------ |
+| Entrada        | 30%  | +5%           | Degraus e superficies sao a maior barreira |
+| Estacionamento | 10%  | 0%            | Distancia ate a entrada e relevante        |
+| Interior       | 20%  | 0%            | Superficies anti-derrapantes               |
+| Mesas          | 10%  | -5%           | Menos restricoes de espaco                 |
+| Casa de Banho  | 25%  | 0%            | Barras de apoio essenciais                 |
+| Comunicacao    | 5%   | 0%            | Mantido                                    |
 
 #### Bengala
 
 Perfil com menos restricoes fisicas mas sensivel a degraus, superficies irregulares e iluminacao.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 25% | 0% | Degraus e superficies |
-| Estacionamento | 10% | 0% | Distancia |
-| Interior | 20% | 0% | Superficies |
-| Mesas | 15% | 0% | Sem restricoes especiais |
-| Casa de Banho | 20% | -5% | Barras de apoio uteis mas nao criticas |
-| Comunicacao | 10% | +5% | Sinalizacao e iluminacao mais relevantes |
+| Categoria      | Peso | Delta vs base | Justificacao                             |
+| -------------- | ---- | ------------- | ---------------------------------------- |
+| Entrada        | 25%  | 0%            | Degraus e superficies                    |
+| Estacionamento | 10%  | 0%            | Distancia                                |
+| Interior       | 20%  | 0%            | Superficies                              |
+| Mesas          | 15%  | 0%            | Sem restricoes especiais                 |
+| Casa de Banho  | 20%  | -5%           | Barras de apoio uteis mas nao criticas   |
+| Comunicacao    | 10%  | +5%           | Sinalizacao e iluminacao mais relevantes |
 
 #### Mobilidade reduzida (idosos, gravidez, lesao temporaria)
 
 Perfil generalista com sensibilidade a degraus, distancias e conforto.
 
-| Categoria | Peso | Delta vs base | Justificacao |
-|---|---|---|---|
-| Entrada | 20% | -5% | Degraus sao problema mas podem gerir com ajuda |
-| Estacionamento | 15% | +5% | Proximidade e fundamental |
-| Interior | 20% | 0% | Conforto e estabilidade |
-| Mesas | 15% | 0% | Altura confortavel |
-| Casa de Banho | 20% | -5% | Barras de apoio uteis |
-| Comunicacao | 10% | +5% | Sinalizacao clara e importante |
+| Categoria      | Peso | Delta vs base | Justificacao                                   |
+| -------------- | ---- | ------------- | ---------------------------------------------- |
+| Entrada        | 20%  | -5%           | Degraus sao problema mas podem gerir com ajuda |
+| Estacionamento | 15%  | +5%           | Proximidade e fundamental                      |
+| Interior       | 20%  | 0%            | Conforto e estabilidade                        |
+| Mesas          | 15%  | 0%            | Altura confortavel                             |
+| Casa de Banho  | 20%  | -5%           | Barras de apoio uteis                          |
+| Comunicacao    | 10%  | +5%           | Sinalizacao clara e importante                 |
 
 ---
 
 ## 3. Algoritmo de Calculo Detalhado
 
-Cada categoria e calculada como soma ponderada de subcritrios, cada um avaliado numa escala de 0 a 100. O score da categoria e a soma dos subcritrios multiplicados pelo seu peso relativo dentro da categoria.
+Cada categoria e calculada como soma ponderada de subcritrios, cada um avaliado numa escala de 0 a 100. O score da
+categoria e a soma dos subcritrios multiplicados pelo seu peso relativo dentro da categoria.
 
 ### 3.1 Entrada (Entrance Score)
 
-```
+```plaintext
 entrance_score = (
   accessible_entrance_score × 0.30 +
   door_width_score × 0.20 +
@@ -198,80 +222,81 @@ entrance_score = (
 
 Avaliacao booleana da existencia de uma entrada acessivel (ao nivel do chao ou com rampa).
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_accessible_entrance = true` e `has_level_entrance = true` | 100 |
-| `has_accessible_entrance = true` e `has_ramp = true` | 80 |
-| `has_accessible_entrance = true` (com ajuda possivel) | 60 |
-| `has_portable_ramp = true` (rampa portatil disponivel) | 40 |
-| `has_accessible_entrance = false` | 0 |
+| Condicao                                                       | Pontuacao |
+| -------------------------------------------------------------- | --------- |
+| `has_accessible_entrance = true` e `has_level_entrance = true` | 100       |
+| `has_accessible_entrance = true` e `has_ramp = true`           | 80        |
+| `has_accessible_entrance = true` (com ajuda possivel)          | 60        |
+| `has_portable_ramp = true` (rampa portatil disponivel)         | 40        |
+| `has_accessible_entrance = false`                              | 0         |
 
 #### `door_width_score(door_width_cm, wheelchair_width_cm)`
 
-A largura de referencia depende do perfil do utilizador. Para a pontuacao global, usa-se a largura de referencia normativa de 80 cm (ISO 21542).
+A largura de referencia depende do perfil do utilizador. Para a pontuacao global, usa-se a largura de referencia
+normativa de 80 cm (ISO 21542).
 
-| Condicao | Pontuacao | Justificacao |
-|---|---|---|
-| `door_width >= ref_width + 15` | 100 | Confortavel: passagem com folga |
-| `door_width >= ref_width + 5` | 75 | Adequado: passagem com margem |
-| `door_width >= ref_width` | 50 | Justo: passagem possivel mas sem margem |
-| `door_width >= ref_width - 5` | 25 | Apertado: pode passar com dificuldade |
-| `door_width < ref_width - 5` | 0 | Inacessivel: nao passa |
+| Condicao                       | Pontuacao | Justificacao                            |
+| ------------------------------ | --------- | --------------------------------------- |
+| `door_width >= ref_width + 15` | 100       | Confortavel: passagem com folga         |
+| `door_width >= ref_width + 5`  | 75        | Adequado: passagem com margem           |
+| `door_width >= ref_width`      | 50        | Justo: passagem possivel mas sem margem |
+| `door_width >= ref_width - 5`  | 25        | Apertado: pode passar com dificuldade   |
+| `door_width < ref_width - 5`   | 0         | Inacessivel: nao passa                  |
 
 Onde `ref_width` para pontuacao global = 80 cm (ISO 21542) e para pontuacao personalizada = `user.wheelchair_width`.
 
 #### `step_score(num_steps, step_height_cm, has_ramp, has_portable_ramp)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `num_steps = 0` (entrada ao nivel) | 100 |
-| `num_steps > 0` e `has_ramp = true` e rampa conforme | 80 |
-| `num_steps = 1` e `step_height <= 2` (ressalto minimo) | 60 |
-| `num_steps > 0` e `has_portable_ramp = true` | 40 |
-| `num_steps = 1` e `step_height <= 5` | 20 |
-| `num_steps = 1` e `step_height > 5` | 5 |
-| `num_steps >= 2` e sem rampa | 0 |
+| Condicao                                               | Pontuacao |
+| ------------------------------------------------------ | --------- |
+| `num_steps = 0` (entrada ao nivel)                     | 100       |
+| `num_steps > 0` e `has_ramp = true` e rampa conforme   | 80        |
+| `num_steps = 1` e `step_height <= 2` (ressalto minimo) | 60        |
+| `num_steps > 0` e `has_portable_ramp = true`           | 40        |
+| `num_steps = 1` e `step_height <= 5`                   | 20        |
+| `num_steps = 1` e `step_height > 5`                    | 5         |
+| `num_steps >= 2` e sem rampa                           | 0         |
 
 #### `surface_score(surface_type)`
 
-| Tipo de superficie | Pontuacao | Justificacao |
-|---|---|---|
-| `smooth` | 100 | Superficie lisa e regular |
-| `cobblestone` (calcada portuguesa) | 30 | Muito irregular, vibracao e instabilidade |
-| `gravel` (gravilha) | 20 | Rodas afundam, dificil de circular |
-| `uneven` (irregular) | 15 | Risco de queda ou bloqueio |
-| `grass` (relva) | 10 | Rodas afundam, dificil para cadeiras pesadas |
+| Tipo de superficie                 | Pontuacao | Justificacao                                 |
+| ---------------------------------- | --------- | -------------------------------------------- |
+| `smooth`                           | 100       | Superficie lisa e regular                    |
+| `cobblestone` (calcada portuguesa) | 30        | Muito irregular, vibracao e instabilidade    |
+| `gravel` (gravilha)                | 20        | Rodas afundam, dificil de circular           |
+| `uneven` (irregular)               | 15        | Risco de queda ou bloqueio                   |
+| `grass` (relva)                    | 10        | Rodas afundam, dificil para cadeiras pesadas |
 
 #### `ramp_quality_score(has_ramp, ramp_incline, ramp_has_handrails)`
 
 So aplicavel quando existem degraus e rampa. Caso nao haja degraus, este subcritrio e neutro (100).
 
-| Condicao | Pontuacao |
-|---|---|
-| Sem degraus (entrada ao nivel) | 100 |
-| `ramp_incline <= 6%` e `ramp_has_handrails = true` | 100 |
-| `ramp_incline <= 6%` e `ramp_has_handrails = false` | 85 |
-| `ramp_incline <= 8%` e `ramp_has_handrails = true` | 80 |
-| `ramp_incline <= 8%` e `ramp_has_handrails = false` | 65 |
-| `ramp_incline <= 10%` e `ramp_has_handrails = true` | 50 |
-| `ramp_incline <= 10%` e `ramp_has_handrails = false` | 35 |
-| `ramp_incline <= 12%` | 20 |
-| `ramp_incline > 12%` | 5 |
-| Sem rampa e com degraus | 0 |
+| Condicao                                             | Pontuacao |
+| ---------------------------------------------------- | --------- |
+| Sem degraus (entrada ao nivel)                       | 100       |
+| `ramp_incline <= 6%` e `ramp_has_handrails = true`   | 100       |
+| `ramp_incline <= 6%` e `ramp_has_handrails = false`  | 85        |
+| `ramp_incline <= 8%` e `ramp_has_handrails = true`   | 80        |
+| `ramp_incline <= 8%` e `ramp_has_handrails = false`  | 65        |
+| `ramp_incline <= 10%` e `ramp_has_handrails = true`  | 50        |
+| `ramp_incline <= 10%` e `ramp_has_handrails = false` | 35        |
+| `ramp_incline <= 12%`                                | 20        |
+| `ramp_incline > 12%`                                 | 5         |
+| Sem rampa e com degraus                              | 0         |
 
 Limiares: DL 163/2006 (Portugal) recomenda <= 6%; ADA permite ate 8.33% (1:12).
 
 #### `lighting_score(lighting_level)`
 
 | Nivel de iluminacao | Pontuacao |
-|---|---|
-| `well_lit` | 100 |
-| `moderate` | 60 |
-| `poor` | 20 |
+| ------------------- | --------- |
+| `well_lit`          | 100       |
+| `moderate`          | 60        |
+| `poor`              | 20        |
 
 ### 3.2 Estacionamento (Parking Score)
 
-```
+```plaintext
 parking_score = (
   accessible_parking_score × 0.35 +
   distance_score × 0.20 +
@@ -284,64 +309,64 @@ parking_score = (
 
 #### `accessible_parking_score(has_accessible_parking, accessible_parking_spaces)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `accessible_parking_spaces >= 2` | 100 |
-| `accessible_parking_spaces = 1` | 80 |
-| `has_accessible_parking = false` mas estacionamento geral proximo | 30 |
-| Sem estacionamento | 0 |
+| Condicao                                                          | Pontuacao |
+| ----------------------------------------------------------------- | --------- |
+| `accessible_parking_spaces >= 2`                                  | 100       |
+| `accessible_parking_spaces = 1`                                   | 80        |
+| `has_accessible_parking = false` mas estacionamento geral proximo | 30        |
+| Sem estacionamento                                                | 0         |
 
 #### `distance_score(parking_distance_to_entrance_m)`
 
 | Distancia (metros) | Pontuacao |
-|---|---|
-| `<= 20` | 100 |
-| `<= 50` | 80 |
-| `<= 100` | 50 |
-| `<= 200` | 25 |
-| `> 200` | 10 |
+| ------------------ | --------- |
+| `<= 20`            | 100       |
+| `<= 50`            | 80        |
+| `<= 100`           | 50        |
+| `<= 200`           | 25        |
+| `> 200`            | 10        |
 
 #### `space_width_score(parking_space_width_cm)`
 
-| Largura (cm) | Pontuacao | Referencia |
-|---|---|---|
-| `>= 370` (150 + 120 aisle integrado) | 100 | Excelente para vans adaptadas |
-| `>= 330` | 80 | Bom |
-| `>= 280` | 60 | Adequado |
-| `>= 244` | 40 | Minimo ADA |
-| `< 244` | 10 | Insuficiente |
+| Largura (cm)                         | Pontuacao | Referencia                    |
+| ------------------------------------ | --------- | ----------------------------- |
+| `>= 370` (150 + 120 aisle integrado) | 100       | Excelente para vans adaptadas |
+| `>= 330`                             | 80        | Bom                           |
+| `>= 280`                             | 60        | Adequado                      |
+| `>= 244`                             | 40        | Minimo ADA                    |
+| `< 244`                              | 10        | Insuficiente                  |
 
 #### `access_aisle_score(has_adjacent_access_aisle, access_aisle_width_cm)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_aisle = true` e `width >= 152` | 100 |
-| `has_aisle = true` e `width >= 120` | 70 |
-| `has_aisle = true` e `width < 120` | 40 |
-| `has_aisle = false` | 0 |
+| Condicao                            | Pontuacao |
+| ----------------------------------- | --------- |
+| `has_aisle = true` e `width >= 152` | 100       |
+| `has_aisle = true` e `width >= 120` | 70        |
+| `has_aisle = true` e `width < 120`  | 40        |
+| `has_aisle = false`                 | 0         |
 
 Limiar: ADA 502.3 exige >= 152 cm (60 pol.) para vans.
 
 #### `parking_surface_score(parking_surface_type)`
 
 | Tipo de superficie | Pontuacao |
-|---|---|
-| `asphalt` | 100 |
-| `concrete` | 100 |
-| `cobblestone` | 40 |
-| `gravel` | 20 |
-| `other` | 30 |
+| ------------------ | --------- |
+| `asphalt`          | 100       |
+| `concrete`         | 100       |
+| `cobblestone`      | 40        |
+| `gravel`           | 20        |
+| `other`            | 30        |
 
 #### `dropoff_score(has_dropoff_area)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_dropoff_area = true` | 100 |
-| `has_dropoff_area = false` | 0 |
+| Condicao                   | Pontuacao |
+| -------------------------- | --------- |
+| `has_dropoff_area = true`  | 100       |
+| `has_dropoff_area = false` | 0         |
 
 ### 3.3 Interior (Interior Score)
 
-```
+```plaintext
 interior_score = (
   corridor_width_score × 0.25 +
   floor_score × 0.15 +
@@ -356,80 +381,81 @@ interior_score = (
 
 Para a pontuacao global, usa-se como referencia a largura normativa de 90 cm (ADA 403.5.1).
 
-| Condicao | Pontuacao | Justificacao |
-|---|---|---|
-| `width >= 150` | 100 | Duas cadeiras cruzam-se |
-| `width >= 120` | 85 | ISO 21542: passagem confortavel |
-| `width >= 90` | 65 | ADA: passagem minima |
-| `width >= 80` | 40 | Passagem apertada para cadeira manual |
-| `width >= 70` | 15 | Apenas bengala/muletas |
-| `width < 70` | 0 | Inacessivel |
+| Condicao       | Pontuacao | Justificacao                          |
+| -------------- | --------- | ------------------------------------- |
+| `width >= 150` | 100       | Duas cadeiras cruzam-se               |
+| `width >= 120` | 85        | ISO 21542: passagem confortavel       |
+| `width >= 90`  | 65        | ADA: passagem minima                  |
+| `width >= 80`  | 40        | Passagem apertada para cadeira manual |
+| `width >= 70`  | 15        | Apenas bengala/muletas                |
+| `width < 70`   | 0         | Inacessivel                           |
 
 #### `floor_score(floor_type, is_non_slip)`
 
-| Tipo de piso | Base | Bonus anti-derrapante |
-|---|---|---|
-| `smooth_tile` | 80 | +20 se `is_non_slip` |
-| `wood` | 75 | +15 se `is_non_slip` |
-| `concrete` | 70 | +20 se `is_non_slip` |
-| `carpet` | 50 | N/A (ja anti-derrapante mas dificulta rodas) |
-| `uneven` | 15 | +10 se `is_non_slip` |
-| `other` | 40 | +15 se `is_non_slip` |
+| Tipo de piso  | Base | Bonus anti-derrapante                        |
+| ------------- | ---- | -------------------------------------------- |
+| `smooth_tile` | 80   | +20 se `is_non_slip`                         |
+| `wood`        | 75   | +15 se `is_non_slip`                         |
+| `concrete`    | 70   | +20 se `is_non_slip`                         |
+| `carpet`      | 50   | N/A (ja anti-derrapante mas dificulta rodas) |
+| `uneven`      | 15   | +10 se `is_non_slip`                         |
+| `other`       | 40   | +15 se `is_non_slip`                         |
 
-Nota: Alcatifa (carpet) recebe pontuacao mais baixa porque dificulta a locomocao de cadeiras de rodas, apesar de ser anti-derrapante.
+Nota: Alcatifa (carpet) recebe pontuacao mais baixa porque dificulta a locomocao de cadeiras de rodas, apesar de ser
+anti-derrapante.
 
 #### `turning_space_score(turning_space_cm, user_turning_radius_cm)`
 
 Para a pontuacao global, usa-se como referencia 152 cm (ADA 304.3.1).
 
-| Condicao | Pontuacao |
-|---|---|
-| `space >= ref + 30` | 100 |
-| `space >= ref + 10` | 85 |
-| `space >= ref` | 70 |
-| `space >= ref - 10` | 45 |
-| `space >= ref - 20` | 25 |
-| `space < ref - 20` | 0 |
+| Condicao            | Pontuacao |
+| ------------------- | --------- |
+| `space >= ref + 30` | 100       |
+| `space >= ref + 10` | 85        |
+| `space >= ref`      | 70        |
+| `space >= ref - 10` | 45        |
+| `space >= ref - 20` | 25        |
+| `space < ref - 20`  | 0         |
 
 Onde `ref` para pontuacao global = 152 cm e para pontuacao personalizada = `user.turning_radius_needed`.
 
 #### `counter_height_score(counter_height_cm, has_low_counter)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_low_counter = true` e `counter_height <= 86` | 100 |
-| `has_low_counter = true` e `counter_height <= 91` | 80 |
-| `counter_height <= 91` (sem balcao rebaixado mas altura aceitavel) | 60 |
-| `counter_height <= 100` | 30 |
-| `counter_height > 100` e `has_low_counter = false` | 10 |
+| Condicao                                                           | Pontuacao |
+| ------------------------------------------------------------------ | --------- |
+| `has_low_counter = true` e `counter_height <= 86`                  | 100       |
+| `has_low_counter = true` e `counter_height <= 91`                  | 80        |
+| `counter_height <= 91` (sem balcao rebaixado mas altura aceitavel) | 60        |
+| `counter_height <= 100`                                            | 30        |
+| `counter_height > 100` e `has_low_counter = false`                 | 10        |
 
 Limiar: ADA 904.4 exige <= 91.4 cm (36 pol.) para balcao acessivel.
 
 #### `interior_steps_score(has_interior_steps, interior_step_count)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_interior_steps = false` | 100 |
-| `interior_step_count = 1` e altura <= 2 cm | 60 |
-| `interior_step_count = 1` e altura <= 5 cm | 30 |
-| `interior_step_count >= 2` e `has_elevator = true` | 50 |
-| `interior_step_count >= 2` e `has_elevator = false` | 0 |
+| Condicao                                            | Pontuacao |
+| --------------------------------------------------- | --------- |
+| `has_interior_steps = false`                        | 100       |
+| `interior_step_count = 1` e altura <= 2 cm          | 60        |
+| `interior_step_count = 1` e altura <= 5 cm          | 30        |
+| `interior_step_count >= 2` e `has_elevator = true`  | 50        |
+| `interior_step_count >= 2` e `has_elevator = false` | 0         |
 
 #### `elevator_score(has_elevator, elevator_door_width, elevator_cabin_width, elevator_cabin_depth)`
 
 So aplicavel se o restaurante tem pisos multiplos. Se for espaco unico sem degraus, score = 100.
 
-| Condicao | Pontuacao |
-|---|---|
-| Sem necessidade de elevador (piso unico) | 100 |
-| `has_elevator` e `door_width >= 91` e `cabin_width >= 170` e `cabin_depth >= 137` | 100 |
-| `has_elevator` e `door_width >= 80` e `cabin_width >= 140` e `cabin_depth >= 120` | 70 |
-| `has_elevator` e dimensoes menores que acima | 40 |
-| `has_elevator = false` e restaurante multipiso | 0 |
+| Condicao                                                                          | Pontuacao |
+| --------------------------------------------------------------------------------- | --------- |
+| Sem necessidade de elevador (piso unico)                                          | 100       |
+| `has_elevator` e `door_width >= 91` e `cabin_width >= 170` e `cabin_depth >= 137` | 100       |
+| `has_elevator` e `door_width >= 80` e `cabin_width >= 140` e `cabin_depth >= 120` | 70        |
+| `has_elevator` e dimensoes menores que acima                                      | 40        |
+| `has_elevator = false` e restaurante multipiso                                    | 0         |
 
 ### 3.4 Mesas (Seating Score)
 
-```
+```plaintext
 seating_score = (
   accessible_tables_score × 0.25 +
   table_height_score × 0.20 +
@@ -441,57 +467,57 @@ seating_score = (
 
 #### `accessible_tables_score(has_accessible_tables, accessible_table_count, total_context)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_accessible_tables` e `count >= 4` | 100 |
-| `has_accessible_tables` e `count >= 2` | 80 |
-| `has_accessible_tables` e `count = 1` | 50 |
-| `has_accessible_tables = false` | 0 |
+| Condicao                               | Pontuacao |
+| -------------------------------------- | --------- |
+| `has_accessible_tables` e `count >= 4` | 100       |
+| `has_accessible_tables` e `count >= 2` | 80        |
+| `has_accessible_tables` e `count = 1`  | 50        |
+| `has_accessible_tables = false`        | 0         |
 
 #### `table_height_score(table_height_cm)`
 
-| Altura (cm) | Pontuacao | Referencia |
-|---|---|---|
-| `71 <= height <= 86` | 100 | Faixa ADA 902.3 |
-| `68 <= height < 71` ou `86 < height <= 90` | 70 | Aceitavel |
-| `65 <= height < 68` ou `90 < height <= 95` | 40 | Desconfortavel |
-| Fora destes limites | 10 | Inacessivel |
+| Altura (cm)                                | Pontuacao | Referencia      |
+| ------------------------------------------ | --------- | --------------- |
+| `71 <= height <= 86`                       | 100       | Faixa ADA 902.3 |
+| `68 <= height < 71` ou `86 < height <= 90` | 70        | Aceitavel       |
+| `65 <= height < 68` ou `90 < height <= 95` | 40        | Desconfortavel  |
+| Fora destes limites                        | 10        | Inacessivel     |
 
 #### `under_clearance_score(under_table_clearance_cm)`
 
 Espaco livre sob a mesa para joelhos e pernas de quem esta em cadeira de rodas.
 
-| Altura livre (cm) | Pontuacao | Referencia |
-|---|---|---|
-| `>= 73` | 100 | Confortavel |
-| `>= 68.5` | 80 | Minimo ADA 306.3 (27 pol.) |
-| `>= 65` | 50 | Apertado mas possivel |
-| `>= 60` | 25 | Muito apertado |
-| `< 60` | 0 | Inacessivel |
+| Altura livre (cm) | Pontuacao | Referencia                 |
+| ----------------- | --------- | -------------------------- |
+| `>= 73`           | 100       | Confortavel                |
+| `>= 68.5`         | 80        | Minimo ADA 306.3 (27 pol.) |
+| `>= 65`           | 50        | Apertado mas possivel      |
+| `>= 60`           | 25        | Muito apertado             |
+| `< 60`            | 0         | Inacessivel                |
 
 #### `spacing_score(space_between_tables_cm)`
 
-| Espaco (cm) | Pontuacao | Referencia |
-|---|---|---|
-| `>= 120` | 100 | Passagem confortavel para cadeira electrica |
-| `>= 90` | 75 | ISO 21542: passagem minima para cadeira de rodas |
-| `>= 75` | 40 | Apertado, possivel com cadeira manual |
-| `>= 60` | 15 | Apenas bengala/muletas |
-| `< 60` | 0 | Inacessivel para mobilidade reduzida |
+| Espaco (cm) | Pontuacao | Referencia                                       |
+| ----------- | --------- | ------------------------------------------------ |
+| `>= 120`    | 100       | Passagem confortavel para cadeira electrica      |
+| `>= 90`     | 75        | ISO 21542: passagem minima para cadeira de rodas |
+| `>= 75`     | 40        | Apertado, possivel com cadeira manual            |
+| `>= 60`     | 15        | Apenas bengala/muletas                           |
+| `< 60`      | 0         | Inacessivel para mobilidade reduzida             |
 
 #### `outdoor_score(has_outdoor_seating, outdoor_seating_accessible)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_outdoor_seating` e `outdoor_seating_accessible` | 100 |
-| `has_outdoor_seating` e `outdoor_seating_accessible = false` | 30 |
-| `has_outdoor_seating = false` | 50 |
+| Condicao                                                     | Pontuacao |
+| ------------------------------------------------------------ | --------- |
+| `has_outdoor_seating` e `outdoor_seating_accessible`         | 100       |
+| `has_outdoor_seating` e `outdoor_seating_accessible = false` | 30        |
+| `has_outdoor_seating = false`                                | 50        |
 
 Nota: Ausencia de esplanada nao e penalizada fortemente; e uma alternativa, nao um requisito.
 
 ### 3.5 Casa de Banho (Bathroom Score)
 
-```
+```plaintext
 bathroom_score = (
   accessible_bathroom_score × 0.20 +
   bathroom_door_width_score × 0.15 +
@@ -506,22 +532,22 @@ bathroom_score = (
 
 #### `accessible_bathroom_score(has_accessible_bathroom)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_accessible_bathroom = true` | 100 |
-| `has_accessible_bathroom = false` | 0 |
+| Condicao                          | Pontuacao |
+| --------------------------------- | --------- |
+| `has_accessible_bathroom = true`  | 100       |
+| `has_accessible_bathroom = false` | 0         |
 
 #### `bathroom_door_width_score(bathroom_door_width_cm, wheelchair_width_cm)`
 
 Mesma formula que `door_width_score` da seccao 3.1, com os mesmos limiares relativos a largura de referencia.
 
-| Condicao | Pontuacao |
-|---|---|
-| `door_width >= ref_width + 15` | 100 |
-| `door_width >= ref_width + 5` | 75 |
-| `door_width >= ref_width` | 50 |
-| `door_width >= ref_width - 5` | 25 |
-| `door_width < ref_width - 5` | 0 |
+| Condicao                       | Pontuacao |
+| ------------------------------ | --------- |
+| `door_width >= ref_width + 15` | 100       |
+| `door_width >= ref_width + 5`  | 75        |
+| `door_width >= ref_width`      | 50        |
+| `door_width >= ref_width - 5`  | 25        |
+| `door_width < ref_width - 5`   | 0         |
 
 Onde `ref_width` para pontuacao global = 80 cm (ISO 21542) e para pontuacao personalizada = `user.wheelchair_width`.
 
@@ -529,70 +555,70 @@ Onde `ref_width` para pontuacao global = 80 cm (ISO 21542) e para pontuacao pers
 
 Mesma formula que `turning_space_score` da seccao 3.3.
 
-| Condicao | Pontuacao |
-|---|---|
-| `space >= ref + 30` | 100 |
-| `space >= ref + 10` | 85 |
-| `space >= ref` | 70 |
-| `space >= ref - 10` | 45 |
-| `space >= ref - 20` | 25 |
-| `space < ref - 20` | 0 |
+| Condicao            | Pontuacao |
+| ------------------- | --------- |
+| `space >= ref + 30` | 100       |
+| `space >= ref + 10` | 85        |
+| `space >= ref`      | 70        |
+| `space >= ref - 10` | 45        |
+| `space >= ref - 20` | 25        |
+| `space < ref - 20`  | 0         |
 
 Onde `ref` para pontuacao global = 152 cm e para pontuacao personalizada = `user.turning_radius_needed`.
 
 #### `grab_bars_score(has_grab_bars, grab_bar_side, user_transfer_side)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_grab_bars` e `grab_bar_side = "both"` | 100 |
-| `has_grab_bars` e lado corresponde ao `user_transfer_side` | 90 |
-| `has_grab_bars` e lado nao corresponde | 50 |
-| `has_grab_bars = false` | 0 |
+| Condicao                                                   | Pontuacao |
+| ---------------------------------------------------------- | --------- |
+| `has_grab_bars` e `grab_bar_side = "both"`                 | 100       |
+| `has_grab_bars` e lado corresponde ao `user_transfer_side` | 90        |
+| `has_grab_bars` e lado nao corresponde                     | 50        |
+| `has_grab_bars = false`                                    | 0         |
 
 Para a pontuacao global (sem perfil), `grab_bar_side = "both"` recebe 100 e qualquer lado unico recebe 70.
 
 #### `toilet_height_score(toilet_seat_height_cm)`
 
-| Altura (cm) | Pontuacao | Referencia |
-|---|---|---|
-| `43 <= height <= 48` | 100 | Faixa ADA 604.4 |
-| `40 <= height < 43` ou `48 < height <= 52` | 70 | Aceitavel |
-| `36 <= height < 40` ou `52 < height <= 56` | 40 | Desconfortavel |
-| Fora destes limites | 10 | Transferencia muito dificil |
+| Altura (cm)                                | Pontuacao | Referencia                  |
+| ------------------------------------------ | --------- | --------------------------- |
+| `43 <= height <= 48`                       | 100       | Faixa ADA 604.4             |
+| `40 <= height < 43` ou `48 < height <= 52` | 70        | Aceitavel                   |
+| `36 <= height < 40` ou `52 < height <= 56` | 40        | Desconfortavel              |
+| Fora destes limites                        | 10        | Transferencia muito dificil |
 
 #### `sink_score(sink_height_cm, has_knee_space, faucet_type)`
 
-| Componente | Condicao | Pontuacao parcial |
-|---|---|---|
-| Altura | `sink_height <= 86` | 40 |
-| Altura | `86 < sink_height <= 91` | 25 |
-| Altura | `sink_height > 91` | 5 |
-| Espaco para joelhos | `has_knee_space = true` | 30 |
-| Espaco para joelhos | `has_knee_space = false` | 0 |
-| Torneira | `faucet_type = "sensor"` | 30 |
-| Torneira | `faucet_type = "lever"` | 25 |
-| Torneira | `faucet_type = "knob"` | 10 |
+| Componente          | Condicao                 | Pontuacao parcial |
+| ------------------- | ------------------------ | ----------------- |
+| Altura              | `sink_height <= 86`      | 40                |
+| Altura              | `86 < sink_height <= 91` | 25                |
+| Altura              | `sink_height > 91`       | 5                 |
+| Espaco para joelhos | `has_knee_space = true`  | 30                |
+| Espaco para joelhos | `has_knee_space = false` | 0                 |
+| Torneira            | `faucet_type = "sensor"` | 30                |
+| Torneira            | `faucet_type = "lever"`  | 25                |
+| Torneira            | `faucet_type = "knob"`   | 10                |
 
 Score total = soma das tres componentes (maximo 100).
 
 #### `same_floor_score(bathroom_on_same_floor)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `bathroom_on_same_floor = true` | 100 |
-| `bathroom_on_same_floor = false` e `has_elevator = true` | 50 |
-| `bathroom_on_same_floor = false` e `has_elevator = false` | 0 |
+| Condicao                                                  | Pontuacao |
+| --------------------------------------------------------- | --------- |
+| `bathroom_on_same_floor = true`                           | 100       |
+| `bathroom_on_same_floor = false` e `has_elevator = true`  | 50        |
+| `bathroom_on_same_floor = false` e `has_elevator = false` | 0         |
 
 #### `emergency_button_score(has_emergency_button)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `has_emergency_button = true` | 100 |
-| `has_emergency_button = false` | 0 |
+| Condicao                       | Pontuacao |
+| ------------------------------ | --------- |
+| `has_emergency_button = true`  | 100       |
+| `has_emergency_button = false` | 0         |
 
 ### 3.6 Comunicacao (Communication Score)
 
-```
+```plaintext
 communication_score = (
   menu_format_score × 0.40 +
   staff_training_score × 0.35 +
@@ -604,30 +630,31 @@ communication_score = (
 
 Cada formato acessivel contribui para a pontuacao. Os formatos sao cumulativos.
 
-| Formato | Pontuacao |
-|---|---|
-| `has_digital_menu` ou `has_qr_code_menu` | +35 |
-| `has_large_print_menu` | +25 |
-| `has_picture_menu` | +25 |
-| `has_braille_menu` | +15 |
+| Formato                                  | Pontuacao |
+| ---------------------------------------- | --------- |
+| `has_digital_menu` ou `has_qr_code_menu` | +35       |
+| `has_large_print_menu`                   | +25       |
+| `has_picture_menu`                       | +25       |
+| `has_braille_menu`                       | +15       |
 
 Score = min(100, soma dos formatos disponiveis). Se nenhum formato acessivel esta disponivel, score = 0.
 
 #### `staff_training_score(staff_trained_in_accessibility)`
 
-| Condicao | Pontuacao |
-|---|---|
-| `staff_trained = true` | 100 |
-| `staff_trained = false` | 0 |
+| Condicao                | Pontuacao |
+| ----------------------- | --------- |
+| `staff_trained = true`  | 100       |
+| `staff_trained = false` | 0         |
 
 #### `signage_score(has_hearing_loop, mirror_at_wheelchair_height)`
 
-| Componente | Condicao | Pontuacao parcial |
-|---|---|---|
-| Anel de inducao | `has_hearing_loop = true` | 50 |
-| Espelho acessivel | `has_mirror_at_wheelchair_height = true` | 50 |
+| Componente        | Condicao                                 | Pontuacao parcial |
+| ----------------- | ---------------------------------------- | ----------------- |
+| Anel de inducao   | `has_hearing_loop = true`                | 50                |
+| Espelho acessivel | `has_mirror_at_wheelchair_height = true` | 50                |
 
-Score total = soma (maximo 100). Nota: campo `has_hearing_loop` utilizado como proxy para investimento em comunicacao acessivel.
+Score total = soma (maximo 100). Nota: campo `has_hearing_loop` utilizado como proxy para investimento em comunicacao
+acessivel.
 
 ---
 
@@ -635,13 +662,14 @@ Score total = soma (maximo 100). Nota: campo `has_hearing_loop` utilizado como p
 
 ### 4.1 Formula geral
 
-```
+```plaintext
 pontuacao_personalizada = Sigma(score_categoria_i x peso_personalizado_i) x multiplicador_verificacao
 ```
 
 Onde:
 
-- `score_categoria_i` = pontuacao da categoria i recalculada com as dimensoes do utilizador (ex: `door_width_score` usa `user.wheelchair_width` em vez de 80 cm)
+- `score_categoria_i` = pontuacao da categoria i recalculada com as dimensoes do utilizador (ex: `door_width_score` usa
+  `user.wheelchair_width` em vez de 80 cm)
 - `peso_personalizado_i` = peso da categoria ajustado ao tipo de mobilidade do utilizador (tabela da seccao 2.2)
 - `multiplicador_verificacao` = factor de confianca baseado na fonte dos dados e idade da verificacao
 
@@ -649,28 +677,29 @@ Onde:
 
 O multiplicador reflecte a confianca que o sistema tem nos dados. Dados nao verificados ou antigos sao penalizados.
 
-| Fonte de dados | Multiplicador base |
-|---|---|
-| Verificacao profissional (`professionally_verified`) | 1.00 |
-| Verificacao comunitaria com 3+ relatorios concordantes (`community_verified`) | 0.90 |
-| Autoavaliacao pelo proprietario (`owner`) | 0.75 |
-| Analise por IA a partir de fotografias (`ai_analysis`) | 0.60 |
-| Dado nao verificado (reporte unico da comunidade) (`community` + `unverified`) | 0.50 |
+| Fonte de dados                                                                 | Multiplicador base |
+| ------------------------------------------------------------------------------ | ------------------ |
+| Verificacao profissional (`professionally_verified`)                           | 1.00               |
+| Verificacao comunitaria com 3+ relatorios concordantes (`community_verified`)  | 0.90               |
+| Autoavaliacao pelo proprietario (`owner`)                                      | 0.75               |
+| Analise por IA a partir de fotografias (`ai_analysis`)                         | 0.60               |
+| Dado nao verificado (reporte unico da comunidade) (`community` + `unverified`) | 0.50               |
 
 ### 4.3 Criterios eliminatorios
 
 Antes de calcular a pontuacao, o sistema verifica condicoes eliminatorias que geram avisos criticos:
 
-| Condicao | Aviso |
-|---|---|
-| `entrance_door_width < user.wheelchair_width + 4` | "Porta da entrada demasiado estreita para a sua cadeira" |
-| `num_steps > 0` e `has_ramp = false` e `user.max_step_height = 0` | "Sem acesso ao nivel -- degraus sem rampa" |
-| `ramp_incline > user.max_ramp_incline` | "Inclinacao da rampa superior ao seu limite" |
-| `bathroom_door_width < user.wheelchair_width + 4` | "Porta da casa de banho demasiado estreita" |
-| `bathroom_turning_space < user.turning_radius_needed - 20` | "Espaco de rotacao na casa de banho insuficiente" |
-| `corridor_min_width < user.wheelchair_width + 10` | "Corredores demasiado estreitos" |
+| Condicao                                                          | Aviso                                                    |
+| ----------------------------------------------------------------- | -------------------------------------------------------- |
+| `entrance_door_width < user.wheelchair_width + 4`                 | "Porta da entrada demasiado estreita para a sua cadeira" |
+| `num_steps > 0` e `has_ramp = false` e `user.max_step_height = 0` | "Sem acesso ao nivel -- degraus sem rampa"               |
+| `ramp_incline > user.max_ramp_incline`                            | "Inclinacao da rampa superior ao seu limite"             |
+| `bathroom_door_width < user.wheelchair_width + 4`                 | "Porta da casa de banho demasiado estreita"              |
+| `bathroom_turning_space < user.turning_radius_needed - 20`        | "Espaco de rotacao na casa de banho insuficiente"        |
+| `corridor_min_width < user.wheelchair_width + 10`                 | "Corredores demasiado estreitos"                         |
 
-Os avisos criticos sao apresentados independentemente da pontuacao numrica. Um restaurante pode ter pontuacao personalizada de 70/100 mas com um aviso critico na casa de banho.
+Os avisos criticos sao apresentados independentemente da pontuacao numrica. Um restaurante pode ter pontuacao
+personalizada de 70/100 mas com um aviso critico na casa de banho.
 
 ---
 
@@ -678,20 +707,21 @@ Os avisos criticos sao apresentados independentemente da pontuacao numrica. Um r
 
 ### 5.1 Limiares globais
 
-| Cor | Pontuacao | Significado |
-|---|---|---|
-| Verde | >= 75 | Acessivel -- poucas ou nenhumas barreiras significativas |
-| Amarelo | >= 40 e < 75 | Parcialmente acessivel -- barreiras existentes, verificar detalhes |
-| Vermelho | < 40 | Barreiras significativas -- provavel dificuldade de acesso |
-| Cinzento | -- | Sem dados suficientes para classificar |
+| Cor      | Pontuacao    | Significado                                                        |
+| -------- | ------------ | ------------------------------------------------------------------ |
+| Verde    | >= 75        | Acessivel -- poucas ou nenhumas barreiras significativas           |
+| Amarelo  | >= 40 e < 75 | Parcialmente acessivel -- barreiras existentes, verificar detalhes |
+| Vermelho | < 40         | Barreiras significativas -- provavel dificuldade de acesso         |
+| Cinzento | --           | Sem dados suficientes para classificar                             |
 
 ### 5.2 Semaforo por categoria
 
-Cada categoria tem o seu proprio semaforo, utilizando os mesmos limiares. Isto permite ao utilizador identificar rapidamente onde estao os problemas.
+Cada categoria tem o seu proprio semaforo, utilizando os mesmos limiares. Isto permite ao utilizador identificar
+rapidamente onde estao os problemas.
 
 Exemplo de apresentacao:
 
-```
+```plaintext
 Entrada:       [VERDE]   85/100
 Estacionamento:[VERDE]   90/100
 Interior:      [AMARELO] 62/100
@@ -702,11 +732,13 @@ Comunicacao:   [AMARELO] 55/100
 
 ### 5.3 Semaforo personalizado
 
-O semaforo personalizado usa a pontuacao personalizada e pode diferir do semaforo global. Um restaurante pode ser VERDE globalmente mas AMARELO ou VERMELHO para um perfil especifico.
+O semaforo personalizado usa a pontuacao personalizada e pode diferir do semaforo global. Um restaurante pode ser VERDE
+globalmente mas AMARELO ou VERMELHO para um perfil especifico.
 
 ### 5.4 Condicao "Cinzento" (dados insuficientes)
 
 Um restaurante e classificado como Cinzento quando:
+
 - Menos de 3 subcritrios preenchidos na categoria (semaforo da categoria)
 - Menos de 3 categorias com dados (semaforo global)
 - Todos os dados provem de fonte unica nao verificada com mais de 12 meses
@@ -717,7 +749,7 @@ Um restaurante e classificado como Cinzento quando:
 
 ### 6.1 Fluxo de verificacao
 
-```
+```plaintext
 1. PROPRIETARIO SUBMETE DADOS
    Estado: "owner" + "unverified"
    Multiplicador: 0.75
@@ -775,30 +807,31 @@ O verificador profissional segue um protocolo estruturado:
 A fiabilidade dos dados degrada-se ao longo do tempo. O multiplicador de verificacao e ajustado pela idade dos dados:
 
 | Idade dos dados | Factor de decay | Multiplicador resultante (exemplo: profissional) |
-|---|---|---|
-| 0 - 6 meses | 1.00 | 1.00 x 1.00 = 1.00 |
-| 6 - 12 meses | 0.90 | 1.00 x 0.90 = 0.90 |
-| 12 - 18 meses | 0.80 | 1.00 x 0.80 = 0.80 |
-| 18 - 24 meses | 0.65 | 1.00 x 0.65 = 0.65 |
-| > 24 meses | 0.50 | 1.00 x 0.50 = 0.50 |
+| --------------- | --------------- | ------------------------------------------------ |
+| 0 - 6 meses     | 1.00            | 1.00 x 1.00 = 1.00                               |
+| 6 - 12 meses    | 0.90            | 1.00 x 0.90 = 0.90                               |
+| 12 - 18 meses   | 0.80            | 1.00 x 0.80 = 0.80                               |
+| 18 - 24 meses   | 0.65            | 1.00 x 0.65 = 0.65                               |
+| > 24 meses      | 0.50            | 1.00 x 0.50 = 0.50                               |
 
 ### 7.2 Formula de decay
 
-```
+```plaintext
 decay_factor = max(0.50, 1.0 - (months_since_verification / 48))
 effective_multiplier = base_multiplier × decay_factor
 ```
 
-Onde `months_since_verification` e o numero de meses desde a ultima verificacao e `base_multiplier` e o multiplicador da fonte de dados. O factor minimo e 0.50 (nunca desce abaixo de metade).
+Onde `months_since_verification` e o numero de meses desde a ultima verificacao e `base_multiplier` e o multiplicador da
+fonte de dados. O factor minimo e 0.50 (nunca desce abaixo de metade).
 
 ### 7.3 Eventos que activam re-verificacao
 
-| Evento | Accao |
-|---|---|
-| Proprietario reporta renovacao/obras | Reset do estado para "unverified"; alerta aos verificadores |
-| Utilizador sinaliza "informacao parece desactualizada" | Flag no restaurante; 3+ flags = destaque para re-verificacao |
-| Decay atinge 0.65 (18+ meses) | Alerta automatico: "dados com mais de 18 meses -- verificacao recomendada" |
-| Dados contraditrios entre fontes | Flag para revisao manual |
+| Evento                                                 | Accao                                                                      |
+| ------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Proprietario reporta renovacao/obras                   | Reset do estado para "unverified"; alerta aos verificadores                |
+| Utilizador sinaliza "informacao parece desactualizada" | Flag no restaurante; 3+ flags = destaque para re-verificacao               |
+| Decay atinge 0.65 (18+ meses)                          | Alerta automatico: "dados com mais de 18 meses -- verificacao recomendada" |
+| Dados contraditrios entre fontes                       | Flag para revisao manual                                                   |
 
 ---
 
@@ -807,6 +840,7 @@ Onde `months_since_verification` e o numero de meses desde a ultima verificacao 
 ### 8.1 Exemplo completo de calculo
 
 **Perfil do utilizador (Joao):**
+
 - Tipo de mobilidade: `electric_wheelchair`
 - Largura da cadeira: 68 cm
 - Comprimento da cadeira: 110 cm
@@ -818,114 +852,118 @@ Onde `months_since_verification` e o numero de meses desde a ultima verificacao 
 - Lado de transferencia: esquerdo
 
 **Dados do restaurante (Restaurante Exemplo):**
+
 - Entrada: porta 85 cm, sem degraus, entrada ao nivel, superficie lisa, boa iluminacao
-- Estacionamento: 1 lugar acessivel, 30 m de distancia, largura 300 cm, com corredor de acesso 130 cm, asfalto, sem zona de largada
-- Interior: corredor 110 cm, piso em madeira anti-derrapante, espaco de rotacao 155 cm, balcao 95 cm sem balcao rebaixado, sem degraus interiores
+- Estacionamento: 1 lugar acessivel, 30 m de distancia, largura 300 cm, com corredor de acesso 130 cm, asfalto, sem zona
+  de largada
+- Interior: corredor 110 cm, piso em madeira anti-derrapante, espaco de rotacao 155 cm, balcao 95 cm sem balcao
+  rebaixado, sem degraus interiores
 - Mesas: 3 mesas acessiveis, altura 75 cm, espaco livre 70 cm, espaco entre mesas 100 cm, com esplanada acessivel
-- Casa de banho: acessivel, porta 75 cm, espaco de rotacao 140 cm, barras de apoio do lado esquerdo, sanita 45 cm, lavatorio 84 cm com espaco para joelhos, torneira de alavanca, mesmo piso, sem botao de emergencia
+- Casa de banho: acessivel, porta 75 cm, espaco de rotacao 140 cm, barras de apoio do lado esquerdo, sanita 45 cm,
+  lavatorio 84 cm com espaco para joelhos, torneira de alavanca, mesmo piso, sem botao de emergencia
 - Comunicacao: menu digital, menu com fotografias, pessoal nao formado, sem anel de inducao
 - Verificacao: `community_verified`, ultima verificacao ha 4 meses
 
 ### 8.2 Calculo passo a passo
 
-**Pesos para cadeira electrica (seccao 2.2):**
-Entrada=0.25, Estacionamento=0.10, Interior=0.20, Mesas=0.10, WC=0.30, Comunicacao=0.05
+**Pesos para cadeira electrica (seccao 2.2):** Entrada=0.25, Estacionamento=0.10, Interior=0.20, Mesas=0.10, WC=0.30,
+Comunicacao=0.05
 
 #### Categoria: Entrada
 
-| Subcritrio | Calculo | Score |
-|---|---|---|
-| `accessible_entrance_score` | `has_accessible = true`, `has_level_entrance = true` | 100 |
-| `door_width_score` | 85 >= 68 + 15 (83) => sim | 100 |
-| `step_score` | `num_steps = 0` | 100 |
-| `surface_score` | `smooth` | 100 |
-| `ramp_quality_score` | Sem degraus (entrada ao nivel) | 100 |
-| `lighting_score` | `well_lit` | 100 |
+| Subcritrio                  | Calculo                                              | Score |
+| --------------------------- | ---------------------------------------------------- | ----- |
+| `accessible_entrance_score` | `has_accessible = true`, `has_level_entrance = true` | 100   |
+| `door_width_score`          | 85 >= 68 + 15 (83) => sim                            | 100   |
+| `step_score`                | `num_steps = 0`                                      | 100   |
+| `surface_score`             | `smooth`                                             | 100   |
+| `ramp_quality_score`        | Sem degraus (entrada ao nivel)                       | 100   |
+| `lighting_score`            | `well_lit`                                           | 100   |
 
-```
+```plaintext
 entrance_score = 100×0.30 + 100×0.20 + 100×0.25 + 100×0.10 + 100×0.10 + 100×0.05 = 100.0
 ```
 
 #### Categoria: Estacionamento
 
-| Subcritrio | Calculo | Score |
-|---|---|---|
-| `accessible_parking_score` | 1 lugar acessivel | 80 |
-| `distance_score` | 30 m <= 50 | 80 |
-| `space_width_score` | 300 >= 280 | 60 |
-| `access_aisle_score` | `has_aisle = true`, 130 >= 120 | 70 |
-| `parking_surface_score` | `asphalt` | 100 |
-| `dropoff_score` | `has_dropoff = false` | 0 |
+| Subcritrio                 | Calculo                        | Score |
+| -------------------------- | ------------------------------ | ----- |
+| `accessible_parking_score` | 1 lugar acessivel              | 80    |
+| `distance_score`           | 30 m <= 50                     | 80    |
+| `space_width_score`        | 300 >= 280                     | 60    |
+| `access_aisle_score`       | `has_aisle = true`, 130 >= 120 | 70    |
+| `parking_surface_score`    | `asphalt`                      | 100   |
+| `dropoff_score`            | `has_dropoff = false`          | 0     |
 
-```
+```plaintext
 parking_score = 80×0.35 + 80×0.20 + 60×0.15 + 70×0.15 + 100×0.10 + 0×0.05
              = 28.0 + 16.0 + 9.0 + 10.5 + 10.0 + 0.0 = 73.5
 ```
 
 #### Categoria: Interior
 
-| Subcritrio | Calculo | Score |
-|---|---|---|
-| `corridor_width_score` | 110 >= 90 => 65. Personalizado: 110 >= 68+10=78 => largura OK; uso tabela: 110 >= 90 | 65 |
-| `floor_score` | `wood` + `is_non_slip` = 75 + 15 = 90 | 90 |
-| `turning_space_score` | 155 >= 150+0; 155 >= ref(150)+10? Nao (155 < 160). 155 >= ref(150)? Sim | 70 |
-| `counter_height_score` | 95 <= 100, `has_low_counter = false` | 30 |
-| `interior_steps_score` | `has_interior_steps = false` | 100 |
-| `elevator_score` | Piso unico | 100 |
+| Subcritrio             | Calculo                                                                              | Score |
+| ---------------------- | ------------------------------------------------------------------------------------ | ----- |
+| `corridor_width_score` | 110 >= 90 => 65. Personalizado: 110 >= 68+10=78 => largura OK; uso tabela: 110 >= 90 | 65    |
+| `floor_score`          | `wood` + `is_non_slip` = 75 + 15 = 90                                                | 90    |
+| `turning_space_score`  | 155 >= 150+0; 155 >= ref(150)+10? Nao (155 < 160). 155 >= ref(150)? Sim              | 70    |
+| `counter_height_score` | 95 <= 100, `has_low_counter = false`                                                 | 30    |
+| `interior_steps_score` | `has_interior_steps = false`                                                         | 100   |
+| `elevator_score`       | Piso unico                                                                           | 100   |
 
-```
+```plaintext
 interior_score = 65×0.25 + 90×0.15 + 70×0.30 + 30×0.10 + 100×0.15 + 100×0.05
               = 16.25 + 13.5 + 21.0 + 3.0 + 15.0 + 5.0 = 73.75
 ```
 
 #### Categoria: Mesas
 
-| Subcritrio | Calculo | Score |
-|---|---|---|
-| `accessible_tables_score` | 3 mesas >= 2 | 80 |
-| `table_height_score` | 75 cm, 71 <= 75 <= 86 | 100 |
-| `under_clearance_score` | 70 >= 68.5 | 80 |
-| `spacing_score` | 100 >= 90 | 75 |
-| `outdoor_score` | Esplanada acessivel | 100 |
+| Subcritrio                | Calculo               | Score |
+| ------------------------- | --------------------- | ----- |
+| `accessible_tables_score` | 3 mesas >= 2          | 80    |
+| `table_height_score`      | 75 cm, 71 <= 75 <= 86 | 100   |
+| `under_clearance_score`   | 70 >= 68.5            | 80    |
+| `spacing_score`           | 100 >= 90             | 75    |
+| `outdoor_score`           | Esplanada acessivel   | 100   |
 
-```
+```plaintext
 seating_score = 80×0.25 + 100×0.20 + 80×0.25 + 75×0.20 + 100×0.10
              = 20.0 + 20.0 + 20.0 + 15.0 + 10.0 = 85.0
 ```
 
 #### Categoria: Casa de Banho
 
-| Subcritrio | Calculo | Score |
-|---|---|---|
-| `accessible_bathroom_score` | `has_accessible = true` | 100 |
-| `bathroom_door_width_score` | 75 >= 68+5 (73)? Sim, 75 >= 73 => 75. 75 >= 68+15 (83)? Nao | 75 |
-| `turning_space_score` | 140 vs ref 150: 140 >= 150-10 (140) => sim, 140 >= 150? Nao | 45 |
-| `grab_bars_score` | `has_grab_bars`, lado esquerdo = transfer_side esquerdo | 90 |
-| `toilet_height_score` | 45 cm, 43 <= 45 <= 48 | 100 |
-| `sink_score` | 84 <= 86 (40) + knee_space (30) + lever (25) = 95 | 95 |
-| `same_floor_score` | Mesmo piso | 100 |
-| `emergency_button_score` | `has_emergency = false` | 0 |
+| Subcritrio                  | Calculo                                                     | Score |
+| --------------------------- | ----------------------------------------------------------- | ----- |
+| `accessible_bathroom_score` | `has_accessible = true`                                     | 100   |
+| `bathroom_door_width_score` | 75 >= 68+5 (73)? Sim, 75 >= 73 => 75. 75 >= 68+15 (83)? Nao | 75    |
+| `turning_space_score`       | 140 vs ref 150: 140 >= 150-10 (140) => sim, 140 >= 150? Nao | 45    |
+| `grab_bars_score`           | `has_grab_bars`, lado esquerdo = transfer_side esquerdo     | 90    |
+| `toilet_height_score`       | 45 cm, 43 <= 45 <= 48                                       | 100   |
+| `sink_score`                | 84 <= 86 (40) + knee_space (30) + lever (25) = 95           | 95    |
+| `same_floor_score`          | Mesmo piso                                                  | 100   |
+| `emergency_button_score`    | `has_emergency = false`                                     | 0     |
 
-```
+```plaintext
 bathroom_score = 100×0.20 + 75×0.15 + 45×0.20 + 90×0.15 + 100×0.10 + 95×0.10 + 100×0.05 + 0×0.05
               = 20.0 + 11.25 + 9.0 + 13.5 + 10.0 + 9.5 + 5.0 + 0.0 = 78.25
 ```
 
 #### Categoria: Comunicacao
 
-| Subcritrio | Calculo | Score |
-|---|---|---|
-| `menu_format_score` | digital (+35) + picture (+25) = 60 | 60 |
-| `staff_training_score` | `trained = false` | 0 |
-| `signage_score` | Nenhum: 0 | 0 |
+| Subcritrio             | Calculo                            | Score |
+| ---------------------- | ---------------------------------- | ----- |
+| `menu_format_score`    | digital (+35) + picture (+25) = 60 | 60    |
+| `staff_training_score` | `trained = false`                  | 0     |
+| `signage_score`        | Nenhum: 0                          | 0     |
 
-```
+```plaintext
 communication_score = 60×0.40 + 0×0.35 + 0×0.25 = 24.0
 ```
 
 #### Pontuacao personalizada final
 
-```
+```plaintext
 score = entrance(100.0)  × 0.25 +
         parking(73.5)    × 0.10 +
         interior(73.75)  × 0.20 +
@@ -937,16 +975,17 @@ score = entrance(100.0)  × 0.25 +
      = 80.275
 ```
 
-Multiplicador de verificacao: `community_verified` = 0.90, ha 4 meses = decay 1.00.
-Multiplicador efectivo = 0.90 x 1.00 = 0.90.
+Multiplicador de verificacao: `community_verified` = 0.90, ha 4 meses = decay 1.00. Multiplicador efectivo = 0.90 x 1.00
+= 0.90.
 
-```
+```plaintext
 pontuacao_final = 80.275 × 0.90 = 72.25
 ```
 
 **Resultado:** 72/100 -- AMARELO
 
 **Avisos gerados:**
+
 - Aviso: Porta da casa de banho tem 75 cm (sua cadeira: 68 cm, margem de apenas 7 cm)
 - Aviso critico: Espaco de rotacao na casa de banho e 140 cm (necessario: 150 cm -- apertado!)
 - OK: Entrada ao nivel sem degraus
@@ -959,7 +998,7 @@ pontuacao_final = 80.275 × 0.90 = 72.25
 
 ### 9.1 Vista resumida (cartao na lista de resultados)
 
-```
+```plaintext
 +------------------------------------------------------------------+
 |  RESTAURANTE EXEMPLO                          [AMARELO] 72/100   |
 |  Cozinha portuguesa | $$$ | 1.2 km                               |
@@ -971,13 +1010,14 @@ pontuacao_final = 80.275 × 0.90 = 72.25
 ```
 
 Componentes:
+
 - **Badge de pontuacao** com cor do semaforo e valor numrico
 - **Indicador "Para a sua cadeira"** com 1-2 alertas ou confirmacoes mais relevantes
 - **Tipo de cozinha, gama de preco e distancia** como contexto
 
 ### 9.2 Vista detalhada (pagina do restaurante)
 
-```
+```plaintext
 +------------------------------------------------------------------+
 |                    PONTUACAO DE ACESSIBILIDADE                    |
 +------------------------------------------------------------------+
@@ -1012,13 +1052,13 @@ Componentes:
 
 ### 9.3 Componentes visuais
 
-| Componente | Descricao |
-|---|---|
-| Badge de pontuacao global | Circulo com cor do semaforo, numero grande, texto "para si" ou "global" |
-| Barras de categoria | Barras horizontais proporcionais com cor do semaforo da categoria |
-| Lista de avisos | Icones de aviso (!) e confirmacao (OK) com texto conciso |
-| Comparacao global vs personalizada | Dois badges lado a lado quando diferem significativamente (>10 pontos) |
-| Indicador de confianca | Badge textual com fonte, data e proximo decay |
+| Componente                         | Descricao                                                               |
+| ---------------------------------- | ----------------------------------------------------------------------- |
+| Badge de pontuacao global          | Circulo com cor do semaforo, numero grande, texto "para si" ou "global" |
+| Barras de categoria                | Barras horizontais proporcionais com cor do semaforo da categoria       |
+| Lista de avisos                    | Icones de aviso (!) e confirmacao (OK) com texto conciso                |
+| Comparacao global vs personalizada | Dois badges lado a lado quando diferem significativamente (>10 pontos)  |
+| Indicador de confianca             | Badge textual com fonte, data e proximo decay                           |
 
 ---
 
@@ -1026,34 +1066,34 @@ Componentes:
 
 ### 10.1 Dimensoes tipicas de equipamentos de mobilidade
 
-| Equipamento | Largura (cm) | Comprimento (cm) | Peso c/ utilizador (kg) | Raio de viragem (cm) |
-|---|---|---|---|---|
-| Cadeira electrica (standard) | 60 - 68 | 100 - 110 | 120 - 180 | 150 - 170 |
-| Cadeira electrica (larga/bariatrica) | 68 - 80 | 105 - 120 | 180 - 250 | 170 - 200 |
-| Cadeira manual (standard) | 55 - 65 | 90 - 110 | 70 - 120 | 120 - 150 |
-| Cadeira manual (desportiva) | 50 - 60 | 80 - 100 | 60 - 100 | 100 - 130 |
-| Scooter motorizado (3 rodas) | 55 - 65 | 120 - 140 | 130 - 200 | 180 - 220 |
-| Scooter motorizado (4 rodas) | 55 - 70 | 125 - 145 | 140 - 220 | 200 - 250 |
-| Andarilho / rollator | 55 - 65 | 60 - 75 | N/A | 80 - 100 |
+| Equipamento                          | Largura (cm) | Comprimento (cm) | Peso c/ utilizador (kg) | Raio de viragem (cm) |
+| ------------------------------------ | ------------ | ---------------- | ----------------------- | -------------------- |
+| Cadeira electrica (standard)         | 60 - 68      | 100 - 110        | 120 - 180               | 150 - 170            |
+| Cadeira electrica (larga/bariatrica) | 68 - 80      | 105 - 120        | 180 - 250               | 170 - 200            |
+| Cadeira manual (standard)            | 55 - 65      | 90 - 110         | 70 - 120                | 120 - 150            |
+| Cadeira manual (desportiva)          | 50 - 60      | 80 - 100         | 60 - 100                | 100 - 130            |
+| Scooter motorizado (3 rodas)         | 55 - 65      | 120 - 140        | 130 - 200               | 180 - 220            |
+| Scooter motorizado (4 rodas)         | 55 - 70      | 125 - 145        | 140 - 220               | 200 - 250            |
+| Andarilho / rollator                 | 55 - 65      | 60 - 75          | N/A                     | 80 - 100             |
 
 ### 10.2 Limiares normativos por criterio
 
-| Criterio | ADA | ISO 21542 | DL 163/2006 (PT) | Recomendado | Minimo aceitavel | Inaceitavel |
-|---|---|---|---|---|---|---|
-| Largura da porta | >= 81.3 cm | >= 80 cm | >= 77 cm | >= 90 cm | >= 80 cm | < 75 cm |
-| Inclinacao da rampa | <= 8.33% | <= 6% (ideal) | <= 6% (ideal), max 8% | <= 6% | <= 8% | > 12% |
-| Largura da rampa | >= 91.4 cm | >= 120 cm | >= 120 cm | >= 120 cm | >= 90 cm | < 90 cm |
-| Espaco de rotacao | >= 152 cm | >= 150 cm | >= 150 cm | >= 170 cm | >= 150 cm | < 130 cm |
-| Largura do corredor | >= 91.4 cm | >= 120 cm | >= 120 cm | >= 120 cm | >= 90 cm | < 70 cm |
-| Altura da mesa | 71-86 cm | 71-86 cm | -- | 73-80 cm | 68-90 cm | < 65 ou > 95 |
-| Espaco livre sob mesa | >= 68.5 cm | >= 70 cm | -- | >= 73 cm | >= 68 cm | < 60 cm |
-| Espaco entre mesas | -- | >= 90 cm | >= 90 cm | >= 120 cm | >= 90 cm | < 60 cm |
-| Largura porta WC | >= 81.3 cm | >= 80 cm | >= 77 cm | >= 90 cm | >= 80 cm | < 75 cm |
-| Espaco rotacao WC | >= 152 cm | >= 150 cm | >= 150 cm | >= 170 cm | >= 150 cm | < 130 cm |
-| Altura da sanita | 43-48 cm | 43-48 cm | 45-50 cm | 45-48 cm | 40-52 cm | < 36 ou > 56 |
-| Altura do lavatorio | <= 86 cm | <= 85 cm | <= 80 cm | <= 80 cm | <= 86 cm | > 91 cm |
-| Lugar estacion. acessivel | >= 244 cm | >= 250 cm | >= 250 cm | >= 330 cm | >= 244 cm | < 244 cm |
-| Corredor acesso estacion. | >= 152 cm | >= 120 cm | >= 120 cm | >= 152 cm | >= 120 cm | < 100 cm |
+| Criterio                  | ADA        | ISO 21542     | DL 163/2006 (PT)      | Recomendado | Minimo aceitavel | Inaceitavel  |
+| ------------------------- | ---------- | ------------- | --------------------- | ----------- | ---------------- | ------------ |
+| Largura da porta          | >= 81.3 cm | >= 80 cm      | >= 77 cm              | >= 90 cm    | >= 80 cm         | < 75 cm      |
+| Inclinacao da rampa       | <= 8.33%   | <= 6% (ideal) | <= 6% (ideal), max 8% | <= 6%       | <= 8%            | > 12%        |
+| Largura da rampa          | >= 91.4 cm | >= 120 cm     | >= 120 cm             | >= 120 cm   | >= 90 cm         | < 90 cm      |
+| Espaco de rotacao         | >= 152 cm  | >= 150 cm     | >= 150 cm             | >= 170 cm   | >= 150 cm        | < 130 cm     |
+| Largura do corredor       | >= 91.4 cm | >= 120 cm     | >= 120 cm             | >= 120 cm   | >= 90 cm         | < 70 cm      |
+| Altura da mesa            | 71-86 cm   | 71-86 cm      | --                    | 73-80 cm    | 68-90 cm         | < 65 ou > 95 |
+| Espaco livre sob mesa     | >= 68.5 cm | >= 70 cm      | --                    | >= 73 cm    | >= 68 cm         | < 60 cm      |
+| Espaco entre mesas        | --         | >= 90 cm      | >= 90 cm              | >= 120 cm   | >= 90 cm         | < 60 cm      |
+| Largura porta WC          | >= 81.3 cm | >= 80 cm      | >= 77 cm              | >= 90 cm    | >= 80 cm         | < 75 cm      |
+| Espaco rotacao WC         | >= 152 cm  | >= 150 cm     | >= 150 cm             | >= 170 cm   | >= 150 cm        | < 130 cm     |
+| Altura da sanita          | 43-48 cm   | 43-48 cm      | 45-50 cm              | 45-48 cm    | 40-52 cm         | < 36 ou > 56 |
+| Altura do lavatorio       | <= 86 cm   | <= 85 cm      | <= 80 cm              | <= 80 cm    | <= 86 cm         | > 91 cm      |
+| Lugar estacion. acessivel | >= 244 cm  | >= 250 cm     | >= 250 cm             | >= 330 cm   | >= 244 cm        | < 244 cm     |
+| Corredor acesso estacion. | >= 152 cm  | >= 120 cm     | >= 120 cm             | >= 152 cm   | >= 120 cm        | < 100 cm     |
 
 ---
 
@@ -1075,22 +1115,13 @@ export type MobilityType =
   | "none"
   | "other";
 
-export type VerificationStatus =
-  | "unverified"
-  | "community_verified"
-  | "professionally_verified";
+export type VerificationStatus = "unverified" | "community_verified" | "professionally_verified";
 
 export type DataSource = "owner" | "community" | "import" | "ai_analysis";
 
 export type TrafficLight = "green" | "yellow" | "red" | "grey";
 
-export type ScoringCategory =
-  | "entrance"
-  | "parking"
-  | "interior"
-  | "seating"
-  | "bathroom"
-  | "communication";
+export type ScoringCategory = "entrance" | "parking" | "interior" | "seating" | "bathroom" | "communication";
 
 export interface CategoryWeights {
   entrance: number;
@@ -1261,9 +1292,7 @@ const VERIFICATION_MULTIPLIERS: Record<string, number> = {
 
 // --- Pesos por tipo de mobilidade ---
 
-export function getPersonalizedWeights(
-  mobilityType: MobilityType,
-): CategoryWeights {
+export function getPersonalizedWeights(mobilityType: MobilityType): CategoryWeights {
   const weights: Record<MobilityType, CategoryWeights> = {
     electric_wheelchair: {
       entrance: 0.25,
@@ -1384,8 +1413,7 @@ function calculateDecayFactor(lastVerifiedAt?: Date): number {
   if (!lastVerifiedAt) return 0.5; // sem data = maximo decay
 
   const now = new Date();
-  const monthsDiff =
-    (now.getTime() - lastVerifiedAt.getTime()) / (1000 * 60 * 60 * 24 * 30);
+  const monthsDiff = (now.getTime() - lastVerifiedAt.getTime()) / (1000 * 60 * 60 * 24 * 30);
 
   return Math.max(0.5, 1.0 - monthsDiff / 48);
 }
@@ -1401,10 +1429,7 @@ function doorWidthScore(doorWidth: number | undefined, refWidth: number): number
   return 0;
 }
 
-function turningSpaceScore(
-  space: number | undefined,
-  refSpace: number,
-): number {
+function turningSpaceScore(space: number | undefined, refSpace: number): number {
   if (space == null) return 0;
   if (space >= refSpace + 30) return 100;
   if (space >= refSpace + 10) return 85;
@@ -1439,10 +1464,7 @@ export function calculateCategoryScore(
   }
 }
 
-function calculateEntranceScore(
-  r: RestaurantAccessibilityProfile,
-  user?: UserProfile,
-): CategoryScore {
+function calculateEntranceScore(r: RestaurantAccessibilityProfile, user?: UserProfile): CategoryScore {
   const refWidth = user?.wheelchairWidth ?? GLOBAL_REF_DOOR_WIDTH;
   const subcriteria: SubcriterionScore[] = [];
 
@@ -1494,9 +1516,7 @@ function calculateEntranceScore(
     uneven: 15,
     grass: 10,
   };
-  const surfScore = r.exteriorSurfaceType
-    ? (surfaceScores[r.exteriorSurfaceType] ?? 40)
-    : 0;
+  const surfScore = r.exteriorSurfaceType ? (surfaceScores[r.exteriorSurfaceType] ?? 40) : 0;
   subcriteria.push({
     name: "Superficie exterior",
     score: surfScore,
@@ -1533,9 +1553,7 @@ function calculateEntranceScore(
     moderate: 60,
     poor: 20,
   };
-  const lightScore = r.entranceLighting
-    ? (lightingScores[r.entranceLighting] ?? 50)
-    : 0;
+  const lightScore = r.entranceLighting ? (lightingScores[r.entranceLighting] ?? 50) : 0;
   subcriteria.push({
     name: "Iluminacao",
     score: lightScore,
@@ -1543,10 +1561,7 @@ function calculateEntranceScore(
     value: r.entranceLighting,
   });
 
-  const totalScore = subcriteria.reduce(
-    (sum, s) => sum + s.score * s.weight,
-    0,
-  );
+  const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
   const filledFields = [
     r.hasAccessibleEntrance,
     r.entranceDoorWidth,
@@ -1565,16 +1580,12 @@ function calculateEntranceScore(
   };
 }
 
-function calculateParkingScore(
-  r: RestaurantAccessibilityProfile,
-  _user?: UserProfile,
-): CategoryScore {
+function calculateParkingScore(r: RestaurantAccessibilityProfile, _user?: UserProfile): CategoryScore {
   const subcriteria: SubcriterionScore[] = [];
 
   // accessible_parking_score
   let parkScore = 0;
-  if (r.accessibleParkingSpaces != null && r.accessibleParkingSpaces >= 2)
-    parkScore = 100;
+  if (r.accessibleParkingSpaces != null && r.accessibleParkingSpaces >= 2) parkScore = 100;
   else if (r.accessibleParkingSpaces === 1) parkScore = 80;
   else if (r.hasAccessibleParking === false) parkScore = 30;
   else parkScore = 0;
@@ -1639,9 +1650,7 @@ function calculateParkingScore(
     gravel: 20,
     other: 30,
   };
-  const surfScore = r.parkingSurfaceType
-    ? (surfaceScores[r.parkingSurfaceType] ?? 30)
-    : 0;
+  const surfScore = r.parkingSurfaceType ? (surfaceScores[r.parkingSurfaceType] ?? 30) : 0;
   subcriteria.push({
     name: "Superficie do parque",
     score: surfScore,
@@ -1658,10 +1667,7 @@ function calculateParkingScore(
     value: r.hasDropoffArea,
   });
 
-  const totalScore = subcriteria.reduce(
-    (sum, s) => sum + s.score * s.weight,
-    0,
-  );
+  const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
   const filledFields = [
     r.hasAccessibleParking,
     r.parkingDistanceToEntrance,
@@ -1680,10 +1686,7 @@ function calculateParkingScore(
   };
 }
 
-function calculateInteriorScore(
-  r: RestaurantAccessibilityProfile,
-  user?: UserProfile,
-): CategoryScore {
+function calculateInteriorScore(r: RestaurantAccessibilityProfile, user?: UserProfile): CategoryScore {
   const refTurning = user?.turningRadiusNeeded ?? GLOBAL_REF_TURNING_SPACE;
   const subcriteria: SubcriterionScore[] = [];
 
@@ -1723,8 +1726,7 @@ function calculateInteriorScore(
       uneven: 10,
       other: 15,
     };
-    floorScore = (baseScores[r.floorType] ?? 40) +
-      (r.isNonSlip ? (bonusScores[r.floorType] ?? 10) : 0);
+    floorScore = (baseScores[r.floorType] ?? 40) + (r.isNonSlip ? (bonusScores[r.floorType] ?? 10) : 0);
   }
   subcriteria.push({
     name: "Tipo de piso",
@@ -1804,10 +1806,7 @@ function calculateInteriorScore(
     value: r.hasElevator,
   });
 
-  const totalScore = subcriteria.reduce(
-    (sum, s) => sum + s.score * s.weight,
-    0,
-  );
+  const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
   const filledFields = [
     r.corridorMinWidth,
     r.floorType,
@@ -1826,10 +1825,7 @@ function calculateInteriorScore(
   };
 }
 
-function calculateSeatingScore(
-  r: RestaurantAccessibilityProfile,
-  _user?: UserProfile,
-): CategoryScore {
+function calculateSeatingScore(r: RestaurantAccessibilityProfile, _user?: UserProfile): CategoryScore {
   const subcriteria: SubcriterionScore[] = [];
 
   // accessible_tables_score
@@ -1850,15 +1846,9 @@ function calculateSeatingScore(
   let heightScore = 0;
   if (r.tableHeight != null) {
     if (r.tableHeight >= 71 && r.tableHeight <= 86) heightScore = 100;
-    else if (
-      (r.tableHeight >= 68 && r.tableHeight < 71) ||
-      (r.tableHeight > 86 && r.tableHeight <= 90)
-    )
+    else if ((r.tableHeight >= 68 && r.tableHeight < 71) || (r.tableHeight > 86 && r.tableHeight <= 90))
       heightScore = 70;
-    else if (
-      (r.tableHeight >= 65 && r.tableHeight < 68) ||
-      (r.tableHeight > 90 && r.tableHeight <= 95)
-    )
+    else if ((r.tableHeight >= 65 && r.tableHeight < 68) || (r.tableHeight > 90 && r.tableHeight <= 95))
       heightScore = 40;
     else heightScore = 10;
   }
@@ -1913,10 +1903,7 @@ function calculateSeatingScore(
     value: r.hasOutdoorSeating,
   });
 
-  const totalScore = subcriteria.reduce(
-    (sum, s) => sum + s.score * s.weight,
-    0,
-  );
+  const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
   const filledFields = [
     r.hasAccessibleTables,
     r.tableHeight,
@@ -1934,10 +1921,7 @@ function calculateSeatingScore(
   };
 }
 
-function calculateBathroomScore(
-  r: RestaurantAccessibilityProfile,
-  user?: UserProfile,
-): CategoryScore {
+function calculateBathroomScore(r: RestaurantAccessibilityProfile, user?: UserProfile): CategoryScore {
   const refWidth = user?.wheelchairWidth ?? GLOBAL_REF_DOOR_WIDTH;
   const refTurning = user?.turningRadiusNeeded ?? GLOBAL_REF_TURNING_SPACE;
   const subcriteria: SubcriterionScore[] = [];
@@ -1981,10 +1965,7 @@ function calculateBathroomScore(
       r.grabBarSide === user.bathroomTransferSide
     ) {
       grabScore = 90;
-    } else if (
-      user?.bathroomTransferSide &&
-      user.bathroomTransferSide !== "not_applicable"
-    ) {
+    } else if (user?.bathroomTransferSide && user.bathroomTransferSide !== "not_applicable") {
       grabScore = 50;
     } else {
       grabScore = 70; // pontuacao global (sem perfil)
@@ -2059,10 +2040,7 @@ function calculateBathroomScore(
     value: r.hasEmergencyButton,
   });
 
-  const totalScore = subcriteria.reduce(
-    (sum, s) => sum + s.score * s.weight,
-    0,
-  );
+  const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
   const filledFields = [
     r.hasAccessibleBathroom,
     r.bathroomDoorWidth,
@@ -2083,9 +2061,7 @@ function calculateBathroomScore(
   };
 }
 
-function calculateCommunicationScore(
-  r: RestaurantAccessibilityProfile,
-): CategoryScore {
+function calculateCommunicationScore(r: RestaurantAccessibilityProfile): CategoryScore {
   const subcriteria: SubcriterionScore[] = [];
 
   // menu_format_score
@@ -2122,15 +2098,10 @@ function calculateCommunicationScore(
     value: signageScore > 0,
   });
 
-  const totalScore = subcriteria.reduce(
-    (sum, s) => sum + s.score * s.weight,
-    0,
-  );
-  const filledFields = [
-    r.hasDigitalMenu ?? r.hasQRCodeMenu,
-    r.staffTrainedInAccessibility,
-    r.hasHearingLoop,
-  ].filter((f) => f != null).length;
+  const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
+  const filledFields = [r.hasDigitalMenu ?? r.hasQRCodeMenu, r.staffTrainedInAccessibility, r.hasHearingLoop].filter(
+    (f) => f != null,
+  ).length;
 
   return {
     category: "communication",
@@ -2148,19 +2119,10 @@ export function calculateOverallScore(
   userProfile?: UserProfile,
   customWeights?: CategoryWeights,
 ): OverallScore {
-  const categories: ScoringCategory[] = [
-    "entrance",
-    "parking",
-    "interior",
-    "seating",
-    "bathroom",
-    "communication",
-  ];
+  const categories: ScoringCategory[] = ["entrance", "parking", "interior", "seating", "bathroom", "communication"];
 
   // Calcular score por categoria
-  const categoryScores = categories.map((cat) =>
-    calculateCategoryScore(cat, restaurant, userProfile),
-  );
+  const categoryScores = categories.map((cat) => calculateCategoryScore(cat, restaurant, userProfile));
 
   // Pesos
   const baseWeights: CategoryWeights = {
@@ -2173,23 +2135,14 @@ export function calculateOverallScore(
   };
 
   const personalizedWeights =
-    customWeights ??
-    (userProfile
-      ? getPersonalizedWeights(userProfile.mobilityType)
-      : baseWeights);
+    customWeights ?? (userProfile ? getPersonalizedWeights(userProfile.mobilityType) : baseWeights);
 
   // Pontuacao global (pesos base)
-  const globalScore = categoryScores.reduce(
-    (sum, cs) => sum + cs.score * baseWeights[cs.category],
-    0,
-  );
+  const globalScore = categoryScores.reduce((sum, cs) => sum + cs.score * baseWeights[cs.category], 0);
 
   // Pontuacao personalizada (pesos ajustados)
   const personalizedRawScore = userProfile
-    ? categoryScores.reduce(
-        (sum, cs) => sum + cs.score * personalizedWeights[cs.category],
-        0,
-      )
+    ? categoryScores.reduce((sum, cs) => sum + cs.score * personalizedWeights[cs.category], 0)
     : undefined;
 
   // Multiplicador de verificacao
@@ -2201,9 +2154,7 @@ export function calculateOverallScore(
   );
 
   const finalGlobal = globalScore * verificationMultiplier;
-  const finalPersonalized = personalizedRawScore != null
-    ? personalizedRawScore * verificationMultiplier
-    : undefined;
+  const finalPersonalized = personalizedRawScore != null ? personalizedRawScore * verificationMultiplier : undefined;
 
   // Gerar avisos
   const warnings = generateWarnings(restaurant, userProfile);
@@ -2220,14 +2171,9 @@ export function calculateOverallScore(
 
   return {
     globalScore: Math.round(finalGlobal * 100) / 100,
-    personalizedScore:
-      finalPersonalized != null
-        ? Math.round(finalPersonalized * 100) / 100
-        : undefined,
+    personalizedScore: finalPersonalized != null ? Math.round(finalPersonalized * 100) / 100 : undefined,
     globalTrafficLight: getTrafficLight(finalGlobal),
-    personalizedTrafficLight: finalPersonalized != null
-      ? getTrafficLight(finalPersonalized)
-      : undefined,
+    personalizedTrafficLight: finalPersonalized != null ? getTrafficLight(finalPersonalized) : undefined,
     categoryScores,
     verificationMultiplier,
     warnings,
@@ -2237,19 +2183,12 @@ export function calculateOverallScore(
 
 // --- Avisos ---
 
-function generateWarnings(
-  r: RestaurantAccessibilityProfile,
-  user?: UserProfile,
-): Warning[] {
+function generateWarnings(r: RestaurantAccessibilityProfile, user?: UserProfile): Warning[] {
   const warnings: Warning[] = [];
   if (!user) return warnings;
 
   // Porta da entrada
-  if (
-    r.entranceDoorWidth != null &&
-    user.wheelchairWidth != null &&
-    r.entranceDoorWidth < user.wheelchairWidth + 4
-  ) {
+  if (r.entranceDoorWidth != null && user.wheelchairWidth != null && r.entranceDoorWidth < user.wheelchairWidth + 4) {
     warnings.push({
       severity: "critical",
       category: "entrance",
@@ -2260,13 +2199,7 @@ function generateWarnings(
   }
 
   // Degraus sem rampa
-  if (
-    r.numberOfSteps != null &&
-    r.numberOfSteps > 0 &&
-    !r.hasRamp &&
-    !r.hasPortableRamp &&
-    user.maxStepHeight === 0
-  ) {
+  if (r.numberOfSteps != null && r.numberOfSteps > 0 && !r.hasRamp && !r.hasPortableRamp && user.maxStepHeight === 0) {
     warnings.push({
       severity: "critical",
       category: "entrance",
@@ -2277,11 +2210,7 @@ function generateWarnings(
   }
 
   // Inclinacao da rampa
-  if (
-    r.rampIncline != null &&
-    user.maxRampIncline != null &&
-    r.rampIncline > user.maxRampIncline
-  ) {
+  if (r.rampIncline != null && user.maxRampIncline != null && r.rampIncline > user.maxRampIncline) {
     warnings.push({
       severity: "warning",
       category: "entrance",
@@ -2292,11 +2221,7 @@ function generateWarnings(
   }
 
   // Porta da casa de banho
-  if (
-    r.bathroomDoorWidth != null &&
-    user.wheelchairWidth != null &&
-    r.bathroomDoorWidth < user.wheelchairWidth + 4
-  ) {
+  if (r.bathroomDoorWidth != null && user.wheelchairWidth != null && r.bathroomDoorWidth < user.wheelchairWidth + 4) {
     warnings.push({
       severity: "critical",
       category: "bathroom",
@@ -2334,11 +2259,7 @@ function generateWarnings(
   }
 
   // Corredores
-  if (
-    r.corridorMinWidth != null &&
-    user.wheelchairWidth != null &&
-    r.corridorMinWidth < user.wheelchairWidth + 10
-  ) {
+  if (r.corridorMinWidth != null && user.wheelchairWidth != null && r.corridorMinWidth < user.wheelchairWidth + 10) {
     warnings.push({
       severity: "warning",
       category: "interior",
@@ -2383,9 +2304,7 @@ export function generateScoreExplanation(
     const tl = getTrafficLightLabel(cs.trafficLight);
     lines.push(`- ${label}: ${Math.round(cs.score)}/100 (${tl})`);
     if (cs.dataCompleteness < 0.5) {
-      lines.push(
-        `  (!) Dados incompletos: apenas ${Math.round(cs.dataCompleteness * 100)}% dos campos preenchidos`,
-      );
+      lines.push(`  (!) Dados incompletos: apenas ${Math.round(cs.dataCompleteness * 100)}% dos campos preenchidos`);
     }
   }
 
@@ -2452,10 +2371,15 @@ function getMobilityLabel(mt: MobilityType): string {
 
 ## Notas Finais
 
-Este documento define a especificacao completa do sistema de classificacao de acessibilidade do Eat Out Adviser. A implementacao deve:
+Este documento define a especificacao completa do sistema de classificacao de acessibilidade do Eat Out Adviser. A
+implementacao deve:
 
-1. **Manter consistencia** com o modelo de dados definido em `DATA_MODEL.md`, nomeadamente as tabelas `accessibility_profiles` e `accessibility_scores`
-2. **Recalcular scores** sempre que o `AccessibilityProfile` de um restaurante e actualizado (via trigger ou job agendado)
-3. **Pre-calcular scores** para os perfis de mobilidade mais comuns e armazenar no campo `weighted_score_for_profile` da tabela `accessibility_scores`
-4. **Calcular scores personalizados** em tempo real para perfis com dimensoes especificas (largura de cadeira, raio de viragem)
+1. **Manter consistencia** com o modelo de dados definido em `DATA_MODEL.md`, nomeadamente as tabelas
+   `accessibility_profiles` e `accessibility_scores`
+2. **Recalcular scores** sempre que o `AccessibilityProfile` de um restaurante e actualizado (via trigger ou job
+   agendado)
+3. **Pre-calcular scores** para os perfis de mobilidade mais comuns e armazenar no campo `weighted_score_for_profile` da
+   tabela `accessibility_scores`
+4. **Calcular scores personalizados** em tempo real para perfis com dimensoes especificas (largura de cadeira, raio de
+   viragem)
 5. **Registar no AuditLog** qualquer alteracao em dados que afecte o calculo de scores

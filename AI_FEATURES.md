@@ -1,8 +1,8 @@
 # Eat Out Adviser - Especificacao de Funcionalidades de IA
 
-**Data:** Marco de 2026
-**Projecto:** Eat Out Adviser - Sistema de recomendacao de restaurantes com foco em acessibilidade
-**Stack de IA:** Claude Sonnet 4.6 / Opus 4.5, Claude Vision, nomic-embed-text-v2 (Ollama), pgvector, RAG, MCP
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Sistema de recomendacao de restaurantes com foco em
+acessibilidade **Stack de IA:** Claude Sonnet 4.6 / Opus 4.5, Claude Vision, nomic-embed-text-v2 (Ollama), pgvector,
+RAG, MCP
 
 ---
 
@@ -25,13 +25,15 @@
 
 ### 1.1 Descricao e Historia de Utilizador
 
-**Como** utilizador de cadeira de rodas electrica, **quero** escrever uma frase como "restaurante italiano acessivel no centro do Porto com estacionamento" **para que** o sistema compreenda as minhas necessidades e devolva resultados relevantes ordenados por compatibilidade com o meu perfil de acessibilidade.
+**Como** utilizador de cadeira de rodas electrica, **quero** escrever uma frase como "restaurante italiano acessivel no
+centro do Porto com estacionamento" **para que** o sistema compreenda as minhas necessidades e devolva resultados
+relevantes ordenados por compatibilidade com o meu perfil de acessibilidade.
 
 ### 1.2 Abordagem Tecnica
 
 O fluxo de pesquisa segue seis etapas sequenciais:
 
-```
+```plaintext
 Utilizador escreve query em linguagem natural
        |
        v
@@ -52,7 +54,7 @@ Utilizador escreve query em linguagem natural
 
 ### 1.3 System Prompt para Interpretacao de Query
 
-```
+```plaintext
 Es o modulo de interpretacao de pesquisa do Eat Out Adviser, uma aplicacao portuguesa de recomendacao de restaurantes focada em acessibilidade fisica.
 
 A tua tarefa e analisar a query do utilizador e extrair informacao estruturada. Deves:
@@ -82,14 +84,15 @@ Contexto: A aplicacao serve a area metropolitana do Porto, Portugal. Os utilizad
 // Ferramenta 1: Interpretacao da query pelo Claude
 const parseSearchQueryTool = {
   name: "parse_search_query",
-  description: "Analisa a query do utilizador e extrai intencao e entidades estruturadas para pesquisa de restaurantes.",
+  description:
+    "Analisa a query do utilizador e extrai intencao e entidades estruturadas para pesquisa de restaurantes.",
   input_schema: {
     type: "object",
     properties: {
       intent: {
         type: "string",
         enum: ["search_restaurant", "get_info", "compare", "ask_accessibility"],
-        description: "Intencao principal do utilizador"
+        description: "Intencao principal do utilizador",
       },
       entities: {
         type: "object",
@@ -100,22 +103,22 @@ const parseSearchQueryTool = {
           specific_accessibility: {
             type: "array",
             items: { type: "string" },
-            description: "Lista de requisitos de acessibilidade especificos"
+            description: "Lista de requisitos de acessibilidade especificos",
           },
           price_range: {
             type: "string",
-            enum: ["economico", "moderado", "premium", "qualquer"]
+            enum: ["economico", "moderado", "premium", "qualquer"],
           },
           features: { type: "array", items: { type: "string" } },
           group_size: { type: "number" },
           meal_type: { type: "string" },
-          date_time: { type: "string" }
+          date_time: { type: "string" },
         },
-        required: ["accessibility_required"]
+        required: ["accessibility_required"],
       },
       semantic_query: {
         type: "string",
-        description: "Reformulacao optimizada para busca semantica"
+        description: "Reformulacao optimizada para busca semantica",
       },
       structured_filters: {
         type: "object",
@@ -127,12 +130,12 @@ const parseSearchQueryTool = {
           has_accessible_bathroom: { type: "boolean" },
           has_parking: { type: "boolean" },
           min_door_width_cm: { type: "number" },
-          max_price_level: { type: "number" }
-        }
-      }
+          max_price_level: { type: "number" },
+        },
+      },
     },
-    required: ["intent", "entities", "semantic_query"]
-  }
+    required: ["intent", "entities", "semantic_query"],
+  },
 };
 
 // Ferramenta 2: Busca hibrida na base de dados
@@ -145,14 +148,14 @@ const hybridSearchTool = {
       query_embedding: {
         type: "array",
         items: { type: "number" },
-        description: "Vector embedding da query (768 dimensoes)"
+        description: "Vector embedding da query (768 dimensoes)",
       },
       structured_filters: { type: "object" },
       limit: { type: "number", default: 20 },
-      similarity_threshold: { type: "number", default: 0.7 }
+      similarity_threshold: { type: "number", default: 0.7 },
     },
-    required: ["query_embedding"]
-  }
+    required: ["query_embedding"],
+  },
 };
 
 // Ferramenta 3: Re-ranking com contexto de acessibilidade
@@ -171,17 +174,17 @@ const rerankResultsTool = {
             name: { type: "string" },
             accessibility_score: { type: "number" },
             similarity_score: { type: "number" },
-            accessibility_features: { type: "object" }
-          }
-        }
+            accessibility_features: { type: "object" },
+          },
+        },
       },
       user_profile: {
         type: "object",
-        description: "Perfil de acessibilidade do utilizador"
-      }
+        description: "Perfil de acessibilidade do utilizador",
+      },
     },
-    required: ["results", "user_profile"]
-  }
+    required: ["results", "user_profile"],
+  },
 };
 ```
 
@@ -218,7 +221,8 @@ const rerankResultsTool = {
 ```typescript
 const embedding = await ollama.embeddings({
   model: "nomic-embed-text-v2",
-  prompt: "search_query: restaurante cozinha italiana centro historico Porto acessivel cadeira rodas estacionamento adaptado"
+  prompt:
+    "search_query: restaurante cozinha italiana centro historico Porto acessivel cadeira rodas estacionamento adaptado",
 });
 // Resultado: vector de 768 dimensoes
 ```
@@ -257,7 +261,8 @@ LIMIT 20;
 
 **Etapa 4 - Re-ranking pelo Claude:**
 
-O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perfil do utilizador (cadeira de rodas electrica, largura 68cm) e reordena, produzindo:
+O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perfil do utilizador (cadeira de rodas
+electrica, largura 68cm) e reordena, produzindo:
 
 ```json
 {
@@ -280,13 +285,13 @@ O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perf
 
 ### 1.6 Tratamento de Erros
 
-| Cenario | Estrategia |
-|---|---|
-| Claude nao consegue interpretar a query | Devolver mensagem: "Nao consegui compreender a sua pesquisa. Pode reformular? Exemplo: restaurante acessivel no Porto" |
-| Nenhum resultado na busca hibrida | Relaxar filtros progressivamente: primeiro remover filtros de cozinha, depois de localizacao, manter sempre acessibilidade |
-| Ollama indisponivel para embeddings | Fallback para full-text search apenas (PostgreSQL tsvector) com aviso ao utilizador |
-| Timeout da API Claude (>10s) | Cache de interpretacoes frequentes em Redis/memoria. Retry com exponential backoff (max 3 tentativas) |
-| Query ambigua (ex.: "sitio bom para comer") | Claude pede esclarecimento: "Procura um restaurante na zona do Porto? Tem preferencia de tipo de cozinha?" |
+| Cenario                                     | Estrategia                                                                                                                 |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Claude nao consegue interpretar a query     | Devolver mensagem: "Nao consegui compreender a sua pesquisa. Pode reformular? Exemplo: restaurante acessivel no Porto"     |
+| Nenhum resultado na busca hibrida           | Relaxar filtros progressivamente: primeiro remover filtros de cozinha, depois de localizacao, manter sempre acessibilidade |
+| Ollama indisponivel para embeddings         | Fallback para full-text search apenas (PostgreSQL tsvector) com aviso ao utilizador                                        |
+| Timeout da API Claude (>10s)                | Cache de interpretacoes frequentes em Redis/memoria. Retry com exponential backoff (max 3 tentativas)                      |
+| Query ambigua (ex.: "sitio bom para comer") | Claude pede esclarecimento: "Procura um restaurante na zona do Porto? Tem preferencia de tipo de cozinha?"                 |
 
 ### 1.7 Consideracoes de Performance (N5105 16GB)
 
@@ -298,6 +303,7 @@ O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perf
 - **Tempo total estimado:** 2-5 segundos por pesquisa
 
 **Optimizacoes:**
+
 - Cache de embeddings para queries frequentes (LRU cache com TTL de 24h)
 - Pre-computacao de embeddings de restaurantes em batch (offline)
 - Streaming da resposta do Claude para feedback imediato ao utilizador
@@ -315,13 +321,16 @@ O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perf
 
 ### 2.1 Descricao e Historia de Utilizador
 
-**Como** utilizador que avalia restaurantes, **quero** tirar fotografias da entrada, interior e casa de banho de um restaurante **para que** o sistema analise automaticamente as condicoes de acessibilidade e preencha os dados estruturados sem esforco manual.
+**Como** utilizador que avalia restaurantes, **quero** tirar fotografias da entrada, interior e casa de banho de um
+restaurante **para que** o sistema analise automaticamente as condicoes de acessibilidade e preencha os dados
+estruturados sem esforco manual.
 
-**Como** dono de restaurante, **quero** submeter fotografias do meu espaco **para que** o sistema gere um perfil de acessibilidade inicial automaticamente.
+**Como** dono de restaurante, **quero** submeter fotografias do meu espaco **para que** o sistema gere um perfil de
+acessibilidade inicial automaticamente.
 
 ### 2.2 Abordagem Tecnica
 
-```
+```plaintext
 Utilizador submete fotografias (1-10 por restaurante)
        |
        v
@@ -345,7 +354,7 @@ Dados inseridos/actualizados no AccessibilityProfile do restaurante
 
 ### 2.3 System Prompt para Analise Visual
 
-```
+```plaintext
 Es o modulo de analise visual de acessibilidade do Eat Out Adviser. A tua tarefa e analisar fotografias de restaurantes para avaliar condicoes de acessibilidade fisica.
 
 Para cada fotografia, deves:
@@ -447,18 +456,20 @@ REGRAS CRITICAS:
 
 ### 2.5 Metodologia de Pontuacao de Confianca
 
-| Nivel de Confianca | Valor | Criterio |
-|---|---|---|
-| Muito alta | 0.9 - 1.0 | Caracteristica claramente visivel, sem obstrucao, boa iluminacao, angulo directo |
-| Alta | 0.7 - 0.89 | Caracteristica visivel mas com alguma obstrucao parcial ou angulo lateral |
-| Moderada | 0.5 - 0.69 | Caracteristica parcialmente visivel, estimativa com incerteza significativa |
-| Baixa | 0.3 - 0.49 | Inferencia baseada em contexto, nao observacao directa |
-| Muito baixa / Desconhecido | 0.0 - 0.29 | Nao visivel na fotografia, pura especulacao |
+| Nivel de Confianca         | Valor      | Criterio                                                                         |
+| -------------------------- | ---------- | -------------------------------------------------------------------------------- |
+| Muito alta                 | 0.9 - 1.0  | Caracteristica claramente visivel, sem obstrucao, boa iluminacao, angulo directo |
+| Alta                       | 0.7 - 0.89 | Caracteristica visivel mas com alguma obstrucao parcial ou angulo lateral        |
+| Moderada                   | 0.5 - 0.69 | Caracteristica parcialmente visivel, estimativa com incerteza significativa      |
+| Baixa                      | 0.3 - 0.49 | Inferencia baseada em contexto, nao observacao directa                           |
+| Muito baixa / Desconhecido | 0.0 - 0.29 | Nao visivel na fotografia, pura especulacao                                      |
 
 **Regras de agregacao multi-foto:**
+
 - Se multiplas fotos mostram a mesma caracteristica, usar a analise com maior confianca
 - Se analises contradizem, marcar para revisao humana e usar a mais conservadora (pior cenario de acessibilidade)
-- Confianca agregada = max(confianca_foto1, confianca_foto2, ...) * 0.95 (penalizacao ligeira por possivel inconsistencia)
+- Confianca agregada = max(confianca_foto1, confianca_foto2, ...) \* 0.95 (penalizacao ligeira por possivel
+  inconsistencia)
 
 ### 2.6 Integracao com AccessibilityProfile
 
@@ -467,39 +478,37 @@ Os resultados da analise visual alimentam directamente a tabela `accessibility_p
 ```typescript
 // Mapeamento de findings para campos estruturados
 const visionToProfile = {
-  "door_width": "entrance_door_width_cm",
-  "entrance_level": "entrance_has_steps",
-  "ramp": "entrance_has_ramp",
-  "automatic_door": "entrance_automatic_door",
-  "interior_spacing": "interior_table_spacing_cm",
-  "corridor_width": "interior_corridor_width_cm",
-  "bathroom_grab_bars": "bathroom_has_grab_bars",
-  "bathroom_door_width": "bathroom_door_width_cm",
-  "parking_accessible": "parking_has_accessible_spots"
+  door_width: "entrance_door_width_cm",
+  entrance_level: "entrance_has_steps",
+  ramp: "entrance_has_ramp",
+  automatic_door: "entrance_automatic_door",
+  interior_spacing: "interior_table_spacing_cm",
+  corridor_width: "interior_corridor_width_cm",
+  bathroom_grab_bars: "bathroom_has_grab_bars",
+  bathroom_door_width: "bathroom_door_width_cm",
+  parking_accessible: "parking_has_accessible_spots",
 };
 
 // Actualizacao condicional: so actualizar se confianca > threshold
 // e se nao existe dado verificado por humano
-async function updateProfileFromVision(
-  restaurantId: string,
-  findings: VisionFinding[]
-) {
+async function updateProfileFromVision(restaurantId: string, findings: VisionFinding[]) {
   for (const finding of findings) {
     if (finding.confidence >= 0.7) {
       // Actualizar com flag source = 'ai_vision'
-      await db.update(accessibilityProfiles)
+      await db
+        .update(accessibilityProfiles)
         .set({
           [visionToProfile[finding.feature]]: finding.estimated_measurement?.value_cm,
-          [`${visionToProfile[finding.feature]}_source`]: 'ai_vision',
+          [`${visionToProfile[finding.feature]}_source`]: "ai_vision",
           [`${visionToProfile[finding.feature]}_confidence`]: finding.confidence,
-          updated_at: new Date()
+          updated_at: new Date(),
         })
         .where(
           and(
             eq(accessibilityProfiles.restaurant_id, restaurantId),
             // Nao sobrescrever dados verificados por humano
-            ne(accessibilityProfiles[`${visionToProfile[finding.feature]}_source`], 'human_verified')
-          )
+            ne(accessibilityProfiles[`${visionToProfile[finding.feature]}_source`], "human_verified"),
+          ),
         );
     }
   }
@@ -509,11 +518,13 @@ async function updateProfileFromVision(
 ### 2.7 Limitacoes e Disclaimers
 
 - Estimativas de medidas tem margem de erro de 10-20% dependendo da qualidade e angulo da fotografia
-- Nao consegue avaliar: peso de portas, forca necessaria para abrir, textura do piso ao toque, iluminacao real (vs. flash da foto)
+- Nao consegue avaliar: peso de portas, forca necessaria para abrir, textura do piso ao toque, iluminacao real (vs.
+  flash da foto)
 - Fotografias com pouca luz, desfocadas ou com obstrucoes significativas produzem resultados de baixa confianca
 - A analise nao substitui verificacao presencial -- serve como triagem inicial
 - Claude Vision pode nao identificar correctamente rampas portateis ou equipamentos de acessibilidade nao standard
-- **Sempre apresentar disclaimer ao utilizador:** "Esta analise e automatica e baseada em fotografias. Recomendamos contactar o restaurante para confirmar condicoes de acessibilidade."
+- **Sempre apresentar disclaimer ao utilizador:** "Esta analise e automatica e baseada em fotografias. Recomendamos
+  contactar o restaurante para confirmar condicoes de acessibilidade."
 
 ### 2.8 Consideracoes de Performance (N5105 16GB)
 
@@ -535,13 +546,15 @@ async function updateProfileFromVision(
 
 ### 3.1 Descricao e Historia de Utilizador
 
-**Como** utilizador com cadeira de rodas electrica, **quero** que o sistema ordene restaurantes pela compatibilidade com as minhas necessidades especificas **para que** veja primeiro os restaurantes onde tenho garantia de conseguir entrar, sentar-me e usar a casa de banho.
+**Como** utilizador com cadeira de rodas electrica, **quero** que o sistema ordene restaurantes pela compatibilidade com
+as minhas necessidades especificas **para que** veja primeiro os restaurantes onde tenho garantia de conseguir entrar,
+sentar-me e usar a casa de banho.
 
 ### 3.2 Abordagem Tecnica - Algoritmo de Scoring
 
 O score de compatibilidade e calculado como soma ponderada:
 
-```
+```plaintext
 Score = Sigma(weight_i x criterion_score_i) para cada criterio de acessibilidade
 
 Onde:
@@ -552,27 +565,24 @@ Onde:
 
 ### 3.3 Tabela de Pesos por Tipo de Mobilidade
 
-| Criterio | Cadeira Electrica | Cadeira Manual | Andarilho | Muletas | Mobilidade Reduzida |
-|---|---|---|---|---|---|
-| Entrada (rampa/nivel) | 0.30 | 0.28 | 0.20 | 0.15 | 0.15 |
-| Casa de banho | 0.25 | 0.22 | 0.15 | 0.10 | 0.10 |
-| Espaco interior | 0.20 | 0.20 | 0.25 | 0.20 | 0.15 |
-| Estacionamento | 0.15 | 0.15 | 0.10 | 0.10 | 0.10 |
-| Mesas adaptadas | 0.10 | 0.15 | 0.10 | 0.10 | 0.05 |
-| Piso/superficie | - | - | 0.15 | 0.25 | 0.15 |
-| Iluminacao | - | - | 0.05 | 0.10 | 0.10 |
-| Apoios/corrimaos | - | - | - | - | 0.20 |
-| **Total** | **1.00** | **1.00** | **1.00** | **1.00** | **1.00** |
+| Criterio              | Cadeira Electrica | Cadeira Manual | Andarilho | Muletas  | Mobilidade Reduzida |
+| --------------------- | ----------------- | -------------- | --------- | -------- | ------------------- |
+| Entrada (rampa/nivel) | 0.30              | 0.28           | 0.20      | 0.15     | 0.15                |
+| Casa de banho         | 0.25              | 0.22           | 0.15      | 0.10     | 0.10                |
+| Espaco interior       | 0.20              | 0.20           | 0.25      | 0.20     | 0.15                |
+| Estacionamento        | 0.15              | 0.15           | 0.10      | 0.10     | 0.10                |
+| Mesas adaptadas       | 0.10              | 0.15           | 0.10      | 0.10     | 0.05                |
+| Piso/superficie       | -                 | -              | 0.15      | 0.25     | 0.15                |
+| Iluminacao            | -                 | -              | 0.05      | 0.10     | 0.10                |
+| Apoios/corrimaos      | -                 | -              | -         | -        | 0.20                |
+| **Total**             | **1.00**          | **1.00**       | **1.00**  | **1.00** | **1.00**            |
 
 ### 3.4 Calculo do criterion_score por Criterio
 
 **Entrada (entrance_score):**
 
 ```typescript
-function calculateEntranceScore(
-  restaurant: AccessibilityProfile,
-  user: UserProfile
-): number {
+function calculateEntranceScore(restaurant: AccessibilityProfile, user: UserProfile): number {
   let score = 0;
 
   // Nivel da rua (sem degraus) = melhor cenario
@@ -582,11 +592,15 @@ function calculateEntranceScore(
   // Rampa com inclinacao adequada
   else if (restaurant.entrance_has_ramp) {
     const rampSlope = restaurant.entrance_ramp_slope_percent;
-    if (rampSlope <= 6) score = 0.95;       // Excelente
-    else if (rampSlope <= 8) score = 0.85;   // Aceitavel (norma ISO)
-    else if (rampSlope <= 10) score = 0.6;   // Dificil para electrica
-    else if (rampSlope <= 12) score = 0.3;   // Perigoso
-    else score = 0.1;                         // Praticamente inacessivel
+    if (rampSlope <= 6)
+      score = 0.95; // Excelente
+    else if (rampSlope <= 8)
+      score = 0.85; // Aceitavel (norma ISO)
+    else if (rampSlope <= 10)
+      score = 0.6; // Dificil para electrica
+    else if (rampSlope <= 12)
+      score = 0.3; // Perigoso
+    else score = 0.1; // Praticamente inacessivel
   }
   // Degraus com rampa portatil disponivel
   else if (restaurant.entrance_has_portable_ramp) {
@@ -595,17 +609,20 @@ function calculateEntranceScore(
   // Degraus apenas
   else if (restaurant.entrance_step_count > 0) {
     const stepHeight = restaurant.entrance_total_step_height_cm;
-    if (stepHeight <= 2) score = 0.4;        // Micro-degrau, talvez transponivel
-    else score = 0.0;                         // Barreira total para cadeira electrica
+    if (stepHeight <= 2)
+      score = 0.4; // Micro-degrau, talvez transponivel
+    else score = 0.0; // Barreira total para cadeira electrica
   }
 
   // Penalizacao por largura de porta insuficiente
   if (restaurant.entrance_door_width_cm) {
     const userWidth = user.wheelchair_width_cm || 68; // default cadeira electrica
     const clearance = restaurant.entrance_door_width_cm - userWidth;
-    if (clearance < 5) score *= 0.3;          // Muito justo, risco de nao passar
-    else if (clearance < 12) score *= 0.7;    // Passa mas com dificuldade
-    else if (clearance < 20) score *= 0.9;    // Confortavel
+    if (clearance < 5)
+      score *= 0.3; // Muito justo, risco de nao passar
+    else if (clearance < 12)
+      score *= 0.7; // Passa mas com dificuldade
+    else if (clearance < 20) score *= 0.9; // Confortavel
     // >= 20cm de folga: sem penalizacao
   }
 
@@ -621,10 +638,7 @@ function calculateEntranceScore(
 **Casa de banho (bathroom_score):**
 
 ```typescript
-function calculateBathroomScore(
-  restaurant: AccessibilityProfile,
-  user: UserProfile
-): number {
+function calculateBathroomScore(restaurant: AccessibilityProfile, user: UserProfile): number {
   // Sem informacao = score neutro mas com penalizacao de incerteza
   if (!restaurant.bathroom_data_available) return 0.4;
 
@@ -667,13 +681,13 @@ function calculateBathroomScore(
 
 ### 3.5 Definicao de Limiares
 
-| Classificacao | Score | Icone | Descricao |
-|---|---|---|---|
-| Totalmente acessivel | >= 80 | Verde | O utilizador pode entrar, circular, comer e usar a casa de banho sem barreiras significativas |
-| Parcialmente acessivel | 50 - 79 | Amarelo | O utilizador consegue aceder mas com algumas limitacoes ou necessidade de assistencia pontual |
-| Acessibilidade limitada | 25 - 49 | Laranja | Barreiras significativas. Possivel com assistencia consideravel |
-| Nao acessivel | < 25 | Vermelho | Barreiras que impedem o acesso seguro e autonomo |
-| Dados insuficientes | N/A | Cinzento | Menos de 3 criterios com dados. Score nao fiavel |
+| Classificacao           | Score   | Icone    | Descricao                                                                                     |
+| ----------------------- | ------- | -------- | --------------------------------------------------------------------------------------------- |
+| Totalmente acessivel    | >= 80   | Verde    | O utilizador pode entrar, circular, comer e usar a casa de banho sem barreiras significativas |
+| Parcialmente acessivel  | 50 - 79 | Amarelo  | O utilizador consegue aceder mas com algumas limitacoes ou necessidade de assistencia pontual |
+| Acessibilidade limitada | 25 - 49 | Laranja  | Barreiras significativas. Possivel com assistencia consideravel                               |
+| Nao acessivel           | < 25    | Vermelho | Barreiras que impedem o acesso seguro e autonomo                                              |
+| Dados insuficientes     | N/A     | Cinzento | Menos de 3 criterios com dados. Score nao fiavel                                              |
 
 ### 3.6 Ajuste com Feedback do Utilizador
 
@@ -690,29 +704,26 @@ interface UserFeedback {
   overall_accessibility_rating: 1 | 2 | 3 | 4 | 5;
   comments: string;
   // Feedback implicito (recolhido automaticamente)
-  visit_completed: boolean;  // Se o utilizador marcou como visitado
+  visit_completed: boolean; // Se o utilizador marcou como visitado
   time_on_page_seconds: number;
   saved_to_favorites: boolean;
 }
 
 // Ajuste de pesos personalizado
-function adjustUserWeights(
-  userId: string,
-  feedbackHistory: UserFeedback[]
-): UserWeights {
+function adjustUserWeights(userId: string, feedbackHistory: UserFeedback[]): UserWeights {
   const baseWeights = getBaseWeightsForMobilityType(user.mobility_type);
 
   // Se o utilizador consistentemente ignora score de casa de banho
   // (visita restaurantes com bathroom_score baixo e da rating alto)
   // -> reduzir peso da casa de banho para este utilizador
   const bathroomCorrelation = calculateCorrelation(
-    feedbackHistory.map(f => f.restaurant.bathroom_score),
-    feedbackHistory.map(f => f.overall_accessibility_rating)
+    feedbackHistory.map((f) => f.restaurant.bathroom_score),
+    feedbackHistory.map((f) => f.overall_accessibility_rating),
   );
 
   // Ajuste incremental: max +-20% dos pesos base
   const adjustedWeights = { ...baseWeights };
-  adjustedWeights.bathroom *= (1 + bathroomCorrelation * 0.2);
+  adjustedWeights.bathroom *= 1 + bathroomCorrelation * 0.2;
 
   // Renormalizar para soma = 1.0
   const total = Object.values(adjustedWeights).reduce((a, b) => a + b, 0);
@@ -753,11 +764,12 @@ Os pesos base nunca sao completamente ignorados para evitar overfitting a compor
 
 ### 4.1 Descricao e Historia de Utilizador
 
-**Como** utilizador que pesquisa restaurantes, **quero** ver um resumo claro de multiplas avaliacoes **para que** compreenda rapidamente a experiencia geral de acessibilidade sem ler dezenas de reviews individuais.
+**Como** utilizador que pesquisa restaurantes, **quero** ver um resumo claro de multiplas avaliacoes **para que**
+compreenda rapidamente a experiencia geral de acessibilidade sem ler dezenas de reviews individuais.
 
 ### 4.2 Abordagem Tecnica
 
-```
+```plaintext
 Novas avaliacoes submetidas
        |
        v
@@ -775,7 +787,7 @@ Sumario guardado em cache, actualizado incrementalmente
 
 ### 4.3 System Prompt para Sumarizacao
 
-```
+```plaintext
 Es o modulo de sumarizacao de avaliacoes do Eat Out Adviser, uma aplicacao portuguesa focada em acessibilidade de restaurantes.
 
 Recebes um conjunto de avaliacoes de utilizadores sobre um restaurante. Deves produzir tres sumarios distintos:
@@ -858,10 +870,7 @@ REGRAS:
       "summary": "A comida e consistentemente elogiada, com destaque para a pasta fresca feita no momento e a carbonara. A pizza tambem recebe avaliacoes positivas. A relacao qualidade/preco e considerada justa.",
       "sentiment": "muito_positivo",
       "sentiment_score": 0.88,
-      "highlights": [
-        "\"Melhor carbonara do Porto!\" - Carlos R.",
-        "\"Pasta fresca feita no momento\" - Ana M."
-      ]
+      "highlights": ["\"Melhor carbonara do Porto!\" - Carlos R.", "\"Pasta fresca feita no momento\" - Ana M."]
     },
     "service": {
       "summary": "O servico e descrito como rapido e prestavel. O staff demonstra boa vontade em ajudar clientes com mobilidade reduzida. O restaurante mostrou capacidade de resposta a feedback, melhorando condicoes de acessibilidade apos criticas.",
@@ -910,12 +919,9 @@ REGRAS:
 Quando chegam novas avaliacoes, o sistema nao reprocessa todas desde o inicio:
 
 ```typescript
-async function updateSummaryIncrementally(
-  restaurantId: string,
-  newReviews: Review[]
-): Promise<void> {
+async function updateSummaryIncrementally(restaurantId: string, newReviews: Review[]): Promise<void> {
   const existingSummary = await db.query.reviewSummaries.findFirst({
-    where: eq(reviewSummaries.restaurant_id, restaurantId)
+    where: eq(reviewSummaries.restaurant_id, restaurantId),
   });
 
   if (!existingSummary || newReviews.length >= 10) {
@@ -929,30 +935,35 @@ async function updateSummaryIncrementally(
     model: "claude-sonnet-4-6-20260315",
     max_tokens: 1500,
     system: SUMMARIZATION_SYSTEM_PROMPT,
-    messages: [{
-      role: "user",
-      content: `Sumario existente (baseado em ${existingSummary.review_count} avaliacoes):\n${JSON.stringify(existingSummary.categories)}\n\nNovas avaliacoes para integrar:\n${JSON.stringify(newReviews)}\n\nActualiza o sumario integrando as novas avaliacoes. Mantem a estrutura JSON.`
-    }]
+    messages: [
+      {
+        role: "user",
+        content: `Sumario existente (baseado em ${existingSummary.review_count} avaliacoes):\n${JSON.stringify(existingSummary.categories)}\n\nNovas avaliacoes para integrar:\n${JSON.stringify(newReviews)}\n\nActualiza o sumario integrando as novas avaliacoes. Mantem a estrutura JSON.`,
+      },
+    ],
   });
 
   // Guardar sumario actualizado
-  await db.update(reviewSummaries).set({
-    categories: JSON.parse(response.content[0].text),
-    review_count: existingSummary.review_count + newReviews.length,
-    summary_version: existingSummary.summary_version + 1,
-    updated_at: new Date()
-  }).where(eq(reviewSummaries.restaurant_id, restaurantId));
+  await db
+    .update(reviewSummaries)
+    .set({
+      categories: JSON.parse(response.content[0].text),
+      review_count: existingSummary.review_count + newReviews.length,
+      summary_version: existingSummary.summary_version + 1,
+      updated_at: new Date(),
+    })
+    .where(eq(reviewSummaries.restaurant_id, restaurantId));
 }
 ```
 
 ### 4.6 Tratamento de Erros
 
-| Cenario | Estrategia |
-|---|---|
-| Menos de 3 avaliacoes | Nao gerar sumario, mostrar avaliacoes individuais |
-| Avaliacoes em linguas diferentes | Traduzir para portugues antes de sumarizar |
-| Avaliacoes suspeitas (spam) | Filtrar antes de sumarizar (deteccao de duplicados, padroes anormais) |
-| Claude produz JSON invalido | Retry com instrucao mais explicita; fallback para sumario em texto simples |
+| Cenario                          | Estrategia                                                                 |
+| -------------------------------- | -------------------------------------------------------------------------- |
+| Menos de 3 avaliacoes            | Nao gerar sumario, mostrar avaliacoes individuais                          |
+| Avaliacoes em linguas diferentes | Traduzir para portugues antes de sumarizar                                 |
+| Avaliacoes suspeitas (spam)      | Filtrar antes de sumarizar (deteccao de duplicados, padroes anormais)      |
+| Claude produz JSON invalido      | Retry com instrucao mais explicita; fallback para sumario em texto simples |
 
 ### 4.7 Consideracoes de Performance e Custos
 
@@ -967,13 +978,15 @@ async function updateSummaryIncrementally(
 
 ### 5.1 Descricao e Historia de Utilizador
 
-**Como** utilizador com cadeira de rodas electrica, **quero** perguntar ao assistente "Consigo entrar no restaurante X com a minha cadeira?" **para que** receba uma resposta personalizada baseada nas dimensoes da minha cadeira e nos dados reais do restaurante.
+**Como** utilizador com cadeira de rodas electrica, **quero** perguntar ao assistente "Consigo entrar no restaurante X
+com a minha cadeira?" **para que** receba uma resposta personalizada baseada nas dimensoes da minha cadeira e nos dados
+reais do restaurante.
 
 ### 5.2 Abordagem Tecnica
 
 O assistente usa RAG com tool use para responder a perguntas contextualizadas:
 
-```
+```plaintext
 Utilizador faz pergunta no chat
        |
        v
@@ -991,7 +1004,7 @@ Se incerteza > threshold: indicar explicitamente e sugerir contacto directo
 
 ### 5.3 System Prompt do Assistente
 
-```
+```plaintext
 Es o assistente de acessibilidade do Eat Out Adviser, uma aplicacao portuguesa de recomendacao de restaurantes focada em acessibilidade fisica.
 
 O teu objectivo e ajudar utilizadores com mobilidade reduzida a tomar decisoes informadas sobre restaurantes. Tens acesso a ferramentas para consultar a base de dados da aplicacao.
@@ -1024,42 +1037,45 @@ REGRAS FUNDAMENTAIS:
 const assistantTools = [
   {
     name: "get_restaurant_profile",
-    description: "Obtem o perfil completo de um restaurante incluindo dados de acessibilidade, localizacao, horarios e contactos.",
+    description:
+      "Obtem o perfil completo de um restaurante incluindo dados de acessibilidade, localizacao, horarios e contactos.",
     input_schema: {
       type: "object",
       properties: {
         restaurant_id: { type: "string" },
-        restaurant_name: { type: "string", description: "Nome para busca se ID nao disponivel" }
-      }
-    }
+        restaurant_name: { type: "string", description: "Nome para busca se ID nao disponivel" },
+      },
+    },
   },
   {
     name: "get_accessibility_details",
-    description: "Obtem dados detalhados de acessibilidade de um restaurante: entrada, interior, casa de banho, estacionamento.",
+    description:
+      "Obtem dados detalhados de acessibilidade de um restaurante: entrada, interior, casa de banho, estacionamento.",
     input_schema: {
       type: "object",
       properties: {
         restaurant_id: { type: "string" },
         categories: {
           type: "array",
-          items: { type: "string", enum: ["entrance", "interior", "bathroom", "parking", "all"] }
-        }
+          items: { type: "string", enum: ["entrance", "interior", "bathroom", "parking", "all"] },
+        },
       },
-      required: ["restaurant_id"]
-    }
+      required: ["restaurant_id"],
+    },
   },
   {
     name: "get_user_reviews",
-    description: "Obtem avaliacoes de utilizadores sobre um restaurante, opcionalmente filtradas por tipo de mobilidade.",
+    description:
+      "Obtem avaliacoes de utilizadores sobre um restaurante, opcionalmente filtradas por tipo de mobilidade.",
     input_schema: {
       type: "object",
       properties: {
         restaurant_id: { type: "string" },
         mobility_type_filter: { type: "string" },
-        limit: { type: "number", default: 5 }
+        limit: { type: "number", default: 5 },
       },
-      required: ["restaurant_id"]
-    }
+      required: ["restaurant_id"],
+    },
   },
   {
     name: "search_restaurants_nearby",
@@ -1071,10 +1087,10 @@ const assistantTools = [
         longitude: { type: "number" },
         radius_meters: { type: "number", default: 500 },
         min_accessibility_score: { type: "number", default: 50 },
-        cuisine: { type: "string" }
+        cuisine: { type: "string" },
       },
-      required: ["latitude", "longitude"]
-    }
+      required: ["latitude", "longitude"],
+    },
   },
   {
     name: "calculate_matching_score",
@@ -1082,24 +1098,25 @@ const assistantTools = [
     input_schema: {
       type: "object",
       properties: {
-        restaurant_id: { type: "string" }
+        restaurant_id: { type: "string" },
       },
-      required: ["restaurant_id"]
-    }
+      required: ["restaurant_id"],
+    },
   },
   {
     name: "get_route_accessibility",
-    description: "Avalia a acessibilidade do percurso entre o utilizador e o restaurante (passeios, declives, transportes).",
+    description:
+      "Avalia a acessibilidade do percurso entre o utilizador e o restaurante (passeios, declives, transportes).",
     input_schema: {
       type: "object",
       properties: {
         destination_restaurant_id: { type: "string" },
         origin_latitude: { type: "number" },
-        origin_longitude: { type: "number" }
+        origin_longitude: { type: "number" },
       },
-      required: ["destination_restaurant_id"]
-    }
-  }
+      required: ["destination_restaurant_id"],
+    },
+  },
 ];
 ```
 
@@ -1107,7 +1124,7 @@ const assistantTools = [
 
 **Exemplo 1 - Pergunta directa sobre acessibilidade:**
 
-```
+```plaintext
 Utilizador: Consigo entrar no restaurante Trattoria da Maria com a minha cadeira?
 
 [Claude invoca get_restaurant_profile e get_accessibility_details]
@@ -1129,7 +1146,7 @@ Quer que procure alternativas na mesma zona ou que o ajude com mais alguma coisa
 
 **Exemplo 2 - Gestao de incerteza:**
 
-```
+```plaintext
 Utilizador: O restaurante O Cantinho do Porto e acessivel?
 
 [Claude invoca get_restaurant_profile -- restaurante existe mas com poucos dados]
@@ -1151,12 +1168,12 @@ Quer que procure restaurantes acessiveis proximos do Cantinho do Porto?
 
 ### 5.6 Tratamento de Erros
 
-| Cenario | Resposta do Assistente |
-|---|---|
-| Restaurante nao encontrado | "Nao encontrei esse restaurante na nossa base de dados. Pode verificar o nome? Ou pode adiciona-lo para ajudar a comunidade." |
-| Dados desactualizados (>6 meses) | "Aviso: Os dados de acessibilidade deste restaurante foram actualizados pela ultima vez ha [X] meses. Recomendamos confirmacao directa." |
-| Utilizador sem perfil configurado | "Para dar recomendacoes personalizadas, preciso de saber o tipo de cadeira/equipamento que usa. Quer configurar o seu perfil agora?" |
-| Erro na API Claude | Fallback para dados estruturados sem sumarizacao: mostrar dados brutos de acessibilidade em formato legivel |
+| Cenario                           | Resposta do Assistente                                                                                                                   |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Restaurante nao encontrado        | "Nao encontrei esse restaurante na nossa base de dados. Pode verificar o nome? Ou pode adiciona-lo para ajudar a comunidade."            |
+| Dados desactualizados (>6 meses)  | "Aviso: Os dados de acessibilidade deste restaurante foram actualizados pela ultima vez ha [X] meses. Recomendamos confirmacao directa." |
+| Utilizador sem perfil configurado | "Para dar recomendacoes personalizadas, preciso de saber o tipo de cadeira/equipamento que usa. Quer configurar o seu perfil agora?"     |
+| Erro na API Claude                | Fallback para dados estruturados sem sumarizacao: mostrar dados brutos de acessibilidade em formato legivel                              |
 
 ### 5.7 Consideracoes de Performance e Custos
 
@@ -1171,11 +1188,13 @@ Quer que procure restaurantes acessiveis proximos do Cantinho do Porto?
 
 ### 6.1 Descricao e Historia de Utilizador
 
-**Como** utilizador com alergias alimentares e mobilidade reduzida, **quero** que o sistema analise a ementa de um restaurante a partir de uma foto ou ficheiro digital **para que** identifique alergenos, opcoes dieteticas e avalie a acessibilidade do formato da ementa.
+**Como** utilizador com alergias alimentares e mobilidade reduzida, **quero** que o sistema analise a ementa de um
+restaurante a partir de uma foto ou ficheiro digital **para que** identifique alergenos, opcoes dieteticas e avalie a
+acessibilidade do formato da ementa.
 
 ### 6.2 Abordagem Tecnica
 
-```
+```plaintext
 Ementa submetida (foto, PDF, URL ou texto)
        |
        v
@@ -1196,7 +1215,7 @@ Dados estruturados guardados no perfil do restaurante
 
 ### 6.3 System Prompt para Analise de Ementas
 
-```
+```plaintext
 Es o modulo de analise de ementas do Eat Out Adviser. Recebes uma ementa de restaurante (imagem, texto ou PDF) e deves:
 
 1. EXTRAIR todos os pratos com:
@@ -1234,7 +1253,7 @@ Escreve em portugues de Portugal. Se uma secao nao e visivel/legivel, indica "na
       {
         "name": "Carbonara alla Romana",
         "description": "Esparguete com guanciale, pecorino, ovo e pimenta preta",
-        "price_eur": 14.50,
+        "price_eur": 14.5,
         "category": "prato_principal",
         "allergens": {
           "declared": [],
@@ -1268,12 +1287,12 @@ Escreve em portugues de Portugal. Se uma secao nao e visivel/legivel, indica "na
 
 ### 6.5 Tratamento de Erros
 
-| Cenario | Estrategia |
-|---|---|
-| Foto desfocada/ilegivel | Informar utilizador e pedir nova foto com melhor qualidade |
-| Ementa em lingua nao identificada | Identificar lingua e traduzir antes de analisar |
-| Precos nao visiveis | Extrair pratos sem precos, marcar como "preco nao disponivel" |
-| Alergenos nao declarados | Inferir dos ingredientes com aviso claro: "Alergenos inferidos pela IA, nao declarados pelo restaurante. Confirme com o staff." |
+| Cenario                           | Estrategia                                                                                                                      |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Foto desfocada/ilegivel           | Informar utilizador e pedir nova foto com melhor qualidade                                                                      |
+| Ementa em lingua nao identificada | Identificar lingua e traduzir antes de analisar                                                                                 |
+| Precos nao visiveis               | Extrair pratos sem precos, marcar como "preco nao disponivel"                                                                   |
+| Alergenos nao declarados          | Inferir dos ingredientes com aviso claro: "Alergenos inferidos pela IA, nao declarados pelo restaurante. Confirme com o staff." |
 
 ### 6.6 Consideracoes de Performance e Custos
 
@@ -1287,11 +1306,12 @@ Escreve em portugues de Portugal. Se uma secao nao e visivel/legivel, indica "na
 
 ### 7.1 Descricao e Historia de Utilizador
 
-**Como** dono de restaurante, **quero** receber um relatorio detalhado de acessibilidade do meu espaco **para que** compreenda o que esta bem, o que precisa de melhorar e qual o custo estimado das melhorias.
+**Como** dono de restaurante, **quero** receber um relatorio detalhado de acessibilidade do meu espaco **para que**
+compreenda o que esta bem, o que precisa de melhorar e qual o custo estimado das melhorias.
 
 ### 7.2 Abordagem Tecnica
 
-```
+```plaintext
 Dados do restaurante agregados (perfil, fotos, avaliacoes, ementa)
        |
        v
@@ -1306,7 +1326,7 @@ Relatorio em formato HTML/PDF partilhavel
 
 ### 7.3 System Prompt para Geracao de Relatorio
 
-```
+```plaintext
 Es o modulo de geracao de relatorios de acessibilidade do Eat Out Adviser. Geras relatorios profissionais e accionaveis para donos de restaurantes.
 
 O relatorio deve conter:
@@ -1344,27 +1364,27 @@ Escreve em portugues de Portugal. Tom profissional mas acessivel. Usa legislacao
 
 ```typescript
 const improvementCosts: Record<string, { min: number; max: number; unit: string }> = {
-  "rampa_fixa_curta": { min: 500, max: 2000, unit: "EUR" },
-  "rampa_fixa_longa": { min: 2000, max: 8000, unit: "EUR" },
-  "rampa_portatil": { min: 150, max: 500, unit: "EUR" },
-  "alargamento_porta": { min: 800, max: 3000, unit: "EUR" },
-  "porta_automatica": { min: 2000, max: 5000, unit: "EUR" },
-  "casa_banho_adaptacao_completa": { min: 5000, max: 15000, unit: "EUR" },
-  "barras_apoio_casa_banho": { min: 100, max: 400, unit: "EUR" },
-  "rebaixamento_balcao": { min: 500, max: 2000, unit: "EUR" },
-  "sinaletica_acessibilidade": { min: 50, max: 300, unit: "EUR" },
-  "menu_braille": { min: 200, max: 500, unit: "EUR" },
-  "menu_digital_qrcode": { min: 100, max: 500, unit: "EUR" },
-  "lugar_estacionamento_reservado": { min: 200, max: 800, unit: "EUR" },
-  "piso_antiderrapante": { min: 20, max: 60, unit: "EUR/m2" },
-  "iluminacao_melhorada": { min: 300, max: 1500, unit: "EUR" },
-  "corrimao": { min: 150, max: 600, unit: "EUR/metro" }
+  rampa_fixa_curta: { min: 500, max: 2000, unit: "EUR" },
+  rampa_fixa_longa: { min: 2000, max: 8000, unit: "EUR" },
+  rampa_portatil: { min: 150, max: 500, unit: "EUR" },
+  alargamento_porta: { min: 800, max: 3000, unit: "EUR" },
+  porta_automatica: { min: 2000, max: 5000, unit: "EUR" },
+  casa_banho_adaptacao_completa: { min: 5000, max: 15000, unit: "EUR" },
+  barras_apoio_casa_banho: { min: 100, max: 400, unit: "EUR" },
+  rebaixamento_balcao: { min: 500, max: 2000, unit: "EUR" },
+  sinaletica_acessibilidade: { min: 50, max: 300, unit: "EUR" },
+  menu_braille: { min: 200, max: 500, unit: "EUR" },
+  menu_digital_qrcode: { min: 100, max: 500, unit: "EUR" },
+  lugar_estacionamento_reservado: { min: 200, max: 800, unit: "EUR" },
+  piso_antiderrapante: { min: 20, max: 60, unit: "EUR/m2" },
+  iluminacao_melhorada: { min: 300, max: 1500, unit: "EUR" },
+  corrimao: { min: 150, max: 600, unit: "EUR/metro" },
 };
 ```
 
 ### 7.5 Exemplo de Output (Excerto)
 
-```
+```plaintext
 RELATORIO DE ACESSIBILIDADE
 Restaurante: Trattoria da Maria
 Data: 15 de Marco de 2026
@@ -1405,11 +1425,12 @@ RECOMENDACOES PRIORITARIAS:
 
 ### 8.1 Descricao e Historia de Utilizador
 
-**Como** turista estrangeiro com mobilidade reduzida a visitar o Porto, **quero** ler avaliacoes de acessibilidade na minha lingua **para que** consiga planear refeicoes em restaurantes acessiveis sem barreira linguistica.
+**Como** turista estrangeiro com mobilidade reduzida a visitar o Porto, **quero** ler avaliacoes de acessibilidade na
+minha lingua **para que** consiga planear refeicoes em restaurantes acessiveis sem barreira linguistica.
 
 ### 8.2 Abordagem Tecnica
 
-```
+```plaintext
 Conteudo original (avaliacao, descricao, relatorio)
        |
        v
@@ -1427,7 +1448,7 @@ Conteudo traduzido servido ao utilizador
 
 ### 8.3 System Prompt para Traducao
 
-```
+```plaintext
 Es o modulo de traducao do Eat Out Adviser, uma aplicacao de acessibilidade para restaurantes. Traduz o conteudo fornecido de {lingua_origem} para {lingua_destino}.
 
 REGRAS CRITICAS:
@@ -1454,28 +1475,21 @@ REGRAS CRITICAS:
 
 ### 8.4 Linguas Suportadas (MVP)
 
-| Lingua | Codigo | Prioridade |
-|---|---|---|
-| Portugues (Portugal) | pt-PT | Lingua base |
-| Ingles | en | Alta - turismo |
-| Espanhol | es | Alta - proximidade |
-| Frances | fr | Media - turismo |
-| Alemao | de | Media - turismo |
+| Lingua               | Codigo | Prioridade         |
+| -------------------- | ------ | ------------------ |
+| Portugues (Portugal) | pt-PT  | Lingua base        |
+| Ingles               | en     | Alta - turismo     |
+| Espanhol             | es     | Alta - proximidade |
+| Frances              | fr     | Media - turismo    |
+| Alemao               | de     | Media - turismo    |
 
 ### 8.5 Estrategia de Cache
 
 ```typescript
-async function getTranslation(
-  contentHash: string,
-  targetLang: string,
-  originalContent: string
-): Promise<string> {
+async function getTranslation(contentHash: string, targetLang: string, originalContent: string): Promise<string> {
   // 1. Verificar cache
   const cached = await db.query.translations.findFirst({
-    where: and(
-      eq(translations.content_hash, contentHash),
-      eq(translations.target_lang, targetLang)
-    )
+    where: and(eq(translations.content_hash, contentHash), eq(translations.target_lang, targetLang)),
   });
 
   if (cached && cached.created_at > subDays(new Date(), 90)) {
@@ -1486,17 +1500,20 @@ async function getTranslation(
   const translated = await translateWithClaude(originalContent, targetLang);
 
   // 3. Guardar em cache
-  await db.insert(translations).values({
-    content_hash: contentHash,
-    source_lang: detectLanguage(originalContent),
-    target_lang: targetLang,
-    original_content: originalContent,
-    translated_content: translated,
-    created_at: new Date()
-  }).onConflictDoUpdate({
-    target: [translations.content_hash, translations.target_lang],
-    set: { translated_content: translated, created_at: new Date() }
-  });
+  await db
+    .insert(translations)
+    .values({
+      content_hash: contentHash,
+      source_lang: detectLanguage(originalContent),
+      target_lang: targetLang,
+      original_content: originalContent,
+      translated_content: translated,
+      created_at: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: [translations.content_hash, translations.target_lang],
+      set: { translated_content: translated, created_at: new Date() },
+    });
 
   return translated;
 }
@@ -1504,12 +1521,12 @@ async function getTranslation(
 
 ### 8.6 Tratamento de Erros
 
-| Cenario | Estrategia |
-|---|---|
-| Lingua nao suportada | Fallback para ingles com aviso |
-| Conteudo misto (varias linguas) | Traduzir cada segmento individualmente |
-| Termos tecnicos sem traducao | Manter termo original entre aspas com explicacao |
-| Erro na API | Mostrar conteudo original com botao "Tentar traduzir novamente" |
+| Cenario                         | Estrategia                                                      |
+| ------------------------------- | --------------------------------------------------------------- |
+| Lingua nao suportada            | Fallback para ingles com aviso                                  |
+| Conteudo misto (varias linguas) | Traduzir cada segmento individualmente                          |
+| Termos tecnicos sem traducao    | Manter termo original entre aspas com explicacao                |
+| Erro na API                     | Mostrar conteudo original com botao "Tentar traduzir novamente" |
 
 ### 8.7 Consideracoes de Performance e Custos
 
@@ -1524,13 +1541,15 @@ async function getTranslation(
 
 ### 9.1 Descricao e Historia de Utilizador
 
-**Como** developer a trabalhar no ecossistema Eat Out Adviser, **quero** um servidor MCP que exponha as funcionalidades da aplicacao **para que** ferramentas de IA (Claude Code, Claude Desktop, outros agentes) possam interagir directamente com os dados de acessibilidade.
+**Como** developer a trabalhar no ecossistema Eat Out Adviser, **quero** um servidor MCP que exponha as funcionalidades
+da aplicacao **para que** ferramentas de IA (Claude Code, Claude Desktop, outros agentes) possam interagir directamente
+com os dados de acessibilidade.
 
 ### 9.2 Abordagem Tecnica
 
 O servidor MCP segue a especificacao MCP 2025-11-25 e comunica via JSON-RPC 2.0 sobre stdio ou SSE.
 
-```
+```plaintext
 Agente IA (Claude Code, Claude Desktop, etc.)
        |
        v (MCP Protocol - JSON-RPC 2.0)
@@ -1720,7 +1739,7 @@ Base de Dados PostgreSQL + APIs da aplicacao
 
 ### 9.5 Exemplos de Interaccao MCP
 
-**Exemplo: Claude Code pesquisa restaurantes acessiveis**
+#### Exemplo: Claude Code pesquisa restaurantes acessiveis
 
 ```json
 // Request (agente -> servidor MCP)
@@ -1762,7 +1781,7 @@ Base de Dados PostgreSQL + APIs da aplicacao
 }
 ```
 
-**Exemplo: Leitura de recurso**
+#### Exemplo: Leitura de recurso
 
 ```json
 // Request
@@ -1798,16 +1817,19 @@ Base de Dados PostgreSQL + APIs da aplicacao
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
-const server = new Server({
-  name: "eat-out-adviser",
-  version: "1.0.0"
-}, {
-  capabilities: {
-    tools: {},
-    resources: { subscribe: true },
-    prompts: {}
-  }
-});
+const server = new Server(
+  {
+    name: "eat-out-adviser",
+    version: "1.0.0",
+  },
+  {
+    capabilities: {
+      tools: {},
+      resources: { subscribe: true },
+      prompts: {},
+    },
+  },
+);
 
 // Registar handlers para cada ferramenta
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
@@ -1841,11 +1863,13 @@ await server.connect(transport);
 
 ### 10.1 Descricao e Historia de Utilizador
 
-**Como** sistema de backend, **preciso** de um pipeline robusto para gerar, armazenar e actualizar embeddings de restaurantes, perfis de utilizador e avaliacoes **para que** a busca semantica e o sistema de matching funcionem com alta qualidade.
+**Como** sistema de backend, **preciso** de um pipeline robusto para gerar, armazenar e actualizar embeddings de
+restaurantes, perfis de utilizador e avaliacoes **para que** a busca semantica e o sistema de matching funcionem com
+alta qualidade.
 
 ### 10.2 Abordagem Tecnica
 
-```
+```plaintext
 Dados fonte (restaurante, avaliacao, perfil)
        |
        v
@@ -1871,13 +1895,15 @@ Actualizacao incremental quando dados mudam
 ```typescript
 function buildRestaurantEmbeddingText(restaurant: Restaurant): string {
   // Prefixo especifico para busca (recomendado pelo nomic-embed-text-v2)
-  return `search_document: ${restaurant.name}. ${restaurant.description}. ` +
+  return (
+    `search_document: ${restaurant.name}. ${restaurant.description}. ` +
     `Cozinha ${restaurant.cuisine}. ` +
     `Localizado em ${restaurant.address}, ${restaurant.area}. ` +
     `Acessibilidade: ${restaurant.accessibility_summary}. ` +
-    `Caracteristicas: ${restaurant.features.join(', ')}. ` +
+    `Caracteristicas: ${restaurant.features.join(", ")}. ` +
     `Preco: ${restaurant.price_range}. ` +
-    (restaurant.specialties ? `Especialidades: ${restaurant.specialties.join(', ')}.` : '');
+    (restaurant.specialties ? `Especialidades: ${restaurant.specialties.join(", ")}.` : "")
+  );
 }
 ```
 
@@ -1885,10 +1911,12 @@ function buildRestaurantEmbeddingText(restaurant: Restaurant): string {
 
 ```typescript
 function buildReviewEmbeddingText(review: Review): string {
-  return `search_document: Avaliacao de ${review.restaurant_name}. ` +
+  return (
+    `search_document: Avaliacao de ${review.restaurant_name}. ` +
     `${review.text}. ` +
     `Classificacao: ${review.rating}/5. ` +
-    (review.mobility_type ? `Avaliador com ${review.mobility_type}.` : '');
+    (review.mobility_type ? `Avaliador com ${review.mobility_type}.` : "")
+  );
 }
 ```
 
@@ -1896,23 +1924,26 @@ function buildReviewEmbeddingText(review: Review): string {
 
 ```typescript
 function buildUserProfileEmbeddingText(user: UserProfile): string {
-  return `search_document: Utilizador com ${user.mobility_type}. ` +
-    `Necessita: ${user.accessibility_needs.join(', ')}. ` +
-    `Preferencias: cozinha ${user.preferred_cuisines.join(', ')}. ` +
+  return (
+    `search_document: Utilizador com ${user.mobility_type}. ` +
+    `Necessita: ${user.accessibility_needs.join(", ")}. ` +
+    `Preferencias: cozinha ${user.preferred_cuisines.join(", ")}. ` +
     `Zona: ${user.preferred_area}. ` +
-    `Restricoes alimentares: ${user.dietary_restrictions.join(', ') || 'nenhuma'}.`;
+    `Restricoes alimentares: ${user.dietary_restrictions.join(", ") || "nenhuma"}.`
+  );
 }
 ```
 
 ### 10.4 Escolha do Modelo e Dimensionalidade
 
-| Modelo | Dimensoes | Tamanho | RAM (inferencia) | Velocidade (N5105) | Multilingue |
-|---|---|---|---|---|---|
-| **nomic-embed-text-v2** | 768 | ~950MB | ~2GB | ~50-100ms/query | Sim (100+ linguas) |
-| all-MiniLM-L12-v2 | 384 | ~134MB | ~500MB | ~20-30ms/query | Limitado |
-| mxbai-embed-large | 1024 | ~670MB | ~1.5GB | ~80-120ms/query | Sim |
+| Modelo                  | Dimensoes | Tamanho | RAM (inferencia) | Velocidade (N5105) | Multilingue        |
+| ----------------------- | --------- | ------- | ---------------- | ------------------ | ------------------ |
+| **nomic-embed-text-v2** | 768       | ~950MB  | ~2GB             | ~50-100ms/query    | Sim (100+ linguas) |
+| all-MiniLM-L12-v2       | 384       | ~134MB  | ~500MB           | ~20-30ms/query     | Limitado           |
+| mxbai-embed-large       | 1024      | ~670MB  | ~1.5GB           | ~80-120ms/query    | Sim                |
 
 **Justificacao da escolha (nomic-embed-text-v2):**
+
 - Arquitectura MoE activa apenas 305M de 475M parametros -- eficiente para N5105
 - 768 dimensoes oferecem bom equilibrio entre qualidade e armazenamento
 - Suporte nativo a portugues (treinado em 100+ linguas)
@@ -1980,15 +2011,15 @@ const embeddingUpdateStrategy = {
   restaurant: {
     // Re-gerar embedding quando:
     triggers: [
-      "restaurant_profile_updated",   // Dados do restaurante alterados
+      "restaurant_profile_updated", // Dados do restaurante alterados
       "accessibility_profile_updated", // Dados de acessibilidade alterados
-      "new_review_milestone",          // A cada 5 novas avaliacoes
-      "photo_analysis_completed",      // Nova analise de foto concluida
+      "new_review_milestone", // A cada 5 novas avaliacoes
+      "photo_analysis_completed", // Nova analise de foto concluida
     ],
     // Batch update nocturno para consistencia
     batch_schedule: "0 3 * * *", // 3:00 AM diariamente
     // Prioridade: restaurantes com dados alterados nas ultimas 24h
-    batch_priority: "updated_at DESC"
+    batch_priority: "updated_at DESC",
   },
 
   review: {
@@ -2002,7 +2033,7 @@ const embeddingUpdateStrategy = {
     triggers: ["profile_updated", "preferences_changed"],
     // Batch semanal para capturar mudancas implicitas
     batch_schedule: "0 4 * * 0", // Domingos as 4:00 AM
-  }
+  },
 };
 
 // Funcao de geracao de embedding via Ollama
@@ -2012,8 +2043,8 @@ async function generateEmbedding(text: string): Promise<number[]> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       model: "nomic-embed-text-v2",
-      prompt: text
-    })
+      prompt: text,
+    }),
   });
 
   const data = await response.json();
@@ -2027,56 +2058,59 @@ async function batchUpdateRestaurantEmbeddings(): Promise<void> {
       // Restaurantes sem embedding
       isNull(restaurants.last_embedding_at),
       // Restaurantes actualizados desde ultimo embedding
-      gt(restaurants.updated_at, restaurants.last_embedding_at)
+      gt(restaurants.updated_at, restaurants.last_embedding_at),
     ),
     orderBy: desc(restaurants.updated_at),
-    limit: 100 // Processar 100 de cada vez para nao sobrecarregar N5105
+    limit: 100, // Processar 100 de cada vez para nao sobrecarregar N5105
   });
 
   for (const restaurant of outdatedRestaurants) {
     const text = buildRestaurantEmbeddingText(restaurant);
     const embedding = await generateEmbedding(text);
 
-    await db.insert(restaurantEmbeddings)
+    await db
+      .insert(restaurantEmbeddings)
       .values({
         restaurant_id: restaurant.id,
         embedding: embedding,
         embedding_text: text,
         model_version: "nomic-embed-text-v2",
-        updated_at: new Date()
+        updated_at: new Date(),
       })
       .onConflictDoUpdate({
         target: restaurantEmbeddings.restaurant_id,
         set: {
           embedding: embedding,
           embedding_text: text,
-          updated_at: new Date()
-        }
+          updated_at: new Date(),
+        },
       });
 
     // Delay entre embeddings para nao saturar o N5105
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
 }
 ```
 
 ### 10.7 Consideracoes de Performance (N5105 16GB)
 
-| Operacao | Tempo Estimado | RAM |
-|---|---|---|
-| Gerar 1 embedding | 50-100ms | ~2GB (modelo carregado) |
-| Batch de 100 embeddings | 10-15s | ~2GB |
-| Batch de 1000 embeddings | 2-3 min | ~2GB |
-| Busca vectorial (10k registos) | <5ms | Depende do indice |
-| Busca vectorial (100k registos) | <15ms | Depende do indice |
+| Operacao                        | Tempo Estimado | RAM                     |
+| ------------------------------- | -------------- | ----------------------- |
+| Gerar 1 embedding               | 50-100ms       | ~2GB (modelo carregado) |
+| Batch de 100 embeddings         | 10-15s         | ~2GB                    |
+| Batch de 1000 embeddings        | 2-3 min        | ~2GB                    |
+| Busca vectorial (10k registos)  | <5ms           | Depende do indice       |
+| Busca vectorial (100k registos) | <15ms          | Depende do indice       |
 
 **Armazenamento por embedding:**
+
 - 768 dimensoes x 4 bytes (float32) = 3072 bytes = ~3KB por embedding
 - 10.000 restaurantes = ~30MB de embeddings
 - 100.000 avaliacoes = ~300MB de embeddings
 - Com indice HNSW: ~2x o tamanho dos dados base
 
 **Optimizacoes para N5105:**
+
 - Manter o modelo Ollama carregado em memoria (evitar cold start de ~5s)
 - Processar batches durante horas de baixo trafego (noite)
 - Se memoria for limitada, usar dimensionalidade Matryoshka reduzida (256 dim = ~1KB por embedding)
@@ -2093,21 +2127,23 @@ async function batchUpdateRestaurantEmbeddings(): Promise<void> {
 
 ## Resumo de Custos Mensais Estimados (API Claude)
 
-| Funcionalidade | Custo/Unidade | Volume Estimado/Mes | Custo Mensal |
-|---|---|---|---|
-| Pesquisa em linguagem natural | $0.014/pesquisa | 1000 pesquisas | $14.00 |
-| Analise de fotografias | $0.04/restaurante | 100 restaurantes | $4.00 |
-| Sumarizacao de avaliacoes | $0.01/sumario | 200 actualizacoes | $2.00 |
-| Assistente conversacional | $0.03/sessao | 1000 sessoes | $30.00 |
-| Analise de ementas | $0.048/ementa | 50 ementas | $2.40 |
-| Relatorios de acessibilidade | $0.025/relatorio | 20 relatorios | $0.50 |
-| Traducao | $0.003/traducao | 150 traducoes | $0.45 |
-| Matching personalizado | $0 (local) | - | $0.00 |
-| Servidor MCP | $0 (local) | - | $0.00 |
-| Pipeline de embeddings | $0 (Ollama local) | - | $0.00 |
-| **Total estimado** | | | **~$53.35/mes** |
+| Funcionalidade                | Custo/Unidade     | Volume Estimado/Mes | Custo Mensal    |
+| ----------------------------- | ----------------- | ------------------- | --------------- |
+| Pesquisa em linguagem natural | $0.014/pesquisa   | 1000 pesquisas      | $14.00          |
+| Analise de fotografias        | $0.04/restaurante | 100 restaurantes    | $4.00           |
+| Sumarizacao de avaliacoes     | $0.01/sumario     | 200 actualizacoes   | $2.00           |
+| Assistente conversacional     | $0.03/sessao      | 1000 sessoes        | $30.00          |
+| Analise de ementas            | $0.048/ementa     | 50 ementas          | $2.40           |
+| Relatorios de acessibilidade  | $0.025/relatorio  | 20 relatorios       | $0.50           |
+| Traducao                      | $0.003/traducao   | 150 traducoes       | $0.45           |
+| Matching personalizado        | $0 (local)        | -                   | $0.00           |
+| Servidor MCP                  | $0 (local)        | -                   | $0.00           |
+| Pipeline de embeddings        | $0 (Ollama local) | -                   | $0.00           |
+| **Total estimado**            |                   |                     | **~$53.35/mes** |
 
-**Nota:** Estes valores assumem utilizacao do Claude Sonnet 4.6 para a maioria das tarefas. Utilizacao de Opus 4.5 para tarefas criticas (relatorios detalhados, analise complexa) pode aumentar os custos em 3-5x para essas funcionalidades especificas. Com optimizacoes de cache e rate limiting, o custo real pode ser 30-50% inferior ao estimado.
+**Nota:** Estes valores assumem utilizacao do Claude Sonnet 4.6 para a maioria das tarefas. Utilizacao de Opus 4.5 para
+tarefas criticas (relatorios detalhados, analise complexa) pode aumentar os custos em 3-5x para essas funcionalidades
+especificas. Com optimizacoes de cache e rate limiting, o custo real pode ser 30-50% inferior ao estimado.
 
 ---
 
@@ -2123,12 +2159,12 @@ async function batchUpdateRestaurantEmbeddings(): Promise<void> {
 
 ### Disponibilidade e Fallbacks
 
-| Servico | Fallback |
-|---|---|
+| Servico                 | Fallback                                                          |
+| ----------------------- | ----------------------------------------------------------------- |
 | Claude API indisponivel | Cache de respostas frequentes + busca estruturada apenas (sem IA) |
-| Ollama indisponivel | Full-text search PostgreSQL (sem busca semantica) |
-| pgvector lento | Busca estruturada SQL com filtros + cache |
-| Internet indisponivel | PWA com dados em cache local (Service Worker) |
+| Ollama indisponivel     | Full-text search PostgreSQL (sem busca semantica)                 |
+| pgvector lento          | Busca estruturada SQL com filtros + cache                         |
+| Internet indisponivel   | PWA com dados em cache local (Service Worker)                     |
 
 ### Monitorizacao de Qualidade da IA
 
@@ -2143,9 +2179,9 @@ interface AIQualityMetrics {
   output_tokens: number;
   cost_usd: number;
   // Qualidade (feedback implicito e explicito)
-  user_clicked_result: boolean;        // Para pesquisa
-  user_visited_restaurant: boolean;    // Para recomendacoes
-  user_rated_helpful: boolean | null;  // Feedback explicito
+  user_clicked_result: boolean; // Para pesquisa
+  user_visited_restaurant: boolean; // Para recomendacoes
+  user_rated_helpful: boolean | null; // Feedback explicito
   // Erros
   error_type: string | null;
   fallback_used: boolean;
