@@ -7,12 +7,19 @@
 ## Indice
 
 1. [Filosofia do Sistema](#1-filosofia-do-sistema)
+   - 1.1 Porque e necessaria uma classificacao dedicada
+   - 1.2 Analise dos sistemas existentes e posicionamento
+   - 1.3 Principio fundamental: factos primeiro, score depois
+   - 1.4 Insuficiencia das classificacoes genericas
+   - 1.5 Importancia da personalizacao
+   - 1.6 Enquadramento normativo (PT, UE, EUA, UK, ISO)
 2. [Sistema de Pontuacao Global (0-100)](#2-sistema-de-pontuacao-global-0-100)
 3. [Algoritmo de Calculo Detalhado](#3-algoritmo-de-calculo-detalhado)
 4. [Pontuacao Personalizada](#4-pontuacao-personalizada)
 5. [Sistema Semaforo](#5-sistema-semaforo)
 6. [Sistema de Verificacao](#6-sistema-de-verificacao)
 7. [Decay e Actualizacao](#7-decay-e-actualizacao)
+   - 7.4 Sistema de contacto automatizado assistido por IA
 8. [Matching com Perfil do Utilizador](#8-matching-com-perfil-do-utilizador)
 9. [Apresentacao Visual](#9-apresentacao-visual)
 10. [Tabela de Referencia de Medidas](#10-tabela-de-referencia-de-medidas)
@@ -28,7 +35,46 @@ Uma classificacao generica de restaurante (comida, servico, ambiente) responde a
 
 Estas perguntas nao tem resposta possivel num sistema de 1 a 5 estrelas. Uma estrela em "acessibilidade" pode significar coisas radicalmente diferentes: para quem usa bengala, pode significar "ha dois degraus na entrada"; para quem usa cadeira de rodas electrica, pode significar "a porta tem 70 cm e nao consigo passar".
 
-### 1.2 Insuficiencia das classificacoes genericas
+### 1.2 Analise dos sistemas existentes e posicionamento
+
+O Eat Out Adviser combina as melhores caracteristicas de cada sistema existente, eliminando as suas limitacoes.
+
+#### 1.2.1 Sistemas analisados
+
+| Sistema          | Pais              | Abordagem                                                                                 | Forca principal                                                             | Limitacao principal                                         |
+| ---------------- | ----------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| **AccessAble**   | Reino Unido       | Guias factuais detalhados (100% factos, medidas e fotografias), sem pontuacao             | Exaustividade dos dados; inspectores profissionais; ISO 9001                | Sem score nem personalizacao — o utilizador decide sozinho  |
+| **Euan's Guide** | Reino Unido       | Reviews escritas por pessoas com deficiencia (crowdsourcing)                              | Perspectiva autentica de quem vive a experiencia                            | Subjectivo; cobertura inconsistente; sem medidas objectivas |
+| **Wheelmap**     | Alemanha (global) | Semaforo simples (verde/laranja/vermelho) baseado em duas perguntas                       | Simplicidade extrema; facil de contribuir; cobertura global (OpenStreetMap) | Demasiado simplista; sem granularidade nem medidas          |
+| **AXS Map**      | EUA               | Estrelas (1-5) para entrada, interior, WC + acessibilidade visual/auditiva                | Cobre multiplas deficiencias; sistema de rating claro                       | Estrelas subjectivas; sem medidas objectivas                |
+| **Google Maps**  | Global            | Atributos booleanos (entrada/WC/mesas/estacionamento acessiveis) via crowdsourcing        | Escala massiva (500M+ contribuicoes); integrado no Google                   | Binario (sim/nao); sem medidas; dados nao verificados       |
+| **Jaccede**      | Franca (global)   | Plataforma colaborativa com criterios detalhados; contribuicao aberta                     | Colaborativa; cobre qualidade de servico alem do espaco fisico              | Cobertura desigual; sem verificacao profissional            |
+| **Tur4all**      | Espanha/Portugal  | Informacao descritiva por categorias (fisica, visual, auditiva); gerida por especialistas | Adaptada a Iberia; categorias por tipo de deficiencia; app movel            | Descritiva sem score; interface datada; actualizacao lenta  |
+
+#### 1.2.2 O que o Eat Out Adviser adopta de cada sistema
+
+| De...            | Adoptamos...                                                                                                                                                                              |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **AccessAble**   | Recolha exaustiva de dados factuais e objectivos (medidas, fotografias, factos verificaveis). O score numerico e sempre acompanhado dos dados brutos subjacentes — nunca e um substituto. |
+| **Euan's Guide** | Valorizacao da perspectiva vivida: o sistema de verificacao comunitaria (seccao 6) integra relatos de utilizadores reais com mobilidade reduzida.                                         |
+| **Wheelmap**     | Sistema semaforo como camada de comunicacao rapida (seccao 5). Verde/amarelo/vermelho e imediatamente compreensivel.                                                                      |
+| **AXS Map**      | Estrutura de categorias (entrada, interior, WC) como base da avaliacao. Expandimos para 6 categorias com subcritrios ponderados.                                                          |
+| **Google Maps**  | Estrategia de crowdsourcing escalavel. O nosso sistema de contacto automatizado por IA (seccao 7.4) escala a verificacao sem depender apenas de visitas presenciais.                      |
+| **Jaccede**      | Cobertura de qualidade de servico (formacao do pessoal, formatos de menu) na categoria Comunicacao.                                                                                       |
+| **Tur4all**      | Adaptacao ao contexto iberico (legislacao, calcada portuguesa, especificidades culturais) e categorias por tipo de deficiencia.                                                           |
+
+#### 1.2.3 O que o Eat Out Adviser faz que nenhum outro sistema faz
+
+1. **Pontuacao personalizada por perfil de mobilidade:** Cruzamento automatico entre dimensoes do equipamento do utilizador e medidas reais do espaco (ex: largura da cadeira vs. largura da porta), com pesos ajustados ao tipo de mobilidade.
+2. **Criterios eliminatorios com avisos criticos:** Independentemente do score, o sistema gera alertas quando uma barreira fisica e intransponivel para o perfil especifico do utilizador.
+3. **Decay temporal com re-verificacao automatizada por IA:** O multiplicador de confianca degrada-se ao longo do tempo e o sistema contacta proactivamente os restaurantes por email/WhatsApp para manter os dados actualizados.
+4. **Normas internacionais contextualizadas para turismo:** O sistema apresenta limiares de referencia de multiplos paises (Portugal, EUA, Reino Unido, ISO), permitindo que turistas estrangeiros compreendam as medidas no contexto das normas que conhecem.
+
+### 1.3 Principio fundamental: factos primeiro, score depois
+
+A licao mais importante do AccessAble e que a informacao factual detalhada e o alicerce de qualquer sistema de acessibilidade. O utilizador precisa de confiar que os dados sao exactos, exaustivos e objectivos. O score numerico e uma conveniencia — uma camada de interpretacao por cima dos factos — mas nunca substitui o acesso directo aos dados brutos (medidas em centimetros, fotografias, descricoes factuais). Cada subcritrio do sistema armazena e apresenta o valor original (`value` no tipo `SubcriterionScore`) para que o utilizador possa sempre verificar o fundamento do score.
+
+### 1.4 Insuficiencia das classificacoes genericas
 
 Os sistemas de classificacao genericos falham na acessibilidade por quatro razoes:
 
@@ -40,7 +86,7 @@ Os sistemas de classificacao genericos falham na acessibilidade por quatro razoe
 
 4. **Impossibilidade de personalizacao:** O que e acessivel para uma pessoa pode nao ser para outra. Uma porta de 75 cm e suficiente para a maioria das cadeiras manuais (largura tipica 55-65 cm) mas insuficiente para muitas cadeiras electricas (largura tipica 60-75 cm).
 
-### 1.3 Importancia da personalizacao
+### 1.5 Importancia da personalizacao
 
 O Eat Out Adviser parte do principio de que acessibilidade nao e binaria nem universal. E um espectro que depende da interseccao entre as caracteristicas fisicas do espaco e as necessidades especificas de cada utilizador.
 
@@ -49,17 +95,45 @@ Por isso, o sistema calcula duas pontuacoes distintas:
 - **Pontuacao global:** Avaliacao objectiva do espaco contra limiares normativos (util para proprietarios, verificadores e comparacao geral)
 - **Pontuacao personalizada:** Avaliacao especifica para o perfil do utilizador (dimensoes do equipamento de mobilidade, capacidades fisicas, preferencias)
 
-### 1.4 Enquadramento normativo
+### 1.6 Enquadramento normativo
 
-O sistema de pontuacao esta alinhado com as seguintes normas internacionais:
+O sistema de pontuacao esta alinhado com normas internacionais de multiplos paises, essencial para servir tanto residentes portugueses como turistas estrangeiros que precisam de compreender as medidas no contexto das normas que conhecem.
 
-| Norma                                 | Ambito                                                                         | Aplicacao no sistema                                                                                 |
-| ------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| ADA (Americans with Disabilities Act) | Limiares minimos de acessibilidade                                             | Valores de referencia para subcritrios (largura de portas, inclinacao de rampas, espacos de rotacao) |
-| ISO 21542:2021                        | Construcao de edificios -- Acessibilidade e usabilidade do ambiente construido | Limiares europeus/internacionais (geralmente mais exigentes que ADA)                                 |
-| EAA (European Accessibility Act)      | Requisitos de acessibilidade para produtos e servicos na UE                    | Enquadramento legal para servicos de restauracao na UE (em vigor desde Junho de 2025)                |
-| DL 163/2006 (Portugal)                | Normas tecnicas de acessibilidade em edificios                                 | Limiares especificos para o contexto portugues (rampas, portas, sanitarios)                          |
-| EN 301 549                            | Requisitos de acessibilidade para TIC                                          | Aplicavel a interface digital da aplicacao                                                           |
+#### 1.6.1 Normas de referencia para o ambiente construido
+
+| Norma                                 | Pais/Regiao   | Ambito                                                                        | Aplicacao no sistema                                                                                                                                      |
+| ------------------------------------- | ------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DL 163/2006                           | Portugal      | Normas tecnicas de acessibilidade em edificios publicos e residenciais        | Norma primaria: limiares de referencia para todo o sistema (rampas, portas, sanitarios, estacionamento)                                                   |
+| EN 17210:2021                         | UE (CEN)      | Acessibilidade e usabilidade do ambiente construido — requisitos funcionais   | Referencia europeia harmonizada; cobre percursos, estacionamento, circulacao horizontal/vertical, instalacoes sanitarias, sinaltica, iluminacao, acustica |
+| CEN/TR 17621:2021                     | UE (CEN)      | Criterios tecnicos de desempenho e especificacoes (complemento a EN 17210)    | Valores numericos concretos que complementam os requisitos funcionais da EN 17210                                                                         |
+| ISO 21542:2021                        | Internacional | Construcao de edificios — acessibilidade e usabilidade do ambiente construido | Limiares internacionais (geralmente mais exigentes que ADA); base para comparacao global                                                                  |
+| ISO 21902:2021                        | Internacional | Turismo acessivel para todos — requisitos e recomendacoes                     | Norma especifica para turismo: restauracao, alojamento, transporte, destinos; base da certificacao portuguesa de turismo acessivel                        |
+| ADA (Americans with Disabilities Act) | EUA           | Limiares minimos de acessibilidade para espacos publicos                      | Valores de referencia para turistas americanos; base de comparacao nos subcritrios (largura de portas, inclinacao de rampas, espacos de rotacao)          |
+| UK Building Regulations Part M        | Reino Unido   | Acesso e utilizacao de edificios (Volume 2: edificios nao residenciais)       | Valores de referencia para turistas britanicos; inclui requisitos especificos para portas (775 mm min.), rampas (1:12 max.), sanitarios                   |
+| EAA (European Accessibility Act)      | UE            | Requisitos de acessibilidade para produtos e servicos digitais na UE          | Enquadramento legal para servicos digitais de restauracao na UE (em vigor desde Junho de 2025); aplicavel a nossa plataforma                              |
+| EN 301 549                            | UE            | Requisitos de acessibilidade para TIC                                         | Aplicavel a interface digital da aplicacao (WCAG 2.1 AA)                                                                                                  |
+
+#### 1.6.2 Certificacao portuguesa de turismo acessivel
+
+Em Marco de 2025, o Turismo de Portugal lancou uma certificacao baseada na norma portuguesa ISO 21902:2022, classificando ofertas turisticas acessiveis. A certificacao e voluntaria, emitida por organismos acreditados pelo IPAC (Instituto Portugues de Acreditacao), e abrange destinos, servicos e infra-estruturas turisticas. O sistema do Eat Out Adviser complementa esta certificacao: enquanto a certificacao avalia a conformidade normativa de forma binaria (conforme/nao conforme), o nosso sistema fornece informacao granular e personalizada que permite ao utilizador tomar decisoes informadas independentemente do estado de certificacao do restaurante.
+
+#### 1.6.3 Contexto internacional para turismo
+
+Para turistas estrangeiros com mobilidade reduzida, e fundamental compreender como as medidas de um restaurante portugues se comparam com as normas do seu pais de origem. O sistema apresenta esta informacao de forma contextualizada:
+
+| Criterio                       | Portugal (DL 163/2006) | UE (EN 17210 / CEN/TR 17621) | EUA (ADA)             | Reino Unido (Part M) | Recomendado Eat Out Adviser |
+| ------------------------------ | ---------------------- | ---------------------------- | --------------------- | -------------------- | --------------------------- |
+| Largura minima da porta        | >= 77 cm               | >= 80 cm                     | >= 81.3 cm (32 pol.)  | >= 77.5 cm           | >= 90 cm                    |
+| Inclinacao maxima da rampa     | 6% (ideal), max 8%     | <= 6% (ideal)                | <= 8.33% (1:12)       | <= 8.33% (1:12)      | <= 6%                       |
+| Largura minima da rampa        | >= 120 cm              | >= 120 cm                    | >= 91.4 cm (36 pol.)  | >= 100 cm            | >= 120 cm                   |
+| Espaco de rotacao              | >= 150 cm              | >= 150 cm                    | >= 152 cm (60 pol.)   | >= 150 cm            | >= 170 cm                   |
+| Largura do corredor            | >= 120 cm              | >= 120 cm                    | >= 91.4 cm (36 pol.)  | >= 120 cm            | >= 120 cm                   |
+| Largura minima porta WC        | >= 77 cm               | >= 80 cm                     | >= 81.3 cm (32 pol.)  | >= 77.5 cm           | >= 90 cm                    |
+| Espaco rotacao WC              | >= 150 cm              | >= 150 cm                    | >= 152 cm (60 pol.)   | >= 150 cm            | >= 170 cm                   |
+| Altura da sanita               | 45-50 cm               | 43-48 cm                     | 43-48 cm (17-19 pol.) | 48 cm (+/- 1.5 cm)   | 45-48 cm                    |
+| Lugar estacionamento acessivel | >= 250 cm              | >= 250 cm                    | >= 244 cm (96 pol.)   | >= 240 cm            | >= 330 cm                   |
+
+Nota: Os valores "Recomendado Eat Out Adviser" representam o limiar para a pontuacao maxima (100) no respectivo subcritrio. Os limiares normativos correspondem a pontuacoes intermerdias (tipicamente 50-80) no sistema de scoring.
 
 ---
 
@@ -799,6 +873,80 @@ Onde `months_since_verification` e o numero de meses desde a ultima verificacao 
 | Decay atinge 0.65 (18+ meses)                          | Alerta automatico: "dados com mais de 18 meses -- verificacao recomendada" |
 | Dados contraditrios entre fontes                       | Flag para revisao manual                                                   |
 
+### 7.4 Sistema de contacto automatizado assistido por IA
+
+Em vez de depender exclusivamente de visitas presenciais ou chamadas telefonicas, o sistema utiliza canais digitais e inteligencia artificial para manter os dados actualizados de forma escalavel.
+
+#### 7.4.1 Canais de contacto (por ordem de preferencia)
+
+| Canal          | Uso                                                                                                           | Automatizavel |
+| -------------- | ------------------------------------------------------------------------------------------------------------- | ------------- |
+| Email          | Contacto inicial e questionarios estruturados; permite resposta assincrona pelo proprietario                  | Sim           |
+| WhatsApp / SMS | Follow-up e confirmacoes rapidas ("Confirma que a rampa continua operacional?"); maior taxa de resposta em PT | Sim           |
+| Formulario web | Auto-submissao pelo proprietario com campos pre-preenchidos a partir dos dados existentes                     | Sim           |
+| Chamada de voz | Ultimo recurso para restaurantes que nao respondem aos canais digitais                                        | Parcial (IA)  |
+
+#### 7.4.2 Fluxo de re-verificacao automatizada
+
+```plaintext
+1. TRIGGER (decay >= 0.80 ou flag de utilizador ou 12+ meses sem verificacao)
+   |
+   v
+2. IA GERA QUESTIONARIO PERSONALIZADO
+   - Compara dados existentes com data da ultima verificacao
+   - Foca nas categorias com dados mais antigos ou com flags
+   - Gera perguntas em portugues, linguagem simples e directa
+   - Exemplo: "A rampa de entrada continua disponivel? A ultima verificacao
+     registou inclinacao de 7%. Houve alguma alteracao?"
+   |
+   v
+3. ENVIO POR EMAIL (1a tentativa)
+   - Email ao proprietario com link para formulario pre-preenchido
+   - Formulario mostra os dados actuais e pede confirmacao ou correcao
+   - Prazo de resposta: 14 dias
+   |
+   v
+4. FOLLOW-UP POR WHATSAPP/SMS (se sem resposta em 14 dias)
+   - Mensagem curta com link directo para o formulario
+   - Exemplo: "Ola! Estamos a actualizar a informacao de acessibilidade
+     do [nome]. Pode confirmar em 2 minutos? [link]"
+   - Prazo adicional: 7 dias
+   |
+   v
+5. IA PROCESSA RESPOSTAS
+   - Extrai dados estruturados das respostas (mesmo texto livre)
+   - Valida consistencia com dados anteriores
+   - Sinaliza respostas suspeitas (ex: "tudo optimo" sem detalhe)
+   - Actualiza RestaurantAccessibilityProfile com source = "owner"
+   |
+   v
+6. CONFIRMACAO COMUNITARIA
+   - Dados actualizados pelo proprietario ficam com multiplicador 0.75
+   - Sistema solicita verificacao comunitaria para elevar a 0.90
+   - Se resposta do proprietario contradiz dados comunitarios recentes,
+     flag para revisao manual
+```
+
+#### 7.4.3 Frequencia de contacto
+
+| Tipo de restaurante                     | Frequencia de contacto | Justificacao                                           |
+| --------------------------------------- | ---------------------- | ------------------------------------------------------ |
+| Dados com 12+ meses                     | Contacto imediato      | Dados potencialmente desactualizados                   |
+| Restaurante com obras reportadas        | Apos 30 dias da obra   | Tempo para conclusao das alteracoes                    |
+| Restaurante com 3+ flags de usuarios    | Contacto imediato      | Possivel alteracao nao reportada                       |
+| Restaurante novo (< 6 meses no sistema) | Aos 3 meses            | Confirmacao pos-abertura (ajustes iniciais sao comuns) |
+| Restaurante estavel (dados < 12 meses)  | Sem contacto           | Dados recentes e sem sinalizacoes                      |
+
+#### 7.4.4 Integracao com Google Maps e fontes publicas
+
+A IA monitoriza periodicamente fontes publicas para detectar alteracoes que possam afectar a acessibilidade:
+
+- **Google Maps / Google Business:** Alteracao de morada, fotografias novas (detectar obras, nova entrada), alteracao de horario (pode indicar mudanca de gestao)
+- **Redes sociais do restaurante:** Publicacoes sobre renovacoes, nova esplanada, etc.
+- **Licencas camararias (quando disponveis em dados abertos):** Alvaras de obras que possam afectar o espaco fisico
+
+Quando a IA detecta um sinal de alteracao, o restaurante e automaticamente sinalizado para re-verificacao (mesma logica do ponto 7.3).
+
 ---
 
 ## 8. Matching com Perfil do Utilizador
@@ -1097,81 +1245,211 @@ export interface UserProfile {
   maxDistanceFromParking?: number; // metros
 }
 
-export interface RestaurantAccessibilityProfile {
-  // Entrada
-  hasAccessibleEntrance?: boolean;
-  entranceDoorWidth?: number;
-  entranceType?: string;
-  hasLevelEntrance?: boolean;
-  hasRamp?: boolean;
-  rampIncline?: number;
-  rampHasHandrails?: boolean;
-  numberOfSteps?: number;
-  stepHeight?: number;
-  hasPortableRamp?: boolean;
-  exteriorSurfaceType?: string;
-  entranceLighting?: string;
+// --- Dados factuais exaustivos ---
+// Principio: cada campo armazena um FACTO objectivo e mensuravel.
+// Campos booleanos indicam presenca/ausencia. Campos numericos sao medidas em cm, graus ou metros.
+// Campos de texto descrevem caracteristicas observaveis (tipo de superficie, tipo de porta, etc.).
+// Campos de fotografia associam evidencia visual a cada seccao.
+// Inspirado em: AccessAble (factos e medidas), Tur4all (categorias ibéricas),
+// EN 17210:2021 (requisitos funcionais europeus), ISO 21902:2021 (turismo acessivel).
 
-  // Estacionamento
+export interface RestaurantAccessibilityProfile {
+  // --- CHEGADA / Aproximacao ao restaurante (EN 17210 Sec. 7-8) ---
+  // Contexto portugues: muitos restaurantes em zonas historicas com calcada e ruas estreitas
+  arrivalDescription?: string; // Descricao factual do percurso desde transportes publicos/estacionamento
+  nearestAccessibleTransport?: string; // Paragem/estacao acessivel mais proxima e distancia
+  nearestAccessibleTransportDistance?: number; // metros
+  sidewalkCondition?: "smooth" | "cobblestone" | "uneven" | "mixed"; // Calcada portuguesa e muito comum
+  sidewalkWidth?: number; // cm — largura do passeio de acesso
+  hasTactileGuidance?: boolean; // Piso tactil de encaminhamento no percurso
+  hasDroppedKerbs?: boolean; // Rebaixamento de passeios no percurso
+  streetGradient?: number; // % — inclinacao da rua de acesso (relevante em Lisboa, Porto, etc.)
+
+  // --- ESTACIONAMENTO (EN 17210 Sec. 8) ---
   hasAccessibleParking?: boolean;
   accessibleParkingSpaces?: number;
-  parkingDistanceToEntrance?: number;
-  parkingSpaceWidth?: number;
+  parkingDistanceToEntrance?: number; // metros
+  parkingSpaceWidth?: number; // cm
   hasAdjacentAccessAisle?: boolean;
-  accessAisleWidth?: number;
-  parkingSurfaceType?: string;
+  accessAisleWidth?: number; // cm
+  parkingSurfaceType?: "asphalt" | "concrete" | "cobblestone" | "gravel" | "other";
   hasDropoffArea?: boolean;
+  dropoffAreaDescription?: string; // Descricao factual (ex: "zona de carga/descarga a 10m da entrada")
+  parkingIsOnStreet?: boolean; // Estacionamento na rua vs. parque proprio
+  nearestPublicAccessibleParking?: string; // Parque publico acessivel mais proximo
+  nearestPublicAccessibleParkingDistance?: number; // metros
+  parkingPhotos?: string[]; // URLs das fotografias
 
-  // Interior
-  corridorMinWidth?: number;
+  // --- ENTRADA (EN 17210 Sec. 9) ---
+  hasAccessibleEntrance?: boolean;
+  entranceDoorWidth?: number; // cm
+  entranceDoorType?: "automatic_sliding" | "automatic_swing" | "manual_push" | "manual_pull" | "revolving" | "open" | "curtain" | "other";
+  entranceDoorWeight?: "light" | "moderate" | "heavy"; // Forca necessaria para abrir (relevante para cadeira manual)
+  hasLevelEntrance?: boolean;
+  entranceLevelDifference?: number; // cm — desnivel exacto (mesmo que pequeno, ex: 1.5 cm)
+  hasRamp?: boolean;
+  rampIncline?: number; // %
+  rampLength?: number; // cm
+  rampWidth?: number; // cm
+  rampHasHandrails?: boolean;
+  rampHandrailHeight?: number; // cm
+  rampHasLandingArea?: boolean; // Plataforma de descanso (obrigatorio para rampas longas)
+  rampSurfaceType?: string; // Tipo de superficie da rampa (anti-derrapante, etc.)
+  numberOfSteps?: number;
+  stepHeight?: number; // cm (altura de cada degrau)
+  hasPortableRamp?: boolean;
+  portableRampAvailability?: "always" | "on_request" | "advance_notice"; // Disponibilidade da rampa portatil
+  hasEntryBuzzer?: boolean; // Campainha/intercomunicador acessivel
+  entryBuzzerHeight?: number; // cm — altura do botao
+  exteriorSurfaceType?: "smooth" | "cobblestone" | "gravel" | "uneven" | "grass";
+  entranceLighting?: "well_lit" | "moderate" | "poor";
+  hasCanopyOrShelter?: boolean; // Cobertura na zona de espera (proteccao da chuva)
+  entranceNotes?: string; // Notas factuais adicionais
+  entrancePhotos?: string[]; // URLs das fotografias
+
+  // --- INTERIOR / Circulacao (EN 17210 Sec. 9-10) ---
+  corridorMinWidth?: number; // cm — largura minima de passagem
+  mainPathWidth?: number; // cm — largura do percurso principal (entrada ate a mesa)
+  hasMultipleFloors?: boolean;
   hasElevator?: boolean;
-  elevatorDoorWidth?: number;
-  elevatorCabinWidth?: number;
-  elevatorCabinDepth?: number;
-  floorType?: string;
+  elevatorDoorWidth?: number; // cm
+  elevatorCabinWidth?: number; // cm
+  elevatorCabinDepth?: number; // cm
+  elevatorHasAudioAnnouncement?: boolean;
+  elevatorHasBrailleButtons?: boolean;
+  elevatorButtonHeight?: number; // cm
+  hasStairLift?: boolean; // Plataforma elevatoria em escada
+  floorType?: "smooth_tile" | "wood" | "concrete" | "carpet" | "uneven" | "mixed" | "other";
+  floorTypeDescription?: string; // Descricao factual se "mixed" ou "other"
   isNonSlip?: boolean;
   hasInteriorSteps?: boolean;
   interiorStepCount?: number;
-  turningSpaceAvailable?: number;
-  counterHeight?: number;
+  interiorStepHeight?: number; // cm
+  interiorStepHasHandrail?: boolean;
+  hasInteriorRamp?: boolean; // Rampa interna entre areas
+  interiorRampIncline?: number; // %
+  turningSpaceAvailable?: number; // cm — diametro do maior espaco de rotacao
+  turningSpaceLocation?: string; // Onde se localiza (ex: "junto ao balcao", "entre mesas")
+  counterHeight?: number; // cm
   hasLowCounter?: boolean;
+  lowCounterHeight?: number; // cm
+  waitingAreaDescription?: string; // Descricao da zona de espera (se acessivel, espaco, bancos)
+  hasAccessibleWaitingArea?: boolean;
+  lightingLevel?: "bright" | "moderate" | "dim"; // Nivel de iluminacao geral
+  noiseLevel?: "quiet" | "moderate" | "loud"; // Nivel de ruido tipico
+  interiorNotes?: string;
+  interiorPhotos?: string[];
 
-  // Mesas
+  // --- MESAS / Refeicao (EN 17210 Sec. 11) ---
   hasAccessibleTables?: boolean;
   accessibleTableCount?: number;
-  tableHeight?: number;
-  underTableClearance?: number;
-  spaceBetweenTables?: number;
+  totalTableCount?: number; // Total de mesas (para proporcao)
+  tableHeight?: number; // cm
+  underTableClearance?: number; // cm — espaco livre para joelhos
+  underTableDepth?: number; // cm — profundidade do espaco livre sob a mesa
+  spaceBetweenTables?: number; // cm — espaco entre mesas adjacentes
+  hasMovableFurniture?: boolean; // Mesas/cadeiras moveis (podem ser reposicionadas)
+  hasFixedSeating?: boolean; // Bancos fixos ou banquetas (barreira para cadeiras de rodas)
+  hasHighTables?: boolean; // Mesas altas (tipo bar) — podem ser inacessiveis
   hasOutdoorSeating?: boolean;
   outdoorSeatingAccessible?: boolean;
+  outdoorSeatingDescription?: string; // Descricao factual da esplanada (superficie, desnivel, proteccao)
+  outdoorSurfaceType?: string;
+  canReservAccessibleTable?: boolean; // Pode reservar mesa acessivel antecipadamente
+  hasTableService?: boolean; // Servico de mesa (vs. self-service)
+  hasCounterOrdering?: boolean; // Pedido ao balcao
+  staffCanBringFoodToTable?: boolean; // Staff pode trazer comida a mesa (relevante em self-service)
+  seatingNotes?: string;
+  seatingPhotos?: string[];
 
-  // Casa de banho
+  // --- CASA DE BANHO (EN 17210 Sec. 12) ---
   hasAccessibleBathroom?: boolean;
-  bathroomDoorWidth?: number;
-  bathroomTurningSpace?: number;
+  accessibleBathroomCount?: number; // Quantas casas de banho acessiveis
+  bathroomDoorWidth?: number; // cm
+  bathroomDoorType?: "sliding" | "swing_out" | "swing_in" | "automatic" | "other";
+  bathroomDoorHasLever?: boolean; // Puxador de alavanca (vs. puxador redondo)
+  bathroomTurningSpace?: number; // cm — diametro
   hasGrabBars?: boolean;
-  grabBarSide?: string;
-  toiletSeatHeight?: number;
-  sinkHeight?: number;
+  grabBarSide?: "left" | "right" | "both";
+  grabBarType?: "fixed" | "fold_down" | "mixed";
+  toiletSeatHeight?: number; // cm
+  hasHeightAdjustableToilet?: boolean;
+  distanceToiletToWall?: number; // cm — distancia lateral (para transferencia)
+  toiletFlushType?: "lever" | "button" | "sensor" | "pull_cord";
+  toiletFlushHeight?: number; // cm
+  sinkHeight?: number; // cm
   hasKneeSpaceUnderSink?: boolean;
-  faucetType?: string;
+  faucetType?: "sensor" | "lever" | "knob";
   hasMirrorAtWheelchairHeight?: boolean;
+  mirrorLowerEdgeHeight?: number; // cm
   hasEmergencyButton?: boolean;
+  emergencyButtonHeight?: number; // cm
+  emergencyButtonReachable?: boolean; // Alcancavel do chao (em caso de queda)
   bathroomOnSameFloor?: boolean;
+  bathroomFloorNumber?: number; // Piso onde se encontra
+  bathroomDistance?: number; // metros — distancia da zona de refeicao
+  hasBabyChangingFacility?: boolean;
+  babyChangingAccessible?: boolean; // Fraldario acessivel para pais em cadeira de rodas
+  hasAdultChangingBench?: boolean; // Marquesa para adultos (Changing Places standard)
+  bathroomLighting?: "well_lit" | "moderate" | "poor";
+  bathroomNotes?: string;
+  bathroomPhotos?: string[];
 
-  // Comunicacao
+  // --- COMUNICACAO E SERVICO (EN 17210 Sec. 6, ISO 21902 Sec. 8) ---
   hasBrailleMenu?: boolean;
   hasLargePrintMenu?: boolean;
   hasDigitalMenu?: boolean;
   hasQRCodeMenu?: boolean;
   hasPictureMenu?: boolean;
+  hasAudioMenu?: boolean; // Menu em formato audio
+  menuLanguages?: string[]; // Linguas disponiveis no menu (relevante para turismo)
+  hasAllergenInfo?: boolean; // Informacao de alergenos acessivel
   staffTrainedInAccessibility?: boolean;
+  staffCanReadMenu?: boolean; // Funcionarios podem ler o menu ao cliente
+  hasPortugueseSignLanguage?: boolean; // LGP (Lingua Gestual Portuguesa)
   hasHearingLoop?: boolean;
+  signageIsAccessible?: boolean; // Sinalizacao clara, com contraste, a altura acessivel
+  hasAccessiblePaymentTerminal?: boolean; // Terminal de pagamento a altura acessivel
+  paymentTerminalHeight?: number; // cm
+  websiteHasAccessibilityInfo?: boolean; // Site do restaurante tem informacao de acessibilidade
+  canContactByWhatsApp?: boolean; // Restaurante contactavel por WhatsApp
+  canContactByEmail?: boolean;
+  communicationNotes?: string;
+  communicationPhotos?: string[];
 
-  // Metadados
+  // --- SERVICOS ADICIONAIS (inspirado AccessAble / Tur4all) ---
+  hasAssistanceDogPolicy?: boolean; // Aceita caes de assistencia
+  assistanceDogWaterBowl?: boolean; // Disponibiliza agua para cao de assistencia
+  hasAdaptedCutlery?: boolean; // Talheres adaptados disponiveis
+  hasAdaptedCups?: boolean; // Copos adaptados / copos com tampa
+  hasStraws?: boolean; // Palhinhas disponiveis (necessidade medica)
+  hasQuietArea?: boolean; // Zona calma / com menos estimulacao sensorial
+  hasCompanionDiscount?: boolean; // Desconto para acompanhante
+  hasWheelchairLoan?: boolean; // Cadeira de rodas de emprestimo
+  hasMobilityScooterCharging?: boolean; // Ponto de carga para scooter/cadeira electrica
+  chargingPointLocation?: string;
+
+  // --- ESPECIFICIDADES PORTUGUESAS ---
+  // Portugal tem desafios unicos: calcada portuguesa, edificios historicos, topografia acentuada
+  isInHistoricArea?: boolean; // Zona historica (pode ter restricoes de acessibilidade estruturais)
+  hasBeenAdaptedFromHistoric?: boolean; // Edificio historico adaptado (rampa adicionada, WC adaptada, etc.)
+  municipalAccessibilityCertification?: string; // Certificacao municipal se existente
+  turismoPtAccessibilityCertification?: boolean; // Certificacao Turismo de Portugal (ISO 21902)
+
+  // --- EVIDENCIA FOTOGRAFICA ---
+  // Inspirado no AccessAble: cada seccao deve ter fotografias associadas
+  // Os campos *Photos acima sao arrays de URLs. Adicionalmente:
+  photoCount?: number; // Total de fotografias no perfil
+  lastPhotoDate?: Date; // Data da fotografia mais recente
+
+  // --- METADADOS ---
   verificationStatus: VerificationStatus;
   dataSource: DataSource;
   lastVerifiedAt?: Date;
+  lastContactedAt?: Date; // Data do ultimo contacto ao restaurante (seccao 7.4)
+  lastContactMethod?: "email" | "whatsapp" | "phone" | "in_person" | "web_form";
+  ownerResponseRate?: number; // 0-1 — taxa de resposta do proprietario a contactos anteriores
+  dataCompletenessPercent?: number; // 0-100 — percentagem de campos preenchidos
 }
 
 export interface CategoryScore {
