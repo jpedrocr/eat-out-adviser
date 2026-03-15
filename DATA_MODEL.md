@@ -1,8 +1,6 @@
 # Eat Out Adviser - Especificacao do Modelo de Dados
 
-**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Modelo de dados para PostgreSQL 17 + pgvector + Drizzle ORM
-**Normas de referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), EN
-301 549
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Modelo de dados para PostgreSQL 17 + pgvector + Drizzle ORM **Normas de referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), EN 301 549
 
 ---
 
@@ -13,8 +11,7 @@
 3. [Entidades](#3-entidades)
    - 3.1 [Utilizador (User)](#31-utilizador-user)
    - 3.2 [Restaurante (Restaurant)](#32-restaurante-restaurant)
-   - 3.3
-     [Perfil de Acessibilidade do Restaurante (AccessibilityProfile)](#33-perfil-de-acessibilidade-do-restaurante-accessibilityprofile)
+   - 3.3 [Perfil de Acessibilidade do Restaurante (AccessibilityProfile)](#33-perfil-de-acessibilidade-do-restaurante-accessibilityprofile)
    - 3.4 [Pontuacao de Acessibilidade (AccessibilityScore)](#34-pontuacao-de-acessibilidade-accessibilityscore)
    - 3.5 [Avaliacao (Review)](#35-avaliacao-review)
    - 3.6 [Fotografia (Photo)](#36-fotografia-photo)
@@ -36,15 +33,11 @@
 
 O modelo de dados do Eat Out Adviser foi desenhado com os seguintes principios:
 
-- **Acessibilidade como cidadao de primeira classe:** O perfil de acessibilidade do restaurante e a entidade mais
-  detalhada e central do sistema, com campos derivados directamente das normas internacionais ADA, ISO 21542 e EAA.
-- **Pesquisa semantica via pgvector:** As entidades Restaurante, Avaliacao e Prato incluem campos de embedding vectorial
-  (`vector(1024)`) para pesquisa semantica com RAG.
-- **Multilingue por desenho:** Campos textuais descritivos utilizam JSON multilingue ou a tabela de Traducao, permitindo
-  expansao para novos idiomas sem alteracao de esquema.
+- **Acessibilidade como cidadao de primeira classe:** O perfil de acessibilidade do restaurante e a entidade mais detalhada e central do sistema, com campos derivados directamente das normas internacionais ADA, ISO 21542 e EAA.
+- **Pesquisa semantica via pgvector:** As entidades Restaurante, Avaliacao e Prato incluem campos de embedding vectorial (`vector(1024)`) para pesquisa semantica com RAG.
+- **Multilingue por desenho:** Campos textuais descritivos utilizam JSON multilingue ou a tabela de Traducao, permitindo expansao para novos idiomas sem alteracao de esquema.
 - **Auditabilidade total:** Todas as alteracoes em dados de acessibilidade sao rastreadas via AuditLog.
-- **Compatibilidade com A11yJSON:** O modelo mapeia para o formato aberto A11yJSON (Sozialhelden/accessibility.cloud),
-  facilitando importacao e exportacao de dados.
+- **Compatibilidade com A11yJSON:** O modelo mapeia para o formato aberto A11yJSON (Sozialhelden/accessibility.cloud), facilitando importacao e exportacao de dados.
 
 **Tecnologias:**
 
@@ -76,24 +69,11 @@ import { pgEnum, timestamp, uuid } from "drizzle-orm/pg-core";
 
 // --- Enums Partilhados ---
 
-export const mobilityTypeEnum = pgEnum("mobility_type", [
-  "electric_wheelchair",
-  "manual_wheelchair",
-  "walker",
-  "crutches",
-  "cane",
-  "scooter",
-  "none",
-  "other",
-]);
+export const mobilityTypeEnum = pgEnum("mobility_type", ["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "cane", "scooter", "none", "other"]);
 
 export const priceRangeEnum = pgEnum("price_range", ["budget", "moderate", "upscale", "fine_dining"]);
 
-export const verificationStatusEnum = pgEnum("verification_status", [
-  "unverified",
-  "community_verified",
-  "professionally_verified",
-]);
+export const verificationStatusEnum = pgEnum("verification_status", ["unverified", "community_verified", "professionally_verified"]);
 
 export const dataSourceEnum = pgEnum("data_source", ["owner", "community", "import", "ai_analysis"]);
 
@@ -132,12 +112,9 @@ const id = uuid("id").primaryKey().defaultRandom();
 
 ### 3.1 Utilizador (User)
 
-A tabela `users` armazena os dados de cada utilizador registado. A autenticacao e gerida pelo Better Auth, que cria as
-suas proprias tabelas (`session`, `account`, `verification`). A tabela `users` e partilhada entre o Better Auth e a
-logica de negocio da aplicacao.
+A tabela `users` armazena os dados de cada utilizador registado. A autenticacao e gerida pelo Better Auth, que cria as suas proprias tabelas (`session`, `account`, `verification`). A tabela `users` e partilhada entre o Better Auth e a logica de negocio da aplicacao.
 
-O perfil de acessibilidade do utilizador e armazenado numa tabela separada (`user_accessibility_profiles`) com relacao
-1:1, permitindo:
+O perfil de acessibilidade do utilizador e armazenado numa tabela separada (`user_accessibility_profiles`) com relacao 1:1, permitindo:
 
 - Evolucao independente do esquema de acessibilidade
 - Consultas mais eficientes quando so se precisa de dados basicos do utilizador
@@ -189,9 +166,7 @@ export const userAccessibilityProfiles = pgTable("user_accessibility_profiles", 
   maxStepHeight: real("max_step_height"), // cm - altura maxima de degrau que consegue ultrapassar
   needsElevator: boolean("needs_elevator").notNull().default(true),
   needsAccessibleBathroom: boolean("needs_accessible_bathroom").notNull().default(true),
-  bathroomTransferSide: pgEnum("bathroom_transfer_side", ["left", "right", "both", "not_applicable"])(
-    "bathroom_transfer_side",
-  ).default("not_applicable"),
+  bathroomTransferSide: pgEnum("bathroom_transfer_side", ["left", "right", "both", "not_applicable"])("bathroom_transfer_side").default("not_applicable"),
   doorOpeningForceLimit: real("door_opening_force_limit"), // kg
 
   // Contexto social
@@ -250,12 +225,9 @@ export const userAccessibilityProfilesRelations = relations(userAccessibilityPro
 
 ### 3.2 Restaurante (Restaurant)
 
-A tabela `restaurants` e a entidade central de negocio. Cada restaurante possui relacoes com o perfil de acessibilidade,
-avaliacoes, fotografias, ementas e reservas.
+A tabela `restaurants` e a entidade central de negocio. Cada restaurante possui relacoes com o perfil de acessibilidade, avaliacoes, fotografias, ementas e reservas.
 
-As coordenadas geograficas sao armazenadas como campos `real` simples (latitude/longitude), evitando a dependencia da
-extensao PostGIS. Para consultas de proximidade, utiliza-se a formula de Haversine em SQL ou indice GiST com `cube` e
-`earthdistance`.
+As coordenadas geograficas sao armazenadas como campos `real` simples (latitude/longitude), evitando a dependencia da extensao PostGIS. Para consultas de proximidade, utiliza-se a formula de Haversine em SQL ou indice GiST com `cube` e `earthdistance`.
 
 ```typescript
 // src/db/schema/restaurants.ts
@@ -320,13 +292,7 @@ export const restaurants = pgTable(
 
     ...timestamps,
   },
-  (table) => [
-    index("restaurants_slug_idx").on(table.slug),
-    index("restaurants_city_idx").on(table.city),
-    index("restaurants_status_idx").on(table.status),
-    index("restaurants_owner_idx").on(table.ownerId),
-    index("restaurants_coords_idx").on(table.latitude, table.longitude),
-  ],
+  (table) => [index("restaurants_slug_idx").on(table.slug), index("restaurants_city_idx").on(table.city), index("restaurants_status_idx").on(table.status), index("restaurants_owner_idx").on(table.ownerId), index("restaurants_coords_idx").on(table.latitude, table.longitude)],
 );
 ```
 
@@ -369,11 +335,9 @@ export const restaurantsRelations = relations(restaurants, ({ one, many }) => ({
 
 ### 3.3 Perfil de Acessibilidade do Restaurante (AccessibilityProfile)
 
-Esta e a **entidade nuclear** do Eat Out Adviser. Modela de forma granular todas as caracteristicas de acessibilidade
-fisica de um restaurante, alinhadas com as normas internacionais ADA, ISO 21542:2021 e EAA.
+Esta e a **entidade nuclear** do Eat Out Adviser. Modela de forma granular todas as caracteristicas de acessibilidade fisica de um restaurante, alinhadas com as normas internacionais ADA, ISO 21542:2021 e EAA.
 
-Cada restaurante tem exactamente um perfil de acessibilidade (relacao 1:1). Os campos estao organizados por zona do
-espaco: entrada/exterior, estacionamento, interior/circulacao, mesas/assentos, casa de banho e comunicacao/ementa.
+Cada restaurante tem exactamente um perfil de acessibilidade (relacao 1:1). Os campos estao organizados por zona do espaco: entrada/exterior, estacionamento, interior/circulacao, mesas/assentos, casa de banho e comunicacao/ementa.
 
 ```typescript
 // src/db/schema/accessibility-profiles.ts
@@ -383,24 +347,11 @@ import { verificationStatusEnum, dataSourceEnum, timestamps } from "./shared";
 
 // --- Enums especificos de acessibilidade ---
 
-export const entranceTypeEnum = pgEnum("entrance_type", [
-  "automatic",
-  "manual_push",
-  "manual_pull",
-  "revolving",
-  "sliding",
-  "open",
-]);
+export const entranceTypeEnum = pgEnum("entrance_type", ["automatic", "manual_push", "manual_pull", "revolving", "sliding", "open"]);
 
 export const surfaceTypeEnum = pgEnum("surface_type", ["smooth", "cobblestone", "gravel", "uneven", "grass"]);
 
-export const parkingSurfaceTypeEnum = pgEnum("parking_surface_type", [
-  "asphalt",
-  "concrete",
-  "cobblestone",
-  "gravel",
-  "other",
-]);
+export const parkingSurfaceTypeEnum = pgEnum("parking_surface_type", ["asphalt", "concrete", "cobblestone", "gravel", "other"]);
 
 export const lightingEnum = pgEnum("lighting_level", ["well_lit", "moderate", "poor"]);
 
@@ -624,11 +575,9 @@ export const accessibilityProfilesRelations = relations(accessibilityProfiles, (
 
 ### 3.4 Pontuacao de Acessibilidade (AccessibilityScore)
 
-Tabela de scores calculados/cache para cada restaurante. Os scores sao derivados dos dados do `AccessibilityProfile` e
-recalculados sempre que o perfil e actualizado (via trigger ou job agendado).
+Tabela de scores calculados/cache para cada restaurante. Os scores sao derivados dos dados do `AccessibilityProfile` e recalculados sempre que o perfil e actualizado (via trigger ou job agendado).
 
-O campo `weighted_score_for_profile` permite pre-calcular scores ponderados para os perfis de mobilidade mais comuns,
-acelerando queries de listagem e ordenacao.
+O campo `weighted_score_for_profile` permite pre-calcular scores ponderados para os perfis de mobilidade mais comuns, acelerando queries de listagem e ordenacao.
 
 ```typescript
 // src/db/schema/accessibility-scores.ts
@@ -689,11 +638,9 @@ export const accessibilityScoresRelations = relations(accessibilityScores, ({ on
 
 ### 3.5 Avaliacao (Review)
 
-Cada avaliacao e escrita por um utilizador sobre um restaurante, combinando classificacoes numericas (comida, servico,
-acessibilidade, global) com texto livre e metadados sobre a mobilidade no momento da visita.
+Cada avaliacao e escrita por um utilizador sobre um restaurante, combinando classificacoes numericas (comida, servico, acessibilidade, global) com texto livre e metadados sobre a mobilidade no momento da visita.
 
-O campo `embedding` permite pesquisa semantica sobre avaliacoes ("restaurantes com bom acesso para cadeiras electricas"
-encontra avaliacoes relevantes via similaridade vectorial).
+O campo `embedding` permite pesquisa semantica sobre avaliacoes ("restaurantes com bom acesso para cadeiras electricas" encontra avaliacoes relevantes via similaridade vectorial).
 
 ```typescript
 // src/db/schema/reviews.ts
@@ -743,12 +690,7 @@ export const reviews = pgTable(
 
     ...timestamps,
   },
-  (table) => [
-    index("reviews_restaurant_idx").on(table.restaurantId),
-    index("reviews_user_idx").on(table.userId),
-    index("reviews_status_idx").on(table.status),
-    index("reviews_visit_date_idx").on(table.visitDate),
-  ],
+  (table) => [index("reviews_restaurant_idx").on(table.restaurantId), index("reviews_user_idx").on(table.userId), index("reviews_status_idx").on(table.status), index("reviews_visit_date_idx").on(table.visitDate)],
 );
 ```
 
@@ -778,9 +720,7 @@ export const reviewsRelations = relations(reviews, ({ one, many }) => ({
 
 ### 3.6 Fotografia (Photo)
 
-Tabela centralizada para todas as fotografias do sistema. Cada fotografia pode pertencer a um restaurante, a uma
-avaliacao, ou a um relatorio de verificacao. O campo `ai_accessibility_analysis` armazena a saida estruturada do Claude
-Vision para deteccao automatica de elementos de acessibilidade.
+Tabela centralizada para todas as fotografias do sistema. Cada fotografia pode pertencer a um restaurante, a uma avaliacao, ou a um relatorio de verificacao. O campo `ai_accessibility_analysis` armazena a saida estruturada do Claude Vision para deteccao automatica de elementos de acessibilidade.
 
 ```typescript
 // src/db/schema/photos.ts
@@ -788,18 +728,7 @@ import { pgTable, uuid, text, varchar, integer, jsonb, index } from "drizzle-orm
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
-export const photoCategoryEnum = pgEnum("photo_category", [
-  "entrance",
-  "ramp",
-  "interior",
-  "bathroom",
-  "table",
-  "menu",
-  "parking",
-  "exterior",
-  "food",
-  "other",
-]);
+export const photoCategoryEnum = pgEnum("photo_category", ["entrance", "ramp", "interior", "bathroom", "table", "menu", "parking", "exterior", "food", "other"]);
 
 export const photos = pgTable(
   "photos",
@@ -840,11 +769,7 @@ export const photos = pgTable(
     // Apenas createdAt (fotografias nao sao editaveis, apenas adicionadas ou removidas)
     createdAt: timestamps.createdAt,
   },
-  (table) => [
-    index("photos_restaurant_idx").on(table.restaurantId),
-    index("photos_review_idx").on(table.reviewId),
-    index("photos_category_idx").on(table.category),
-  ],
+  (table) => [index("photos_restaurant_idx").on(table.restaurantId), index("photos_review_idx").on(table.reviewId), index("photos_category_idx").on(table.category)],
 );
 ```
 
@@ -868,9 +793,7 @@ export const photos = pgTable(
       "condition": "good",
     },
   ],
-  "accessibility_issues": [
-    "Superficie exterior em calcada portuguesa - potencialmente irregular para cadeiras de rodas",
-  ],
+  "accessibility_issues": ["Superficie exterior em calcada portuguesa - potencialmente irregular para cadeiras de rodas"],
   "overall_assessment": "Entrada acessivel com rampa adequada e porta automatica",
   "confidence": 0.85,
 }
@@ -903,8 +826,7 @@ export const photosRelations = relations(photos, ({ one }) => ({
 
 ### 3.7 Ementa (Menu)
 
-Cada restaurante pode ter multiplas ementas (almoco, jantar, fim de semana, especial, etc.). Os nomes e descricoes sao
-multilingues (JSON).
+Cada restaurante pode ter multiplas ementas (almoco, jantar, fim de semana, especial, etc.). Os nomes e descricoes sao multilingues (JSON).
 
 ```typescript
 // src/db/schema/menus.ts
@@ -912,15 +834,7 @@ import { pgTable, uuid, jsonb, boolean, date } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
-export const menuTypeEnum = pgEnum("menu_type", [
-  "regular",
-  "lunch",
-  "dinner",
-  "weekend",
-  "special",
-  "drinks",
-  "desserts",
-]);
+export const menuTypeEnum = pgEnum("menu_type", ["regular", "lunch", "dinner", "weekend", "special", "drinks", "desserts"]);
 
 export const menus = pgTable("menus", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -957,9 +871,7 @@ export const menusRelations = relations(menus, ({ one, many }) => ({
 
 ### 3.8 Prato (Dish)
 
-Cada prato pertence a uma ementa. Inclui informacao de alergenos e restricoes alimentares (campos criticos para
-utilizadores com necessidades especificas). O campo `embedding` permite pesquisa semantica de pratos ("prato vegetariano
-sem gluten").
+Cada prato pertence a uma ementa. Inclui informacao de alergenos e restricoes alimentares (campos criticos para utilizadores com necessidades especificas). O campo `embedding` permite pesquisa semantica de pratos ("prato vegetariano sem gluten").
 
 ```typescript
 // src/db/schema/dishes.ts
@@ -1008,11 +920,7 @@ export const dishes = pgTable(
 
     ...timestamps,
   },
-  (table) => [
-    index("dishes_menu_idx").on(table.menuId),
-    index("dishes_category_idx").on(table.category),
-    index("dishes_available_idx").on(table.isAvailable),
-  ],
+  (table) => [index("dishes_menu_idx").on(table.menuId), index("dishes_category_idx").on(table.category), index("dishes_available_idx").on(table.isAvailable)],
 );
 ```
 
@@ -1035,8 +943,7 @@ export const dishesRelations = relations(dishes, ({ one }) => ({
 
 ### 3.9 Reserva (Reservation)
 
-A reserva integra informacao de acessibilidade do perfil do utilizador, pre-preenchendo o campo `accessibility_notes`
-automaticamente para que o restaurante possa preparar-se.
+A reserva integra informacao de acessibilidade do perfil do utilizador, pre-preenchendo o campo `accessibility_notes` automaticamente para que o restaurante possa preparar-se.
 
 ```typescript
 // src/db/schema/reservations.ts
@@ -1044,13 +951,7 @@ import { pgTable, uuid, text, varchar, integer, timestamp, index } from "drizzle
 import { relations } from "drizzle-orm";
 import { timestamps } from "./shared";
 
-export const reservationStatusEnum = pgEnum("reservation_status", [
-  "pending",
-  "confirmed",
-  "cancelled",
-  "completed",
-  "no_show",
-]);
+export const reservationStatusEnum = pgEnum("reservation_status", ["pending", "confirmed", "cancelled", "completed", "no_show"]);
 
 export const reservations = pgTable(
   "reservations",
@@ -1085,13 +986,7 @@ export const reservations = pgTable(
 
     ...timestamps,
   },
-  (table) => [
-    index("reservations_user_idx").on(table.userId),
-    index("reservations_restaurant_idx").on(table.restaurantId),
-    index("reservations_datetime_idx").on(table.dateTime),
-    index("reservations_status_idx").on(table.status),
-    index("reservations_confirmation_idx").on(table.confirmationCode),
-  ],
+  (table) => [index("reservations_user_idx").on(table.userId), index("reservations_restaurant_idx").on(table.restaurantId), index("reservations_datetime_idx").on(table.dateTime), index("reservations_status_idx").on(table.status), index("reservations_confirmation_idx").on(table.confirmationCode)],
 );
 ```
 
@@ -1114,8 +1009,7 @@ export const reservationsRelations = relations(reservations, ({ one }) => ({
 
 ### 3.10 Relatorio de Verificacao (VerificationReport)
 
-Os relatorios de verificacao documentam visitas de inspecao ao restaurante, sejam comunitarias (qualquer utilizador),
-profissionais (auditores certificados) ou assistidas por IA (analise de fotografias).
+Os relatorios de verificacao documentam visitas de inspecao ao restaurante, sejam comunitarias (qualquer utilizador), profissionais (auditores certificados) ou assistidas por IA (analise de fotografias).
 
 ```typescript
 // src/db/schema/verification-reports.ts
@@ -1158,11 +1052,7 @@ export const verificationReports = pgTable(
 
     ...timestamps,
   },
-  (table) => [
-    index("verification_reports_restaurant_idx").on(table.restaurantId),
-    index("verification_reports_verifier_idx").on(table.verifierId),
-    index("verification_reports_status_idx").on(table.status),
-  ],
+  (table) => [index("verification_reports_restaurant_idx").on(table.restaurantId), index("verification_reports_verifier_idx").on(table.verifierId), index("verification_reports_status_idx").on(table.status)],
 );
 ```
 
@@ -1186,9 +1076,7 @@ export const verificationReportsRelations = relations(verificationReports, ({ on
 
 ### 3.11 Traducao (Translation)
 
-Sistema de traducoes generico que permite traduzir qualquer campo de qualquer entidade para qualquer locale. Utilizado
-como complemento ao JSON multilingue inline, especialmente para conteudo gerado por utilizadores (avaliacoes) ou para
-campos que necessitam de revisao humana.
+Sistema de traducoes generico que permite traduzir qualquer campo de qualquer entidade para qualquer locale. Utilizado como complemento ao JSON multilingue inline, especialmente para conteudo gerado por utilizadores (avaliacoes) ou para campos que necessitam de revisao humana.
 
 ```typescript
 // src/db/schema/translations.ts
@@ -1238,8 +1126,7 @@ export const translations = pgTable(
 
 ### 3.12 Registo de Auditoria (AuditLog)
 
-Regista todas as alteracoes em dados sensiveis do sistema, especialmente em perfis de acessibilidade. Essencial para
-rastrear quem alterou que, quando e com que valores -- fundamental para a fiabilidade dos dados de acessibilidade.
+Regista todas as alteracoes em dados sensiveis do sistema, especialmente em perfis de acessibilidade. Essencial para rastrear quem alterou que, quando e com que valores -- fundamental para a fiabilidade dos dados de acessibilidade.
 
 ```typescript
 // src/db/schema/audit-logs.ts
@@ -1276,17 +1163,11 @@ export const auditLogs = pgTable(
     // Apenas createdAt (logs nao sao editaveis)
     createdAt: timestamps.createdAt,
   },
-  (table) => [
-    index("audit_logs_user_idx").on(table.userId),
-    index("audit_logs_entity_idx").on(table.entityType, table.entityId),
-    index("audit_logs_action_idx").on(table.action),
-    index("audit_logs_created_idx").on(table.createdAt),
-  ],
+  (table) => [index("audit_logs_user_idx").on(table.userId), index("audit_logs_entity_idx").on(table.entityType, table.entityId), index("audit_logs_action_idx").on(table.action), index("audit_logs_created_idx").on(table.createdAt)],
 );
 ```
 
-**Politica de retencao:** Os registos de auditoria sao imutaveis e nunca eliminados. Para gestao de espaco, pode
-implementar-se particionamento por data (partition by range em `created_at`) apos o primeiro ano de operacao.
+**Politica de retencao:** Os registos de auditoria sao imutaveis e nunca eliminados. Para gestao de espaco, pode implementar-se particionamento por data (partition by range em `created_at`) apos o primeiro ano de operacao.
 
 ---
 
@@ -1422,8 +1303,7 @@ implementar-se particionamento por data (partition by range em `created_at`) apo
 
 ### 5.1 Indices para pgvector (Pesquisa Semantica)
 
-Os indices HNSW (Hierarchical Navigable Small World) sao os recomendados para pgvector em producao, oferecendo <20ms de
-latencia para 1M de vectores com >95% de recall.
+Os indices HNSW (Hierarchical Navigable Small World) sao os recomendados para pgvector em producao, oferecendo <20ms de latencia para 1M de vectores com >95% de recall.
 
 ```sql
 -- Indice HNSW para pesquisa semantica de restaurantes
@@ -1465,8 +1345,7 @@ SET hnsw.ef_search = 40;
 
 ### 5.2 Indices para Consultas Geoespaciais
 
-Sem PostGIS, as consultas de proximidade utilizam a extensao `earthdistance` (incluida no PostgreSQL) ou calculo de
-Haversine. Para indexar, utiliza-se um indice composto ou, preferencialmente, GiST com `cube`/`earthdistance`.
+Sem PostGIS, as consultas de proximidade utilizam a extensao `earthdistance` (incluida no PostgreSQL) ou calculo de Haversine. Para indexar, utiliza-se um indice composto ou, preferencialmente, GiST com `cube`/`earthdistance`.
 
 ```sql
 -- Activar extensoes necessarias
@@ -1617,8 +1496,7 @@ CREATE EXTENSION IF NOT EXISTS "earthdistance";  -- consultas de proximidade
 
 ### 6.6 Regras para Migracoes em Producao
 
-- **Nunca** remover colunas directamente. Primeiro marcar como `@deprecated`, depois remover numa migracao futura apos
-  confirmar que nenhum codigo as utiliza.
+- **Nunca** remover colunas directamente. Primeiro marcar como `@deprecated`, depois remover numa migracao futura apos confirmar que nenhum codigo as utiliza.
 - **Sempre** adicionar novas colunas com `DEFAULT` ou como `nullable` para evitar locks de tabela.
 - **Indices** concorrentes: em tabelas grandes, usar `CREATE INDEX CONCURRENTLY` para evitar bloqueio de escritas.
 - **Backfills** de dados devem correr em batch (ex.: 1000 registos por iteracao) para nao sobrecarregar a base de dados.
@@ -1762,13 +1640,7 @@ async function generateEmbeddings() {
 
   for (const restaurant of pending) {
     // Compor texto para embedding
-    const text = [
-      restaurant.name,
-      JSON.stringify(restaurant.description),
-      restaurant.address,
-      restaurant.city,
-      (restaurant.cuisineTypes ?? []).join(", "),
-    ].join(" | ");
+    const text = [restaurant.name, JSON.stringify(restaurant.description), restaurant.address, restaurant.city, (restaurant.cuisineTypes ?? []).join(", ")].join(" | ");
 
     // Chamar Ollama (API compativel com OpenAI)
     const response = await fetch("http://localhost:11434/api/embeddings", {
@@ -1794,16 +1666,13 @@ generateEmbeddings().catch(console.error);
 
 ### 8.1 O que e o A11yJSON
 
-O **A11yJSON** e um formato de dados aberto criado pela Sozialhelden (a organizacao por detras do Wheelmap.org) e
-mantido pelo projecto accessibility.cloud. Define um esquema JSON padronizado para descrever a acessibilidade de locais
-fisicos.
+O **A11yJSON** e um formato de dados aberto criado pela Sozialhelden (a organizacao por detras do Wheelmap.org) e mantido pelo projecto accessibility.cloud. Define um esquema JSON padronizado para descrever a acessibilidade de locais fisicos.
 
 Repositorio: `github.com/sozialhelden/a11yjson`
 
 ### 8.2 Mapeamento AccessibilityProfile -> A11yJSON
 
-O modelo de dados do Eat Out Adviser foi desenhado para ser compativel com A11yJSON, permitindo importacao e exportacao
-de dados sem perda significativa de informacao.
+O modelo de dados do Eat Out Adviser foi desenhado para ser compativel com A11yJSON, permitindo importacao e exportacao de dados sem perda significativa de informacao.
 
 | Campo Eat Out Adviser       | Campo A11yJSON                                          | Notas                                   |
 | --------------------------- | ------------------------------------------------------- | --------------------------------------- |
@@ -1972,8 +1841,6 @@ O modelo de dados do Eat Out Adviser e **mais granular** que o A11yJSON em varia
 - **Assentos e mesas** (altura, espaco entre mesas, esplanada -- nao coberto no A11yJSON)
 - **Comunicacao/ementa** (menu Braille, menu digital, formacao de staff -- nao coberto no A11yJSON)
 
-Na exportacao para A11yJSON, estes campos adicionais podem ser incluidos no campo `extensions` do A11yJSON (previsto na
-especificacao para dados especificos de aplicacao).
+Na exportacao para A11yJSON, estes campos adicionais podem ser incluidos no campo `extensions` do A11yJSON (previsto na especificacao para dados especificos de aplicacao).
 
-Na importacao de A11yJSON, os campos nao mapeados ficam como `null` (nao preenchidos) e sao marcados como
-`verification_status = 'unverified'` para posterior complemento pela comunidade ou por analise de IA.
+Na importacao de A11yJSON, os campos nao mapeados ficam como `null` (nao preenchidos) e sao marcados como `verification_status = 'unverified'` para posterior complemento pela comunidade ou por analise de IA.

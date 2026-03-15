@@ -1,8 +1,6 @@
 # Eat Out Adviser - Estrutura do Projecto e Arquitectura
 
-**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Plataforma de acessibilidade para restaurantes **Stack:**
-Next.js 16, tRPC, PostgreSQL 17 + pgvector, Drizzle ORM, Better Auth, Claude API, Docker multi-arch, Coolify
-**Ambientes:** MacBook Air M1 16GB (desenvolvimento) | Proxmox Intel N5105 16GB (producao)
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Plataforma de acessibilidade para restaurantes **Stack:** Next.js 16, tRPC, PostgreSQL 17 + pgvector, Drizzle ORM, Better Auth, Claude API, Docker multi-arch, Coolify **Ambientes:** MacBook Air M1 16GB (desenvolvimento) | Proxmox Intel N5105 16GB (producao)
 
 ---
 
@@ -240,8 +238,7 @@ eat-out-adviser/
 
 ### 2.3 `apps/web/` - Aplicacao Next.js 16
 
-**Proposito:** Aplicacao principal do Eat Out Adviser. Contem toda a interface de utilizador, routing e ponto de entrada
-da API tRPC.
+**Proposito:** Aplicacao principal do Eat Out Adviser. Contem toda a interface de utilizador, routing e ponto de entrada da API tRPC.
 
 #### `src/app/` - App Router
 
@@ -312,8 +309,7 @@ Organizados por dominio funcional. Convencoes:
 | `seed/`                   | Scripts de povoamento inicial com dados de restaurantes e acessibilidade                               |
 | `client.ts`               | Exporta a instancia configurada do Drizzle com connection pooling                                      |
 
-**Convencao de nomenclatura na base de dados:** `snake_case` para tabelas (plural) e colunas. UUIDs v7 como chaves
-primarias. Timestamps com timezone.
+**Convencao de nomenclatura na base de dados:** `snake_case` para tabelas (plural) e colunas. UUIDs v7 como chaves primarias. Timestamps com timezone.
 
 ### 2.5 `packages/api/` - Routers tRPC
 
@@ -741,13 +737,7 @@ services:
         condition: service_started
     restart: unless-stopped
     healthcheck:
-      test:
-        [
-          "CMD",
-          "node",
-          "-e",
-          "fetch('http://localhost:3000/api/health').then(r => r.ok ? process.exit(0) : process.exit(1))",
-        ]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r => r.ok ? process.exit(0) : process.exit(1))"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -892,8 +882,8 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U test -d eatoutadviser_test" --health-interval 10s --health-timeout 5s
-          --health-retries 5
+          --health-cmd "pg_isready -U test -d eatoutadviser_test" --health-interval 10s --health-timeout 5s --health-retries 5
+
 
     steps:
       - uses: actions/checkout@v4
@@ -960,34 +950,7 @@ jobs:
 ```json
 {
   "permissions": {
-    "allow": [
-      "Bash(pnpm:*)",
-      "Bash(turbo:*)",
-      "Bash(npm:*)",
-      "Bash(node:*)",
-      "Bash(tsx:*)",
-      "Bash(git:*)",
-      "Bash(docker:*)",
-      "Bash(docker compose:*)",
-      "Bash(drizzle-kit:*)",
-      "Bash(eslint:*)",
-      "Bash(prettier:*)",
-      "Bash(playwright:*)",
-      "Bash(vitest:*)",
-      "Bash(markdownlint-cli2:*)",
-      "Bash(ls:*)",
-      "Bash(cat:*)",
-      "Bash(mkdir:*)",
-      "Bash(cp:*)",
-      "Bash(mv:*)",
-      "Bash(rm:*)",
-      "Read",
-      "Write",
-      "Edit",
-      "Glob",
-      "Grep",
-      "mcp__eat-out-adviser"
-    ],
+    "allow": ["Bash(pnpm:*)", "Bash(turbo:*)", "Bash(npm:*)", "Bash(node:*)", "Bash(tsx:*)", "Bash(git:*)", "Bash(docker:*)", "Bash(docker compose:*)", "Bash(drizzle-kit:*)", "Bash(eslint:*)", "Bash(prettier:*)", "Bash(playwright:*)", "Bash(vitest:*)", "Bash(markdownlint-cli2:*)", "Bash(ls:*)", "Bash(cat:*)", "Bash(mkdir:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(rm:*)", "Read", "Write", "Edit", "Glob", "Grep", "mcp__eat-out-adviser"],
     "deny": ["Bash(curl:*)", "Bash(wget:*)", "Bash(sudo:*)"]
   }
 }

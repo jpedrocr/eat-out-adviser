@@ -1,7 +1,6 @@
 # Relatorio Completo: Plataformas Internacionais de Acessibilidade Fisica para Espacos Publicos
 
-**Data:** 15 de Marco de 2026 **Ambito:** Investigacao de plataformas, normas, dados, IA e boas praticas em
-acessibilidade fisica
+**Data:** 15 de Marco de 2026 **Ambito:** Investigacao de plataformas, normas, dados, IA e boas praticas em acessibilidade fisica
 
 ---
 
@@ -14,26 +13,21 @@ acessibilidade fisica
 - **Conceito URL:** accessnow.com
 - **Sede:** Toronto, Canada (fundada por Maayan Ziv em 2015)
 
-**O que fazem:** Plataforma colaborativa (crowdsourcing) que mapeia a acessibilidade de espacos fisicos em todo o mundo.
-Os utilizadores podem pesquisar locais especificos (restaurantes, hoteis, lojas, atracoes turisticas) ou explorar o mapa
-para encontrar locais acessiveis nas proximidades.
+**O que fazem:** Plataforma colaborativa (crowdsourcing) que mapeia a acessibilidade de espacos fisicos em todo o mundo. Os utilizadores podem pesquisar locais especificos (restaurantes, hoteis, lojas, atracoes turisticas) ou explorar o mapa para encontrar locais acessiveis nas proximidades.
 
 **Caracteristicas principais:**
 
 - Sistema de classificacao tripartido: acessivel, parcialmente acessivel, inacessivel
 - Mais de 200.000 locais classificados em 35 paises
 - Comentarios detalhados dos utilizadores sobre elementos especificos de acessibilidade
-- Novo Assistente de Acessibilidade com IA (lancado em 2025) que fornece resumos automaticos da acessibilidade de um
-  local
-- Recolha de dados sobre iluminacao, entradas, terreno e dados de sensores de dispositivos moveis (detecao de obstaculos
-  e lancis)
+- Novo Assistente de Acessibilidade com IA (lancado em 2025) que fornece resumos automaticos da acessibilidade de um local
+- Recolha de dados sobre iluminacao, entradas, terreno e dados de sensores de dispositivos moveis (detecao de obstaculos e lancis)
 - App disponivel para iOS e Android
 
 **Abordagem tecnologica:**
 
 - Construida sobre a Google Maps Platform
-- Tecnologia patenteada que usa IA e machine learning para compreender e prever a acessibilidade com base em dados de
-  sensores
+- Tecnologia patenteada que usa IA e machine learning para compreender e prever a acessibilidade com base em dados de sensores
 - Integracao com Google AI para resumos inteligentes de acessibilidade
 - Exploracao de reconhecimento de imagem para detetar barreiras automaticamente
 - Combina avaliacoes crowdsourced com dados de parceiros (Google Maps)
@@ -53,13 +47,11 @@ para encontrar locais acessiveis nas proximidades.
 - **Conceito URL:** wheelmap.org
 - **Sede:** Berlim, Alemanha (desenvolvida pela ONG Sozialhelden e.V., desde 2010)
 
-**O que fazem:** Mapa online mundial para pesquisar, encontrar e marcar locais acessiveis a cadeiras de rodas. E a maior
-plataforma aberta de mapeamento de acessibilidade para cadeiras de rodas do mundo.
+**O que fazem:** Mapa online mundial para pesquisar, encontrar e marcar locais acessiveis a cadeiras de rodas. E a maior plataforma aberta de mapeamento de acessibilidade para cadeiras de rodas do mundo.
 
 **Caracteristicas principais:**
 
-- Sistema de semaforo simples: verde (totalmente acessivel), amarelo (parcialmente acessivel), vermelho (inacessivel),
-  cinzento (nao avaliado)
+- Sistema de semaforo simples: verde (totalmente acessivel), amarelo (parcialmente acessivel), vermelho (inacessivel), cinzento (nao avaliado)
 - Mais de 3 milhoes de cafes, bibliotecas, piscinas e outros locais publicos registados
 - 1,5 milhoes de locais ja classificados
 - 180 tipos diferentes de locais
@@ -75,8 +67,7 @@ plataforma aberta de mapeamento de acessibilidade para cadeiras de rodas do mund
 - Construida sobre OpenStreetMap (OSM)
 - Todos os dados sao armazenados no OSM sob licenca Open Database License (ODbL)
 - Dados abertos e gratuitos para qualquer pessoa
-- Desenvolveram o accessibility.cloud -- plataforma de intercambio de dados de acessibilidade que usa o formato A11yJSON
-  como norma de troca de dados
+- Desenvolveram o accessibility.cloud -- plataforma de intercambio de dados de acessibilidade que usa o formato A11yJSON como norma de troca de dados
 - API documentada para integracao
 
 **Modelo de negocio:**
@@ -94,16 +85,13 @@ plataforma aberta de mapeamento de acessibilidade para cadeiras de rodas do mund
 - **Conceito URL:** axsmap.com
 - **Sede:** Nova Iorque, EUA (fundada por Jason DaSilva)
 
-**O que fazem:** Base de dados colaborativa de locais acessiveis em grandes cidades, alimentada pela API do Google Maps.
-Os utilizadores avaliam e fazem criticas a acessibilidade de espacos publicos como restaurantes, paragens de transporte
-e negocios.
+**O que fazem:** Base de dados colaborativa de locais acessiveis em grandes cidades, alimentada pela API do Google Maps. Os utilizadores avaliam e fazem criticas a acessibilidade de espacos publicos como restaurantes, paragens de transporte e negocios.
 
 **Caracteristicas principais:**
 
 - Sistema de classificacao claro, objetivo e uniforme
 - Avaliacoes para deficiencia motora, visual e auditiva
-- Perguntas especificas e praticas: "Ha rampa? Sim ou nao?", "Ha espaco para cadeira de rodas em todas as mesas?", "A
-  porta da casa de banho abre para fora?"
+- Perguntas especificas e praticas: "Ha rampa? Sim ou nao?", "Ha espaco para cadeira de rodas em todas as mesas?", "A porta da casa de banho abre para fora?"
 - Util para varios publicos: pais com carrinhos de bebe, pessoas com deficiencia visual, etc.
 - Mais de 600.000 locais na base de dados (atraves de integracao com outras bases de dados de acessibilidade)
 - Disponivel online, em versao mobile web, e apps para Android e iPhone
@@ -127,15 +115,12 @@ e negocios.
 - **Conceito URL:** jaccede.com
 - **Sede:** Paris, Franca (fundada em 2006)
 
-**O que fazem:** Guia colaborativo online de locais acessiveis, focado inicialmente em Franca mas com presenca
-internacional. Qualquer utilizador pode consultar e contribuir com informacao sobre a acessibilidade de espacos
-publicos.
+**O que fazem:** Guia colaborativo online de locais acessiveis, focado inicialmente em Franca mas com presenca internacional. Qualquer utilizador pode consultar e contribuir com informacao sobre a acessibilidade de espacos publicos.
 
 **Caracteristicas principais:**
 
 - Detalhes precisos sobre largura de portas, presenca de rampas e disposicao de casas de banho
-- Criterios detalhados para um leque alargado de necessidades: deficiencia fisica, visual, auditiva, cognitiva, idosos,
-  pais com carrinhos, gravidas, pessoas com muletas/andarilhos
+- Criterios detalhados para um leque alargado de necessidades: deficiencia fisica, visual, auditiva, cognitiva, idosos, pais com carrinhos, gravidas, pessoas com muletas/andarilhos
 - Mais de 28.000 locais em Franca e no estrangeiro
 - Traduzido em 4 idiomas (FR, EN, ES, DE)
 - 25.000 visitantes por mes
@@ -161,8 +146,7 @@ publicos.
 - **Conceito URL:** euansguide.com
 - **Sede:** Edimburgo, Escocia, Reino Unido (fundada por Euan MacDonald)
 
-**O que fazem:** Plataforma de avaliacoes de acessibilidade escritas por pessoas com experiencia vivida de deficiencia.
-Frequentemente descrita como o "TripAdvisor da acessibilidade".
+**O que fazem:** Plataforma de avaliacoes de acessibilidade escritas por pessoas com experiencia vivida de deficiencia. Frequentemente descrita como o "TripAdvisor da acessibilidade".
 
 **Caracteristicas principais:**
 
@@ -196,18 +180,15 @@ Frequentemente descrita como o "TripAdvisor da acessibilidade".
 - **Conceito URL:** accessiblego.com
 - **Sede:** EUA (fundada por Miriam Eljas Goldman)
 
-**O que fazem:** Primeira plataforma de viagens completa para pessoas com deficiencia, focada em reservas de hoteis com
-informacao detalhada de acessibilidade verificada. Expandiu-se para se tornar um "balcao unico" de viagens acessiveis.
+**O que fazem:** Primeira plataforma de viagens completa para pessoas com deficiencia, focada em reservas de hoteis com informacao detalhada de acessibilidade verificada. Expandiu-se para se tornar um "balcao unico" de viagens acessiveis.
 
 **Caracteristicas principais:**
 
 - Filtros de pesquisa por necessidades especificas de acessibilidade
 - Informacao exclusiva de acessibilidade em mais de 6.000 hoteis em mais de 180 cidades nos EUA
-- Verificacao ativa: apos reserva, um membro da equipa contacta o hotel para confirmar que os pedidos de acessibilidade
-  podem ser atendidos
+- Verificacao ativa: apos reserva, um membro da equipa contacta o hotel para confirmar que os pedidos de acessibilidade podem ser atendidos
 - Descontos exclusivos para membros (ate 60%)
-- Reserva de voos, aluguer de carros com comandos manuais, aluguer de carrinhas adaptadas, aluguer de equipamento de
-  mobilidade e servicos de transporte acessivel
+- Reserva de voos, aluguer de carros com comandos manuais, aluguer de carrinhas adaptadas, aluguer de equipamento de mobilidade e servicos de transporte acessivel
 - Forum comunitario para partilha de dicas e experiencias
 - Servico de concierge para necessidades especificas
 
@@ -230,8 +211,7 @@ informacao detalhada de acessibilidade verificada. Expandiu-se para se tornar um
 - **Conceito URL:** wheeltheworld.com
 - **Sede:** San Francisco, EUA
 
-**O que fazem:** Plataforma de reserva de viagens acessiveis verificadas, incluindo hoteis, atividades, transporte,
-excursoes em grupo e opcoes de viagem em cadeira de rodas.
+**O que fazem:** Plataforma de reserva de viagens acessiveis verificadas, incluindo hoteis, atividades, transporte, excursoes em grupo e opcoes de viagem em cadeira de rodas.
 
 **Caracteristicas principais:**
 
@@ -263,8 +243,7 @@ excursoes em grupo e opcoes de viagem em cadeira de rodas.
 - **Conceito URL:** handiscover.com
 - **Sede:** Malmo, Suecia (fundada por Sebastien Archambeaud)
 
-**O que fazem:** Plataforma lider de reserva de alojamento acessivel na Europa, oferecendo apartamentos, casas, pequenos
-hoteis e B&Bs em mais de 40 paises.
+**O que fazem:** Plataforma lider de reserva de alojamento acessivel na Europa, oferecendo apartamentos, casas, pequenos hoteis e B&Bs em mais de 40 paises.
 
 **Caracteristicas principais:**
 
@@ -292,9 +271,7 @@ hoteis e B&Bs em mais de 40 paises.
 - **Conceito URL:** mobilitymojo.com
 - **Sede:** Irlanda
 
-**O que fazem:** Principal ferramenta de autoavaliacao de acessibilidade para locais de trabalho e hoteis a nivel
-mundial. Fornece as empresas ferramentas para realizar avaliacoes detalhadas e abrangentes do nivel de acessibilidade
-das suas instalacoes.
+**O que fazem:** Principal ferramenta de autoavaliacao de acessibilidade para locais de trabalho e hoteis a nivel mundial. Fornece as empresas ferramentas para realizar avaliacoes detalhadas e abrangentes do nivel de acessibilidade das suas instalacoes.
 
 **Caracteristicas principais:**
 
@@ -323,16 +300,14 @@ das suas instalacoes.
 - **Conceito URL:** accessearth.com
 - **Sede:** Irlanda (fundada por Matt McCann)
 
-**O que fazem:** Plataforma de prontidao para deficiencia e inclusao que fornece ferramentas e recursos para medir,
-melhorar e celebrar a acessibilidade nas comunidades.
+**O que fazem:** Plataforma de prontidao para deficiencia e inclusao que fornece ferramentas e recursos para medir, melhorar e celebrar a acessibilidade nas comunidades.
 
 **Caracteristicas principais:**
 
 - Mais de 110.000 locais disponiveis
 - Classificacao de acessibilidade por criterios especificos
 - App de crowdsourcing para contribuicoes comunitarias
-- Servicos B2B: formacao em sensibilizacao para acessibilidade, avaliacao de acessibilidade de escritorios, consultoria
-  em politicas de acessibilidade
+- Servicos B2B: formacao em sensibilizacao para acessibilidade, avaliacao de acessibilidade de escritorios, consultoria em politicas de acessibilidade
 
 **Abordagem tecnologica:**
 
@@ -352,8 +327,7 @@ melhorar e celebrar a acessibilidade nas comunidades.
 - **Conceito URL:** accessibility.cloud
 - **Sede:** Berlim, Alemanha (pela Sozialhelden e.V., mesma organizacao do Wheelmap)
 
-**O que fazem:** Plataforma de intercambio de dados de acessibilidade fisica num formato padronizado, sustentavel e
-facil de usar. Funciona como hub central para partilha de dados de acessibilidade entre diferentes organizacoes.
+**O que fazem:** Plataforma de intercambio de dados de acessibilidade fisica num formato padronizado, sustentavel e facil de usar. Funciona como hub central para partilha de dados de acessibilidade entre diferentes organizacoes.
 
 **Caracteristicas principais:**
 
@@ -382,24 +356,19 @@ facil de usar. Funciona como hub central para partilha de dados de acessibilidad
 
 ### 2.1 Google Maps -- Funcionalidades de Acessibilidade
 
-**O que oferecem:** O Google Maps e atualmente a plataforma generalista com mais funcionalidades de acessibilidade
-fisica integradas.
+**O que oferecem:** O Google Maps e atualmente a plataforma generalista com mais funcionalidades de acessibilidade fisica integradas.
 
 **Funcionalidades principais:**
 
-- **"Accessible Places" (Locais Acessiveis):** Funcionalidade que pode ser ativada nas definicoes para mostrar
-  informacao de acessibilidade de forma mais proeminente, com icone de cadeira de rodas
-- **Atributos de acessibilidade:** Entrada acessivel, lugares sentados acessiveis, casas de banho acessiveis,
-  estacionamento acessivel, elevador
-- **Rotas acessiveis a cadeiras de rodas:** Filtro de navegacao em transportes publicos que encontra rotas com
-  elevadores, rampas e acesso sem degraus
+- **"Accessible Places" (Locais Acessiveis):** Funcionalidade que pode ser ativada nas definicoes para mostrar informacao de acessibilidade de forma mais proeminente, com icone de cadeira de rodas
+- **Atributos de acessibilidade:** Entrada acessivel, lugares sentados acessiveis, casas de banho acessiveis, estacionamento acessivel, elevador
+- **Rotas acessiveis a cadeiras de rodas:** Filtro de navegacao em transportes publicos que encontra rotas com elevadores, rampas e acesso sem degraus
 - **Caminhos pedonais acessiveis:** Identificacao de percursos pedonais sem barreiras
 - **Navegacao sem escadas**
 - **Mais etiquetas de acessibilidade**
 - **Atributo de identidade de deficiencia para negocios**
 - **Funcao de leitor de ecra**
-- **Informacao em mais de 15 milhoes de locais no mundo** (com contribuicoes de acessibilidade em mais de 50 milhoes de
-  locais)
+- **Informacao em mais de 15 milhoes de locais no mundo** (com contribuicoes de acessibilidade em mais de 50 milhoes de locais)
 
 **Abordagem tecnologica:**
 
@@ -418,8 +387,7 @@ fisica integradas.
 
 ### 2.2 Apple Maps -- Funcionalidades de Acessibilidade
 
-**O que oferecem:** O Apple Maps tem investido mais em acessibilidade digital (VoiceOver, feedback haptil) do que em
-mapeamento de acessibilidade fisica, ficando atras do Google Maps nesta area.
+**O que oferecem:** O Apple Maps tem investido mais em acessibilidade digital (VoiceOver, feedback haptil) do que em mapeamento de acessibilidade fisica, ficando atras do Google Maps nesta area.
 
 **Funcionalidades principais:**
 
@@ -443,14 +411,12 @@ mapeamento de acessibilidade fisica, ficando atras do Google Maps nesta area.
 
 ### 2.3 TripAdvisor -- Filtros de Acessibilidade
 
-**O que oferecem:** O TripAdvisor tem melhorado gradualmente as suas funcionalidades de acessibilidade, embora ainda com
-limitacoes significativas.
+**O que oferecem:** O TripAdvisor tem melhorado gradualmente as suas funcionalidades de acessibilidade, embora ainda com limitacoes significativas.
 
 **Funcionalidades principais:**
 
 - Filtro de "wheelchair" disponivel ao visitar paginas de hoteis ou atracoes especificos
-- **Novo Accessible Travel Hub (lancado em julho de 2025):** plataforma dedicada a viajantes com deficiencia, com
-  conteudo informado por pares, recursos de planeamento e orientacao
+- **Novo Accessible Travel Hub (lancado em julho de 2025):** plataforma dedicada a viajantes com deficiencia, com conteudo informado por pares, recursos de planeamento e orientacao
 - Conteudo editorial com experiencias em primeira pessoa
 - Orientacao para viajantes com dispositivos de mobilidade, sensibilidades sensoriais ou neurodivergencia
 - Forum "Travelling With Disabilities"
@@ -458,8 +424,7 @@ limitacoes significativas.
 **Limitacoes atuais:**
 
 - Nao existe opcao para pesquisar hoteis acessiveis numa localizacao de forma global
-- Necessidade de contactar hoteis diretamente para confirmar acessibilidade especifica (chuveiros com acesso de cadeira
-  de rodas, altura da cama, etc.)
+- Necessidade de contactar hoteis diretamente para confirmar acessibilidade especifica (chuveiros com acesso de cadeira de rodas, altura da cama, etc.)
 - Avaliacoes baseadas em experiencia pessoal de deficiencia perdem-se no sistema geral de avaliacoes
 - Os filtros nao sao suficientemente granulares
 
@@ -472,18 +437,15 @@ limitacoes significativas.
 
 ### 2.4 Yelp -- Funcionalidades de Acessibilidade
 
-**O que oferecem:** O Yelp fez progressos significativos com o lancamento de oito novos atributos de acessibilidade
-pesquisaveis.
+**O que oferecem:** O Yelp fez progressos significativos com o lancamento de oito novos atributos de acessibilidade pesquisaveis.
 
 **Funcionalidades principais:**
 
 **Atributos de mobilidade:**
 
 - Estacionamento acessivel junto a entrada
-- Entrada principal em conformidade com a ADA (rampa, elevadores ou sem degraus; porta com abertura minima de 32
-  polegadas)
-- Casa de banho em conformidade com a ADA (percurso acessivel, barras de apoio, espaco de rotacao de 60 polegadas,
-  dispensadores a menos de 48 polegadas)
+- Entrada principal em conformidade com a ADA (rampa, elevadores ou sem degraus; porta com abertura minima de 32 polegadas)
+- Casa de banho em conformidade com a ADA (percurso acessivel, barras de apoio, espaco de rotacao de 60 polegadas, dispensadores a menos de 48 polegadas)
 - Sem degraus ou escadas
 
 **Atributos de audicao e visao:**
@@ -559,10 +521,8 @@ pesquisaveis.
 
 - Portas: minimo 91 cm (36 polegadas) de largura; aberturas podem reduzir a 81 cm (32 polegadas) em pontos especificos
 - Rampas: inclinacao maxima de 1:12 (8,33%); percursos acessiveis sem rampa: maximo 1:20 (5%)
-- Estacionamento: lugar de 244 cm de largura com corredor adjacente de 152 cm; lugares para carrinhas: 244 cm + corredor
-  de 244 cm
-- Casas de banho: assento da sanita entre 43-48 cm de altura; lavatorio a no maximo 86 cm; espaco livre de rotacao de
-  152 cm de diametro
+- Estacionamento: lugar de 244 cm de largura com corredor adjacente de 152 cm; lugares para carrinhas: 244 cm + corredor de 244 cm
+- Casas de banho: assento da sanita entre 43-48 cm de altura; lavatorio a no maximo 86 cm; espaco livre de rotacao de 152 cm de diametro
 - Forca maxima para abrir portas: 2,27 kg (5 libras)
 
 **ISO 21542:2021 (Internacional):**
@@ -576,10 +536,8 @@ pesquisaveis.
 **European Accessibility Act (EAA):**
 
 - Em vigor desde 28 de junho de 2025 em todos os Estados-Membros da UE
-- Nao prescreve requisitos para o ambiente construido em si, mas o seu anexo estabelece normas de infraestrutura fisica
-  para edificios onde sao prestados servicos digitais cobertos pelo EAA
-- Requisitos fisicos incluem: casas de banho acessiveis (portas largas, barras de apoio, espaco de manobra), elevadores
-  com comunicacao multissensorial, sinalizacao acessivel (alto contraste, pictogramas, braille e sinalizacao tatil)
+- Nao prescreve requisitos para o ambiente construido em si, mas o seu anexo estabelece normas de infraestrutura fisica para edificios onde sao prestados servicos digitais cobertos pelo EAA
+- Requisitos fisicos incluem: casas de banho acessiveis (portas largas, barras de apoio, espaco de manobra), elevadores com comunicacao multissensorial, sinalizacao acessivel (alto contraste, pictogramas, braille e sinalizacao tatil)
 - Principios fundamentais: Percetivel, Operavel, Compreensivel e Robusto (POUR)
 
 **EN 301 549 (Europa):**
@@ -691,10 +649,8 @@ _Museus:_
 
 **Project Sidewalk (Universidade de Washington):**
 
-- Deep learning para detetar automaticamente problemas de acessibilidade em passeios a partir de imagens do Google
-  Street View
-- Identificacao de 33 classes de condicoes de acessibilidade: irregular, tijoletas, fissuras, diferenca de altura,
-  estreito, inclinado, poste, sinalizacao
+- Deep learning para detetar automaticamente problemas de acessibilidade em passeios a partir de imagens do Google Street View
+- Identificacao de 33 classes de condicoes de acessibilidade: irregular, tijoletas, fissuras, diferenca de altura, estreito, inclinado, poste, sinalizacao
 - Alta precisao na detecao de avisos tateis em falta em lancis de acesso e vegetacao invasora em passeios
 - Dataset publico de mais de 300.000 etiquetas no Hugging Face
 
@@ -706,8 +662,7 @@ _Museus:_
 
 **Desafios persistentes:**
 
-- Detecao de lancis de acesso continua dificil devido a oclusoes (sombras, arvores), tamanho reduzido e tendencia para
-  se misturarem visualmente com o passeio
+- Detecao de lancis de acesso continua dificil devido a oclusoes (sombras, arvores), tamanho reduzido e tendencia para se misturarem visualmente com o passeio
 - Transferencia de modelos entre cidades requer adaptacao
 
 ### 6.2 Resumos e Assistentes com IA
@@ -758,10 +713,8 @@ _Museus:_
 - **Edge AI:** Modelos leves que funcionam diretamente em dispositivos moveis, sem necessidade de ligacao a servidores
 - **Vision Transformers (ViTs):** Nova arquitetura de deep learning para percecao visual mais precisa
 - **Visao 3D:** Combinacao de cameras com LiDAR para mapeamento tridimensional de espacos
-- **IA generativa para acessibilidade:** Traducao, resumo, descricao, legendagem e reorganizacao de informacao de forma
-  mais rapida e acessivel
-- **Mercado de visao computacional:** Avaliado em 19,78 mil milhoes USD em 2024, projetado para 31,93 mil milhoes em
-  2027
+- **IA generativa para acessibilidade:** Traducao, resumo, descricao, legendagem e reorganizacao de informacao de forma mais rapida e acessivel
+- **Mercado de visao computacional:** Avaliado em 19,78 mil milhoes USD em 2024, projetado para 31,93 mil milhoes em 2027
 
 ---
 
@@ -771,15 +724,11 @@ _Museus:_
 
 ### 7.1 Principios Fundamentais
 
-1. **Simplicidade:** Usar um sistema facil de compreender (ex.: semaforo verde/amarelo/vermelho do Wheelmap; tres niveis
-   do AccessNow)
-2. **Especificidade:** Perguntas concretas e objetivas em vez de avaliacoes subjetivas ("Ha rampa? Sim/Nao" em vez de
-   "Quao acessivel e?")
-3. **Multiplicitade de necessidades:** Cobrir diferentes tipos de deficiencia (motora, visual, auditiva, cognitiva) em
-   vez de apenas acessibilidade para cadeiras de rodas
+1. **Simplicidade:** Usar um sistema facil de compreender (ex.: semaforo verde/amarelo/vermelho do Wheelmap; tres niveis do AccessNow)
+2. **Especificidade:** Perguntas concretas e objetivas em vez de avaliacoes subjetivas ("Ha rampa? Sim/Nao" em vez de "Quao acessivel e?")
+3. **Multiplicitade de necessidades:** Cobrir diferentes tipos de deficiencia (motora, visual, auditiva, cognitiva) em vez de apenas acessibilidade para cadeiras de rodas
 4. **Verificacao:** Combinar dados crowdsourced com verificacao profissional ou verificacao cruzada
-5. **Granularidade:** Permitir detalhe suficiente para que cada pessoa possa avaliar se o espaco serve as suas
-   necessidades especificas
+5. **Granularidade:** Permitir detalhe suficiente para que cada pessoa possa avaliar se o espaco serve as suas necessidades especificas
 6. **Atualizacao continua:** Mecanismos para sinalizar quando as condicoes mudam (elevadores avariados, obras, etc.)
 
 ### 7.2 Abordagens de Classificacao Observadas
@@ -799,19 +748,16 @@ _Museus:_
 ### 7.3 Recomendacoes de Boas Praticas
 
 1. **Combinar avaliacao automatizada e manual:** Nenhum metodo isolado e suficiente
-2. **Ponderacao por severidade:** Problemas mais graves devem ter maior impacto na classificacao (ex.: ausencia de
-   entrada acessivel e mais grave do que ausencia de estacionamento dedicado)
+2. **Ponderacao por severidade:** Problemas mais graves devem ter maior impacto na classificacao (ex.: ausencia de entrada acessivel e mais grave do que ausencia de estacionamento dedicado)
 3. **Principios POUR adaptados ao fisico:**
    - **Percetivel:** Sinalizacao clara e multimodal
    - **Operavel:** Portas, elevadores, rampas que permitem uso autonomo
    - **Compreensivel:** Informacao facil de entender sobre a acessibilidade do local
    - **Robusto:** Infraestrutura fiavel e bem mantida
-4. **Escala numerica complementar:** Alem de categorias simples, oferecer uma pontuacao (0-100) baseada em criterios
-   ponderados
+4. **Escala numerica complementar:** Alem de categorias simples, oferecer uma pontuacao (0-100) baseada em criterios ponderados
 5. **Transparencia da metodologia:** Publicar como a classificacao e calculada
 6. **Envolvimento de pessoas com deficiencia:** No design, nos testes e na avaliacao continua do sistema
-7. **Dados abertos e interoperaveis:** Usar formatos padronizados (como A11yJSON) para permitir partilha entre
-   plataformas
+7. **Dados abertos e interoperaveis:** Usar formatos padronizados (como A11yJSON) para permitir partilha entre plataformas
 8. **Atualizacoes em tempo real:** Permitir relatos de alteracoes temporarias (elevador avariado, rampa bloqueada)
 
 ---
@@ -847,14 +793,11 @@ _Museus:_
 ### 9.1 Lacunas Identificadas no Mercado
 
 1. **Fragmentacao de dados:** Cada plataforma tem a sua propria base de dados; nao existe uma fonte unica e universal
-2. **Foco predominante nos EUA e Europa Ocidental:** Cobertura limitada em Portugal, Europa do Sul, America Latina,
-   Africa e Asia
+2. **Foco predominante nos EUA e Europa Ocidental:** Cobertura limitada em Portugal, Europa do Sul, America Latina, Africa e Asia
 3. **Verificacao inconsistente:** A maioria depende de crowdsourcing sem verificacao profissional
-4. **Foco predominante em cadeiras de rodas:** Outras deficiencias (visual, auditiva, cognitiva) sao frequentemente
-   subrepresentadas
+4. **Foco predominante em cadeiras de rodas:** Outras deficiencias (visual, auditiva, cognitiva) sao frequentemente subrepresentadas
 5. **Apple Maps atrasado:** Nao oferece rotas acessiveis nem mapeamento de acessibilidade dedicado
-6. **TripAdvisor limitado:** Os filtros de acessibilidade sao insuficientes e a informacao perde-se nas avaliacoes
-   gerais
+6. **TripAdvisor limitado:** Os filtros de acessibilidade sao insuficientes e a informacao perde-se nas avaliacoes gerais
 7. **Falta de integracao:** Poucos sistemas de reserva integram verdadeiramente informacao de acessibilidade verificada
 8. **Portugal especificamente:** Nao ha plataforma dedicada com forte cobertura do territorio portugues
 

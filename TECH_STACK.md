@@ -1,8 +1,6 @@
 # Eat Out Adviser - Relatorio Tecnico de Stack Tecnologica
 
-**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Aplicacao full-stack com foco em acessibilidade para
-recomendacao de restaurantes **Ambientes:** MacBook Air M1 16GB (desenvolvimento) | Proxmox em Intel N5105 16GB
-(producao/self-hosting)
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Aplicacao full-stack com foco em acessibilidade para recomendacao de restaurantes **Ambientes:** MacBook Air M1 16GB (desenvolvimento) | Proxmox em Intel N5105 16GB (producao/self-hosting)
 
 ---
 
@@ -22,9 +20,7 @@ recomendacao de restaurantes **Ambientes:** MacBook Air M1 16GB (desenvolvimento
 
 ## 1. Resumo Executivo
 
-Este documento apresenta a stack tecnologica recomendada para o projecto Eat Out Adviser, uma aplicacao full-stack
-centrada em acessibilidade que utiliza inteligencia artificial para recomendar restaurantes. Todas as escolhas foram
-feitas tendo em conta:
+Este documento apresenta a stack tecnologica recomendada para o projecto Eat Out Adviser, uma aplicacao full-stack centrada em acessibilidade que utiliza inteligencia artificial para recomendar restaurantes. Todas as escolhas foram feitas tendo em conta:
 
 - **Compatibilidade multi-arquitectura:** ARM64 (M1) e x86_64 (Intel N5105)
 - **Operacao via CLI:** Todas as ferramentas sao automatizaveis sem interface grafica
@@ -42,12 +38,9 @@ feitas tendo em conta:
 
 **Justificacao:**
 
-- O Next.js 16 introduziu Cache Components, um novo modelo de programacao que tira partido do Partial Pre-Rendering
-  (PPR) e `use cache` para navegacao instantanea
-- Turbopack (estavel) oferece builds 2-5x mais rapidos que o Webpack, reduzindo significativamente o tempo de
-  desenvolvimento
-- Server Components e Server Actions permitem uma arquitectura hibrida eficiente, essencial para uma app que precisa de
-  SSR para SEO e CSR para interactividade
+- O Next.js 16 introduziu Cache Components, um novo modelo de programacao que tira partido do Partial Pre-Rendering (PPR) e `use cache` para navegacao instantanea
+- Turbopack (estavel) oferece builds 2-5x mais rapidos que o Webpack, reduzindo significativamente o tempo de desenvolvimento
+- Server Components e Server Actions permitem uma arquitectura hibrida eficiente, essencial para uma app que precisa de SSR para SEO e CSR para interactividade
 - Ecossistema React e o maior do mercado, garantindo longevidade e acesso a talento
 - Suporte nativo a TypeScript sem configuracao adicional
 - E a framework full-stack mais adoptada em Marco de 2026, com documentacao extensa e comunidade activa
@@ -62,27 +55,22 @@ feitas tendo em conta:
 
 **Justificacao:**
 
-- **Radix UI** e a biblioteca que melhor implementa acessibilidade nativa -- leitores de ecra e navegacao por teclado
-  funcionam como nativo, sem esforco adicional do programador
-- **shadcn/ui** combina Radix UI para acessibilidade com Tailwind CSS para estilizacao, oferecendo componentes copiados
-  directamente para o projecto (nao e uma dependencia npm, e codigo proprio)
-- Controlo total sobre o codigo dos componentes, essencial para personalizacao de funcionalidades de acessibilidade
-  especificas (ex.: descricoes audio de restaurantes, contrastes elevados)
+- **Radix UI** e a biblioteca que melhor implementa acessibilidade nativa -- leitores de ecra e navegacao por teclado funcionam como nativo, sem esforco adicional do programador
+- **shadcn/ui** combina Radix UI para acessibilidade com Tailwind CSS para estilizacao, oferecendo componentes copiados directamente para o projecto (nao e uma dependencia npm, e codigo proprio)
+- Controlo total sobre o codigo dos componentes, essencial para personalizacao de funcionalidades de acessibilidade especificas (ex.: descricoes audio de restaurantes, contrastes elevados)
 - Suporte completo a ARIA attributes, focus management, e keyboard navigation
 - Comunidade muito activa com mais de 27.000 estrelas no GitHub
 
 #### Complemento: React Aria (Adobe)
 
-- Para componentes mais complexos que necessitem de tratamento avancado de acessibilidade (ex.: tabelas interactivas de
-  menus, sliders de filtragem), React Aria da Adobe gere foco, atributos ARIA e estados de interaccao automaticamente
+- Para componentes mais complexos que necessitem de tratamento avancado de acessibilidade (ex.: tabelas interactivas de menus, sliders de filtragem), React Aria da Adobe gere foco, atributos ARIA e estados de interaccao automaticamente
 - Ideal como complemento ao shadcn/ui para casos especificos
 
 ### 2.3 Estilizacao: Tailwind CSS v4
 
 **Justificacao:**
 
-- Compilador novo em Rust (Lightning CSS) com builds 5x mais rapidos e builds incrementais 100x mais rapidos
-  (microsegundos)
+- Compilador novo em Rust (Lightning CSS) com builds 5x mais rapidos e builds incrementais 100x mais rapidos (microsegundos)
 - Configuracao CSS-first com directivas `@theme` -- elimina ficheiro JavaScript de configuracao
 - Deteccao automatica de conteudo sem configuracao
 - Suporte nativo a funcionalidades CSS modernas (color-mix(), @layer, nesting)
@@ -96,8 +84,7 @@ feitas tendo em conta:
 **Justificacao:**
 
 - Serwist e a ferramenta moderna que se integra limpo com Next.js 16
-- Service Workers para funcionamento offline -- essencial para utilizadores que consultam informacao de restaurantes sem
-  rede
+- Service Workers para funcionamento offline -- essencial para utilizadores que consultam informacao de restaurantes sem rede
 - Web App Manifest para instalacao no ecra inicial em Android e iOS
 - Push Notifications para alertas de novos restaurantes acessiveis
 - Em Marco de 2026, todos os browsers principais suportam completamente as APIs PWA
@@ -121,18 +108,15 @@ feitas tendo em conta:
 
 **Justificacao:**
 
-- **Next.js API Routes** permitem manter frontend e backend no mesmo projecto, simplificando deployment e
-  desenvolvimento
-- **tRPC** adiciona type-safety end-to-end entre cliente e servidor sem necessidade de esquema separado (como GraphQL)
-  nem geracao de codigo
+- **Next.js API Routes** permitem manter frontend e backend no mesmo projecto, simplificando deployment e desenvolvimento
+- **tRPC** adiciona type-safety end-to-end entre cliente e servidor sem necessidade de esquema separado (como GraphQL) nem geracao de codigo
 - Para operacoes pesadas de IA (RAG, processamento de imagens), utilizar Route Handlers com streaming
 - Server Actions do Next.js 16 para mutacoes simples (formularios, favoritos)
 - Elimina a necessidade de um backend separado em Python/Rust para a maioria dos casos de uso
 
 #### Alternativa para microservicos de IA: FastAPI (Python)
 
-- Se o processamento de IA necessitar de bibliotecas Python especificas (ex.: modelos de embedding locais com Ollama),
-  um microservico FastAPI complementa o Next.js
+- Se o processamento de IA necessitar de bibliotecas Python especificas (ex.: modelos de embedding locais com Ollama), um microservico FastAPI complementa o Next.js
 - FastAPI tem performance comparavel ao Node.js para I/O e e 60-80% mais rapido em workloads de data science
 - Documentacao automatica com OpenAPI/Swagger
 - Async nativo com asyncio
@@ -142,13 +126,11 @@ feitas tendo em conta:
 **Justificacao:**
 
 - **PostgreSQL 17** e a base de dados relacional mais robusta e madura para self-hosting
-- **pgvector** transforma PostgreSQL numa base de dados vectorial capaz, eliminando a necessidade de um sistema separado
-  (Pinecone, Weaviate)
+- **pgvector** transforma PostgreSQL numa base de dados vectorial capaz, eliminando a necessidade de um sistema separado (Pinecone, Weaviate)
 - Com indice HNSW, consulta 1M vectores em 5-20ms com 95%+ de recall
 - pgvectorscale (Timescale) oferece 471 QPS a 99% recall em 50M vectores
 - Uma unica base de dados para dados relacionais, JSON e embeddings vectoriais, com garantias transaccionais
-- Para o Eat Out Adviser, o volume de dados (restaurantes, avaliacoes, embeddings) ficara bem abaixo de 1M registos,
-  tornando pgvector perfeito
+- Para o Eat Out Adviser, o volume de dados (restaurantes, avaliacoes, embeddings) ficara bem abaixo de 1M registos, tornando pgvector perfeito
 - Suporta distancia coseno, L2, e produto interno
 - Funciona perfeitamente tanto em ARM64 (M1) como x86_64 (N5105)
 
@@ -156,8 +138,7 @@ feitas tendo em conta:
 
 **Justificacao:**
 
-- Abordagem code-first: esquemas definidos directamente em TypeScript, sem ficheiro de esquema separado nem passo de
-  geracao
+- Abordagem code-first: esquemas definidos directamente em TypeScript, sem ficheiro de esquema separado nem passo de geracao
 - Bundle ultra-leve (~7.4kb min+gzip) sem dependencias externas -- crucial para o N5105 com recursos limitados
 - Alteracoes no esquema reflectem-se imediatamente na API do cliente (sem `npx prisma generate`)
 - Queries SQL-like em TypeScript com type-safety total
@@ -167,8 +148,7 @@ feitas tendo em conta:
 
 **Prisma foi considerado mas rejeitado porque:**
 
-- Apesar do Prisma 7 (late 2025) ter eliminado o motor Rust e reduzido o bundle de ~14MB para ~1.6MB, o Drizzle continua
-  mais leve
+- Apesar do Prisma 7 (late 2025) ter eliminado o motor Rust e reduzido o bundle de ~14MB para ~1.6MB, o Drizzle continua mais leve
 - O passo de geracao (`prisma generate`) adiciona friccao no ciclo de desenvolvimento
 - Drizzle oferece queries mais proximas do SQL, dando mais controlo sobre performance
 
@@ -182,8 +162,7 @@ feitas tendo em conta:
 - Self-hosted por natureza: e uma biblioteca, nao um servico -- controlo total sobre a infraestrutura de autenticacao
 - Suporte nativo a Next.js
 - Para o Eat Out Adviser: OAuth com Google/Apple para login facil + email/password como fallback
-- Melhor opcao a longo prazo para funcionalidades como RBAC (admin, moderador, utilizador), MFA, e politicas de sessao
-  personalizadas
+- Melhor opcao a longo prazo para funcionalidades como RBAC (admin, moderador, utilizador), MFA, e politicas de sessao personalizadas
 
 **Auth.js (NextAuth) foi considerado mas rejeitado porque:**
 
@@ -210,24 +189,21 @@ feitas tendo em conta:
 
 ### 4.1 LLM Principal: Claude API (Anthropic)
 
-**Modelo recomendado:** Claude Sonnet 4.6 (melhor relacao custo/performance para producao) **Modelo premium:** Claude
-Opus 4.5 (para tarefas que exijam raciocinio avancado)
+**Modelo recomendado:** Claude Sonnet 4.6 (melhor relacao custo/performance para producao) **Modelo premium:** Claude Opus 4.5 (para tarefas que exijam raciocinio avancado)
 
 **SDK:** `@anthropic-ai/sdk` (TypeScript)
 
 **Justificacao:**
 
 - Claude e o modelo lider em Marco de 2026 para coding, agentes e utilizacao de ferramentas
-- Janela de contexto de 1M tokens (beta) no Sonnet 4.6 -- permite processar grandes quantidades de dados de restaurantes
-  num unico pedido
+- Janela de contexto de 1M tokens (beta) no Sonnet 4.6 -- permite processar grandes quantidades de dados de restaurantes num unico pedido
 - Suporte nativo a tool use para integrar funcionalidades custom (busca em base de dados, APIs externas de restaurantes)
 - Web search integrado na API
 - Preco competitivo para self-hosting de aplicacoes
 
 **Casos de uso no Eat Out Adviser:**
 
-- Processamento de linguagem natural para queries como "restaurante italiano acessivel a cadeira de rodas no centro de
-  Lisboa"
+- Processamento de linguagem natural para queries como "restaurante italiano acessivel a cadeira de rodas no centro de Lisboa"
 - Geracao de descricoes de acessibilidade a partir de informacao estruturada
 - Assistente conversacional para recomendacoes personalizadas
 - Sumarizacao de avaliacoes de utilizadores
@@ -255,12 +231,10 @@ Opus 4.5 (para tarefas que exijam raciocinio avancado)
 
 **Justificacao da estrategia hibrida:**
 
-- **nomic-embed-text-v2** usa arquitectura Mixture-of-Experts (MoE) inovadora, activa apenas 305M de 475M parametros
-  durante a inferencia -- eficiente para o N5105
+- **nomic-embed-text-v2** usa arquitectura Mixture-of-Experts (MoE) inovadora, activa apenas 305M de 475M parametros durante a inferencia -- eficiente para o N5105
 - Suporte a mais de 100 idiomas, incluindo portugues
 - Ollama gere o modelo localmente com API compativel com OpenAI -- sem custos de API
-- Para o N5105 com 16GB RAM, modelos de embedding pequenos funcionam bem (all-MiniLM-L12-v2 com apenas 22M parametros
-  como alternativa ultra-leve)
+- Para o N5105 com 16GB RAM, modelos de embedding pequenos funcionam bem (all-MiniLM-L12-v2 com apenas 22M parametros como alternativa ultra-leve)
 
 **Armazenamento:** Vectores guardados directamente em PostgreSQL via pgvector com indice HNSW
 
@@ -295,8 +269,7 @@ Resposta personalizada ao utilizador
 - pgvector com HNSW para busca semantica rapida (<20ms para 1M vectores)
 - Full-text search nativo do PostgreSQL (`tsvector`/`tsquery`) para busca lexica complementar
 - Busca hibrida (semantic + lexical) melhora significativamente o recall
-- Dados estruturados de restaurantes (horarios, morada, classificacao de acessibilidade) adicionados como contexto
-  adicional
+- Dados estruturados de restaurantes (horarios, morada, classificacao de acessibilidade) adicionados como contexto adicional
 - Claude processa o contexto combinado e gera recomendacoes naturais em portugues
 
 ### 4.5 Algoritmos de Matching com IA
@@ -305,8 +278,7 @@ Resposta personalizada ao utilizador
 
 1. **Perfil do utilizador:** Preferencias de acessibilidade, restricoes alimentares, localizacao, historico
 2. **Perfil do restaurante:** Embeddings de descricoes + dados estruturados de acessibilidade
-3. **Matching:** Similaridade coseno entre embedding do perfil e embeddings dos restaurantes, ponderada por filtros de
-   acessibilidade
+3. **Matching:** Similaridade coseno entre embedding do perfil e embeddings dos restaurantes, ponderada por filtros de acessibilidade
 4. **Re-ranking com LLM:** Claude reordena os top-20 resultados com base em contexto conversacional
 5. **Feedback loop:** Avaliacoes do utilizador ajustam pesos do matching
 
@@ -318,8 +290,7 @@ Resposta personalizada ao utilizador
 
 **Justificacao:**
 
-- Docker buildx com QEMU permite construir imagens `linux/amd64` (N5105) e `linux/arm64` (M1) a partir de qualquer
-  maquina
+- Docker buildx com QEMU permite construir imagens `linux/amd64` (N5105) e `linux/arm64` (M1) a partir de qualquer maquina
 - Manifest lists garantem que `docker pull` selecciona automaticamente a variante correcta
 - Dockerfile unico com multi-stage build para todas as arquitecturas
 
@@ -346,12 +317,10 @@ eat-out-adviser/
 
 **Justificacao:**
 
-- Proxmox desaconselha oficialmente Docker dentro de LXC containers devido a problemas com namespaces aninhados,
-  limitacoes cgroup e drivers de armazenamento
+- Proxmox desaconselha oficialmente Docker dentro de LXC containers devido a problemas com namespaces aninhados, limitacoes cgroup e drivers de armazenamento
 - Uma VM Debian 12 minima oferece isolamento limpo do kernel e controlo total
 - O N5105 com 16GB suporta confortavelmente: VM com 12GB RAM (PostgreSQL + Next.js + Ollama para embeddings)
-- Proxmox 9.1 pode importar imagens OCI directamente como templates LXC, mas para Docker compose completo, a VM e mais
-  estavel
+- Proxmox 9.1 pode importar imagens OCI directamente como templates LXC, mas para Docker compose completo, a VM e mais estavel
 
 **Alternativa:** Coolify como PaaS self-hosted
 
@@ -422,8 +391,7 @@ eat-out-adviser/
 - **commitlint** com Conventional Commits para mensagens de commit padronizadas
 - **lint-staged** + **Husky** para executar linting apenas nos ficheiros alterados em pre-commit
 
-**Nota sobre Biome:** Para projectos futuros sem necessidade de plugins React/Next.js especificos, Biome sera a escolha
-preferencial pela sua velocidade superior (10.000 ficheiros em 0.8s vs 45.2s no ESLint).
+**Nota sobre Biome:** Para projectos futuros sem necessidade de plugins React/Next.js especificos, Biome sera a escolha preferencial pela sua velocidade superior (10.000 ficheiros em 0.8s vs 45.2s no ESLint).
 
 ### 6.2 Testes
 
@@ -443,8 +411,7 @@ preferencial pela sua velocidade superior (10.000 ficheiros em 0.8s vs 45.2s no 
 
 **Justificacao:**
 
-- Selectores baseados em acessibilidade (`getByRole`, `getByLabel`, `getByText`) criam testes resilientes que tambem
-  validam acessibilidade
+- Selectores baseados em acessibilidade (`getByRole`, `getByLabel`, `getByText`) criam testes resilientes que tambem validam acessibilidade
 - Aria Snapshots permitem validar a arvore de acessibilidade contra templates YAML predefinidos
 - Testes multi-browser (Chromium, Firefox, WebKit) e multi-viewport
 - Integracao nativa com GitHub Actions
@@ -538,8 +505,7 @@ preferencial pela sua velocidade superior (10.000 ficheiros em 0.8s vs 45.2s no 
 
 **Justificacao:**
 
-- MCP e o protocolo aberto (criado pela Anthropic em Novembro 2024) que padroniza a integracao entre LLMs e fontes de
-  dados/ferramentas externas
+- MCP e o protocolo aberto (criado pela Anthropic em Novembro 2024) que padroniza a integracao entre LLMs e fontes de dados/ferramentas externas
 - Em Marco de 2026, MCP e production-ready com mais de 1.000 servidores comunitarios
 - OpenAI, Google, e outros adoptaram o protocolo
 - Roadmap 2026 foca em enterprise readiness, audit trails, e SSO

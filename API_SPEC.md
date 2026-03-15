@@ -1,8 +1,6 @@
 # Eat Out Adviser - Especificacao da API
 
-**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - API tRPC para plataforma de recomendacao de restaurantes com
-foco em acessibilidade **Stack:** Next.js 16 + tRPC + PostgreSQL 17 + pgvector + Drizzle ORM + Better Auth + Claude API
-**Normas:** ADA, ISO 21542:2021, EAA, RGPD, WCAG 2.1 AA
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - API tRPC para plataforma de recomendacao de restaurantes com foco em acessibilidade **Stack:** Next.js 16 + tRPC + PostgreSQL 17 + pgvector + Drizzle ORM + Better Auth + Claude API **Normas:** ADA, ISO 21542:2021, EAA, RGPD, WCAG 2.1 AA
 
 ---
 
@@ -144,8 +142,7 @@ throw new TRPCError({
 
 ### 1.5 Versionamento
 
-A API nao utiliza versionamento explicito no path (ex.: `/v1/`). O tRPC garante compatibilidade via type-safety entre
-cliente e servidor. Alteracoes incompativeis sao geridas por:
+A API nao utiliza versionamento explicito no path (ex.: `/v1/`). O tRPC garante compatibilidade via type-safety entre cliente e servidor. Alteracoes incompativeis sao geridas por:
 
 - Deprecacao gradual de campos (manter campo antigo + adicionar novo)
 - Feature flags para funcionalidades experimentais
@@ -345,8 +342,7 @@ export const multilingualText = z.record(z.enum(["pt", "en", "es", "fr"]), z.str
 
 ### 3.1 Auth Router
 
-O router `auth` actua como camada fina sobre o Better Auth, expondo operacoes de autenticacao via tRPC para manter a
-consistencia da API.
+O router `auth` actua como camada fina sobre o Better Auth, expondo operacoes de autenticacao via tRPC para manter a consistencia da API.
 
 #### `auth.register`
 
@@ -363,11 +359,7 @@ const registerInput = z.discriminatedUnion("method", [
   z.object({
     method: z.literal("credentials"),
     email: z.string().email("Email invalido."),
-    password: z
-      .string()
-      .min(8, "Password deve ter no minimo 8 caracteres.")
-      .regex(/[A-Z]/, "Deve conter pelo menos uma letra maiuscula.")
-      .regex(/[0-9]/, "Deve conter pelo menos um numero."),
+    password: z.string().min(8, "Password deve ter no minimo 8 caracteres.").regex(/[A-Z]/, "Deve conter pelo menos uma letra maiuscula.").regex(/[0-9]/, "Deve conter pelo menos um numero."),
     name: z.string().min(2).max(255),
     locale: z.enum(["pt", "en", "es", "fr"]).default("pt"),
   }),
@@ -546,11 +538,7 @@ const requestPasswordResetOutput = z.object({
 ```typescript
 const resetPasswordInput = z.object({
   token: z.string(),
-  newPassword: z
-    .string()
-    .min(8)
-    .regex(/[A-Z]/, "Deve conter pelo menos uma letra maiuscula.")
-    .regex(/[0-9]/, "Deve conter pelo menos um numero."),
+  newPassword: z.string().min(8).regex(/[A-Z]/, "Deve conter pelo menos uma letra maiuscula.").regex(/[0-9]/, "Deve conter pelo menos um numero."),
 });
 
 const resetPasswordOutput = z.object({ success: z.literal(true) });
@@ -624,16 +612,7 @@ const updateProfileOutput = userProfileOutput;
 ```typescript
 const userAccessibilityProfileOutput = z.object({
   id: z.string().uuid(),
-  mobilityType: z.enum([
-    "electric_wheelchair",
-    "manual_wheelchair",
-    "walker",
-    "crutches",
-    "cane",
-    "scooter",
-    "none",
-    "other",
-  ]),
+  mobilityType: z.enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "cane", "scooter", "none", "other"]),
   wheelchairWidth: z.number().nullable(),
   wheelchairLength: z.number().nullable(),
   turningRadiusNeeded: z.number().nullable(),
@@ -665,9 +644,7 @@ const userAccessibilityProfileOutput = z.object({
 
 ```typescript
 const updateAccessibilityProfileInput = z.object({
-  mobilityType: z
-    .enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "cane", "scooter", "none", "other"])
-    .optional(),
+  mobilityType: z.enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "cane", "scooter", "none", "other"]).optional(),
   wheelchairWidth: z.number().min(0).max(200).nullable().optional(),
   wheelchairLength: z.number().min(0).max(300).nullable().optional(),
   turningRadiusNeeded: z.number().min(0).max(500).nullable().optional(),
@@ -904,9 +881,7 @@ const listInput = z.object({
       minDoorWidthCm: z.number().optional(),
     })
     .optional(),
-  sortBy: z
-    .enum(["name", "averageAccessibilityScore", "averageFoodRating", "reviewCount", "distance", "createdAt"])
-    .default("averageAccessibilityScore"),
+  sortBy: z.enum(["name", "averageAccessibilityScore", "averageFoodRating", "reviewCount", "distance", "createdAt"]).default("averageAccessibilityScore"),
   sortOrder,
 });
 
@@ -1266,21 +1241,7 @@ const createReviewInput = z.object({
   visitDate: z.date(),
   accessibilityComment: z.string().max(2000).optional(),
   // Tags de acessibilidade observadas durante a visita
-  accessibilityTags: z
-    .array(
-      z.enum([
-        "step_free_entrance",
-        "ramp_available",
-        "accessible_bathroom",
-        "wide_doors",
-        "accessible_parking",
-        "lowered_counter",
-        "braille_menu",
-        "staff_assistance",
-        "accessible_tables",
-      ]),
-    )
-    .optional(),
+  accessibilityTags: z.array(z.enum(["step_free_entrance", "ramp_available", "accessible_bathroom", "wide_doors", "accessible_parking", "lowered_counter", "braille_menu", "staff_assistance", "accessible_tables"])).optional(),
 });
 
 const reviewOutput = z.object({
@@ -1461,24 +1422,7 @@ const dishOutput = z.object({
   price: z.number().positive(),
   currency: z.string().length(3).default("EUR"),
   category: z.string(),
-  allergens: z.array(
-    z.enum([
-      "gluten",
-      "crustaceans",
-      "eggs",
-      "fish",
-      "peanuts",
-      "soy",
-      "milk",
-      "nuts",
-      "celery",
-      "mustard",
-      "sesame",
-      "sulphites",
-      "lupin",
-      "molluscs",
-    ]),
-  ),
+  allergens: z.array(z.enum(["gluten", "crustaceans", "eggs", "fish", "peanuts", "soy", "milk", "nuts", "celery", "mustard", "sesame", "sulphites", "lupin", "molluscs"])),
   dietaryFlags: z.array(z.enum(["vegetarian", "vegan", "gluten_free", "lactose_free", "halal", "kosher", "organic"])),
   isAvailable: z.boolean(),
   photoUrl: z.string().url().nullable(),
@@ -1552,29 +1496,8 @@ const addDishInput = z.object({
   price: z.number().positive().multipleOf(0.01),
   currency: z.string().length(3).default("EUR"),
   category: z.string().min(1).max(100),
-  allergens: z
-    .array(
-      z.enum([
-        "gluten",
-        "crustaceans",
-        "eggs",
-        "fish",
-        "peanuts",
-        "soy",
-        "milk",
-        "nuts",
-        "celery",
-        "mustard",
-        "sesame",
-        "sulphites",
-        "lupin",
-        "molluscs",
-      ]),
-    )
-    .default([]),
-  dietaryFlags: z
-    .array(z.enum(["vegetarian", "vegan", "gluten_free", "lactose_free", "halal", "kosher", "organic"]))
-    .default([]),
+  allergens: z.array(z.enum(["gluten", "crustaceans", "eggs", "fish", "peanuts", "soy", "milk", "nuts", "celery", "mustard", "sesame", "sulphites", "lupin", "molluscs"])).default([]),
+  dietaryFlags: z.array(z.enum(["vegetarian", "vegan", "gluten_free", "lactose_free", "halal", "kosher", "organic"])).default([]),
   photoUrl: z.string().url().optional(),
 });
 // Output: dishOutput
@@ -1770,9 +1693,7 @@ const updateStatusOutput = reservationOutput;
 
 ### 3.7 AI Router
 
-Todos os procedimentos do router de IA utilizam a API Claude (Sonnet 4.6 para a maioria, Opus 4.5 para tarefas que
-requerem raciocinio avancado) e estao sujeitos ao rate limit mais restritivo (10 pedidos/minuto) devido ao custo e
-latencia das chamadas de IA.
+Todos os procedimentos do router de IA utilizam a API Claude (Sonnet 4.6 para a maioria, Opus 4.5 para tarefas que requerem raciocinio avancado) e estao sujeitos ao rate limit mais restritivo (10 pedidos/minuto) devido ao custo e latencia das chamadas de IA.
 
 #### `ai.search`
 
@@ -1986,9 +1907,7 @@ const generateReportInput = z.object({
   restaurantId: z.string().uuid(),
   includePhotos: z.boolean().default(true),
   includeReviews: z.boolean().default(true),
-  targetProfile: z
-    .enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "visual_impairment", "general"])
-    .default("general"),
+  targetProfile: z.enum(["electric_wheelchair", "manual_wheelchair", "walker", "crutches", "visual_impairment", "general"]).default("general"),
   locale: z.enum(["pt", "en", "es", "fr"]).default("pt"),
 });
 
@@ -2427,8 +2346,7 @@ const systemStatsOutput = z.object({
 
 ## 4. Eventos em Tempo Real (SSE)
 
-A aplicacao utiliza Server-Sent Events (SSE) via Next.js Route Handlers para comunicacao unidireccional
-servidor-para-cliente. O tRPC suporta subscriptions que mapeiam para SSE.
+A aplicacao utiliza Server-Sent Events (SSE) via Next.js Route Handlers para comunicacao unidireccional servidor-para-cliente. O tRPC suporta subscriptions que mapeiam para SSE.
 
 ### 4.1 Canais de Eventos
 
@@ -2466,9 +2384,7 @@ export async function GET(request: Request, { params }: { params: { channel: str
   const stream = new ReadableStream({
     start(controller) {
       const send = (event: SSEEvent<unknown>) => {
-        controller.enqueue(
-          encoder.encode(`event: ${event.type}\nid: ${event.id}\ndata: ${JSON.stringify(event.data)}\n\n`),
-        );
+        controller.enqueue(encoder.encode(`event: ${event.type}\nid: ${event.id}\ndata: ${JSON.stringify(event.data)}\n\n`));
       };
 
       // Subscrever ao canal via pub/sub interno
@@ -2641,8 +2557,7 @@ function verifyWebhookSignature(payload: string, signature: string, secret: stri
 
 ### 7.1 Endpoints RGPD
 
-O Regulamento Geral de Proteccao de Dados (RGPD) exige que os utilizadores possam exercer os seus direitos. Estes
-endpoints estao incluidos no router `user`.
+O Regulamento Geral de Proteccao de Dados (RGPD) exige que os utilizadores possam exercer os seus direitos. Estes endpoints estao incluidos no router `user`.
 
 #### `user.exportData` (RGPD Art. 20 - Portabilidade)
 
@@ -2718,8 +2633,7 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(self)" },
   {
     key: "Content-Security-Policy",
-    value:
-      "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
+    value: "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
   },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
 ];
@@ -2747,18 +2661,7 @@ Todas as operacoes que alteram dados de acessibilidade sao registadas na tabela 
 const auditLogEntry = z.object({
   id: z.string().uuid(),
   userId: z.string().uuid(),
-  action: z.enum([
-    "accessibility_profile_updated",
-    "verification_report_submitted",
-    "verification_report_approved",
-    "restaurant_created",
-    "restaurant_updated",
-    "review_moderated",
-    "photo_moderated",
-    "account_deleted",
-    "data_exported",
-    "ownership_claimed",
-  ]),
+  action: z.enum(["accessibility_profile_updated", "verification_report_submitted", "verification_report_approved", "restaurant_created", "restaurant_updated", "review_moderated", "photo_moderated", "account_deleted", "data_exported", "ownership_claimed"]),
   entityType: z.string(),
   entityId: z.string().uuid(),
   changes: z.record(

@@ -1,8 +1,6 @@
 # Eat Out Adviser - Especificacao de Funcionalidades de IA
 
-**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Sistema de recomendacao de restaurantes com foco em
-acessibilidade **Stack de IA:** Claude Sonnet 4.6 / Opus 4.5, Claude Vision, nomic-embed-text-v2 (Ollama), pgvector,
-RAG, MCP
+**Data:** Marco de 2026 **Projecto:** Eat Out Adviser - Sistema de recomendacao de restaurantes com foco em acessibilidade **Stack de IA:** Claude Sonnet 4.6 / Opus 4.5, Claude Vision, nomic-embed-text-v2 (Ollama), pgvector, RAG, MCP
 
 ---
 
@@ -25,9 +23,7 @@ RAG, MCP
 
 ### 1.1 Descricao e Historia de Utilizador
 
-**Como** utilizador de cadeira de rodas electrica, **quero** escrever uma frase como "restaurante italiano acessivel no
-centro do Porto com estacionamento" **para que** o sistema compreenda as minhas necessidades e devolva resultados
-relevantes ordenados por compatibilidade com o meu perfil de acessibilidade.
+**Como** utilizador de cadeira de rodas electrica, **quero** escrever uma frase como "restaurante italiano acessivel no centro do Porto com estacionamento" **para que** o sistema compreenda as minhas necessidades e devolva resultados relevantes ordenados por compatibilidade com o meu perfil de acessibilidade.
 
 ### 1.2 Abordagem Tecnica
 
@@ -84,8 +80,7 @@ Contexto: A aplicacao serve a area metropolitana do Porto, Portugal. Os utilizad
 // Ferramenta 1: Interpretacao da query pelo Claude
 const parseSearchQueryTool = {
   name: "parse_search_query",
-  description:
-    "Analisa a query do utilizador e extrai intencao e entidades estruturadas para pesquisa de restaurantes.",
+  description: "Analisa a query do utilizador e extrai intencao e entidades estruturadas para pesquisa de restaurantes.",
   input_schema: {
     type: "object",
     properties: {
@@ -221,8 +216,7 @@ const rerankResultsTool = {
 ```typescript
 const embedding = await ollama.embeddings({
   model: "nomic-embed-text-v2",
-  prompt:
-    "search_query: restaurante cozinha italiana centro historico Porto acessivel cadeira rodas estacionamento adaptado",
+  prompt: "search_query: restaurante cozinha italiana centro historico Porto acessivel cadeira rodas estacionamento adaptado",
 });
 // Resultado: vector de 768 dimensoes
 ```
@@ -261,8 +255,7 @@ LIMIT 20;
 
 **Etapa 4 - Re-ranking pelo Claude:**
 
-O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perfil do utilizador (cadeira de rodas
-electrica, largura 68cm) e reordena, produzindo:
+O Claude recebe os 20 resultados com dados de acessibilidade detalhados e o perfil do utilizador (cadeira de rodas electrica, largura 68cm) e reordena, produzindo:
 
 ```json
 {
@@ -321,12 +314,9 @@ electrica, largura 68cm) e reordena, produzindo:
 
 ### 2.1 Descricao e Historia de Utilizador
 
-**Como** utilizador que avalia restaurantes, **quero** tirar fotografias da entrada, interior e casa de banho de um
-restaurante **para que** o sistema analise automaticamente as condicoes de acessibilidade e preencha os dados
-estruturados sem esforco manual.
+**Como** utilizador que avalia restaurantes, **quero** tirar fotografias da entrada, interior e casa de banho de um restaurante **para que** o sistema analise automaticamente as condicoes de acessibilidade e preencha os dados estruturados sem esforco manual.
 
-**Como** dono de restaurante, **quero** submeter fotografias do meu espaco **para que** o sistema gere um perfil de
-acessibilidade inicial automaticamente.
+**Como** dono de restaurante, **quero** submeter fotografias do meu espaco **para que** o sistema gere um perfil de acessibilidade inicial automaticamente.
 
 ### 2.2 Abordagem Tecnica
 
@@ -444,11 +434,7 @@ REGRAS CRITICAS:
         "notes": "Calcada portuguesa pode dificultar circulacao de cadeiras de rodas"
       }
     ],
-    "recommendations": [
-      "Confirmar presencialmente se existe rampa alternativa",
-      "Verificar se ambas as folhas da porta abrem",
-      "Perguntar ao restaurante sobre rampa portatil"
-    ],
+    "recommendations": ["Confirmar presencialmente se existe rampa alternativa", "Verificar se ambas as folhas da porta abrem", "Perguntar ao restaurante sobre rampa portatil"],
     "disclaimer": "Analise automatica baseada em fotografia. Medidas sao estimativas com margem de erro indicada. Recomenda-se verificacao presencial para confirmacao."
   }
 }
@@ -468,8 +454,7 @@ REGRAS CRITICAS:
 
 - Se multiplas fotos mostram a mesma caracteristica, usar a analise com maior confianca
 - Se analises contradizem, marcar para revisao humana e usar a mais conservadora (pior cenario de acessibilidade)
-- Confianca agregada = max(confianca_foto1, confianca_foto2, ...) \* 0.95 (penalizacao ligeira por possivel
-  inconsistencia)
+- Confianca agregada = max(confianca_foto1, confianca_foto2, ...) \* 0.95 (penalizacao ligeira por possivel inconsistencia)
 
 ### 2.6 Integracao com AccessibilityProfile
 
@@ -518,13 +503,11 @@ async function updateProfileFromVision(restaurantId: string, findings: VisionFin
 ### 2.7 Limitacoes e Disclaimers
 
 - Estimativas de medidas tem margem de erro de 10-20% dependendo da qualidade e angulo da fotografia
-- Nao consegue avaliar: peso de portas, forca necessaria para abrir, textura do piso ao toque, iluminacao real (vs.
-  flash da foto)
+- Nao consegue avaliar: peso de portas, forca necessaria para abrir, textura do piso ao toque, iluminacao real (vs. flash da foto)
 - Fotografias com pouca luz, desfocadas ou com obstrucoes significativas produzem resultados de baixa confianca
 - A analise nao substitui verificacao presencial -- serve como triagem inicial
 - Claude Vision pode nao identificar correctamente rampas portateis ou equipamentos de acessibilidade nao standard
-- **Sempre apresentar disclaimer ao utilizador:** "Esta analise e automatica e baseada em fotografias. Recomendamos
-  contactar o restaurante para confirmar condicoes de acessibilidade."
+- **Sempre apresentar disclaimer ao utilizador:** "Esta analise e automatica e baseada em fotografias. Recomendamos contactar o restaurante para confirmar condicoes de acessibilidade."
 
 ### 2.8 Consideracoes de Performance (N5105 16GB)
 
@@ -546,9 +529,7 @@ async function updateProfileFromVision(restaurantId: string, findings: VisionFin
 
 ### 3.1 Descricao e Historia de Utilizador
 
-**Como** utilizador com cadeira de rodas electrica, **quero** que o sistema ordene restaurantes pela compatibilidade com
-as minhas necessidades especificas **para que** veja primeiro os restaurantes onde tenho garantia de conseguir entrar,
-sentar-me e usar a casa de banho.
+**Como** utilizador com cadeira de rodas electrica, **quero** que o sistema ordene restaurantes pela compatibilidade com as minhas necessidades especificas **para que** veja primeiro os restaurantes onde tenho garantia de conseguir entrar, sentar-me e usar a casa de banho.
 
 ### 3.2 Abordagem Tecnica - Algoritmo de Scoring
 
@@ -764,8 +745,7 @@ Os pesos base nunca sao completamente ignorados para evitar overfitting a compor
 
 ### 4.1 Descricao e Historia de Utilizador
 
-**Como** utilizador que pesquisa restaurantes, **quero** ver um resumo claro de multiplas avaliacoes **para que**
-compreenda rapidamente a experiencia geral de acessibilidade sem ler dezenas de reviews individuais.
+**Como** utilizador que pesquisa restaurantes, **quero** ver um resumo claro de multiplas avaliacoes **para que** compreenda rapidamente a experiencia geral de acessibilidade sem ler dezenas de reviews individuais.
 
 ### 4.2 Abordagem Tecnica
 
@@ -876,19 +856,13 @@ REGRAS:
       "summary": "O servico e descrito como rapido e prestavel. O staff demonstra boa vontade em ajudar clientes com mobilidade reduzida. O restaurante mostrou capacidade de resposta a feedback, melhorando condicoes de acessibilidade apos criticas.",
       "sentiment": "positivo",
       "sentiment_score": 0.78,
-      "highlights": [
-        "\"Staff muito prestavel, ajudaram-me com a porta\" - Ana M.",
-        "\"Voltei depois de lerem a minha avaliacao anterior e melhoraram bastante\" - Joao P."
-      ]
+      "highlights": ["\"Staff muito prestavel, ajudaram-me com a porta\" - Ana M.", "\"Voltei depois de lerem a minha avaliacao anterior e melhoraram bastante\" - Joao P."]
     },
     "accessibility": {
       "summary": "A acessibilidade melhorou recentemente: a entrada principal tem agora rampa, embora anteriormente so existisse acesso lateral. A casa de banho adaptada existe mas houve relato de estar ocupada com material de limpeza. O interior tem bom espacamento entre mesas e piso antiderrapante. Falta corrimao na entrada.",
       "sentiment": "positivo",
       "sentiment_score": 0.65,
-      "highlights": [
-        "\"Rampa na entrada principal agora\" - Joao P.",
-        "\"A casa de banho adaptada estava ocupada por material de limpeza\" - Marta S."
-      ],
+      "highlights": ["\"Rampa na entrada principal agora\" - Joao P.", "\"A casa de banho adaptada estava ocupada por material de limpeza\" - Marta S."],
       "by_mobility_type": {
         "cadeira_electrica": {
           "review_count": 2,
@@ -906,9 +880,7 @@ REGRAS:
           "key_issues": ["falta corrimao na entrada"]
         }
       },
-      "contradictions": [
-        "A experiencia de entrada variou: utilizadores anteriores (antes de Marco 2026) reportaram degrau, enquanto avaliacoes recentes confirmam presenca de rampa"
-      ]
+      "contradictions": ["A experiencia de entrada variou: utilizadores anteriores (antes de Marco 2026) reportaram degrau, enquanto avaliacoes recentes confirmam presenca de rampa"]
     }
   }
 }
@@ -978,9 +950,7 @@ async function updateSummaryIncrementally(restaurantId: string, newReviews: Revi
 
 ### 5.1 Descricao e Historia de Utilizador
 
-**Como** utilizador com cadeira de rodas electrica, **quero** perguntar ao assistente "Consigo entrar no restaurante X
-com a minha cadeira?" **para que** receba uma resposta personalizada baseada nas dimensoes da minha cadeira e nos dados
-reais do restaurante.
+**Como** utilizador com cadeira de rodas electrica, **quero** perguntar ao assistente "Consigo entrar no restaurante X com a minha cadeira?" **para que** receba uma resposta personalizada baseada nas dimensoes da minha cadeira e nos dados reais do restaurante.
 
 ### 5.2 Abordagem Tecnica
 
@@ -1037,8 +1007,7 @@ REGRAS FUNDAMENTAIS:
 const assistantTools = [
   {
     name: "get_restaurant_profile",
-    description:
-      "Obtem o perfil completo de um restaurante incluindo dados de acessibilidade, localizacao, horarios e contactos.",
+    description: "Obtem o perfil completo de um restaurante incluindo dados de acessibilidade, localizacao, horarios e contactos.",
     input_schema: {
       type: "object",
       properties: {
@@ -1049,8 +1018,7 @@ const assistantTools = [
   },
   {
     name: "get_accessibility_details",
-    description:
-      "Obtem dados detalhados de acessibilidade de um restaurante: entrada, interior, casa de banho, estacionamento.",
+    description: "Obtem dados detalhados de acessibilidade de um restaurante: entrada, interior, casa de banho, estacionamento.",
     input_schema: {
       type: "object",
       properties: {
@@ -1065,8 +1033,7 @@ const assistantTools = [
   },
   {
     name: "get_user_reviews",
-    description:
-      "Obtem avaliacoes de utilizadores sobre um restaurante, opcionalmente filtradas por tipo de mobilidade.",
+    description: "Obtem avaliacoes de utilizadores sobre um restaurante, opcionalmente filtradas por tipo de mobilidade.",
     input_schema: {
       type: "object",
       properties: {
@@ -1105,8 +1072,7 @@ const assistantTools = [
   },
   {
     name: "get_route_accessibility",
-    description:
-      "Avalia a acessibilidade do percurso entre o utilizador e o restaurante (passeios, declives, transportes).",
+    description: "Avalia a acessibilidade do percurso entre o utilizador e o restaurante (passeios, declives, transportes).",
     input_schema: {
       type: "object",
       properties: {
@@ -1188,9 +1154,7 @@ Quer que procure restaurantes acessiveis proximos do Cantinho do Porto?
 
 ### 6.1 Descricao e Historia de Utilizador
 
-**Como** utilizador com alergias alimentares e mobilidade reduzida, **quero** que o sistema analise a ementa de um
-restaurante a partir de uma foto ou ficheiro digital **para que** identifique alergenos, opcoes dieteticas e avalie a
-acessibilidade do formato da ementa.
+**Como** utilizador com alergias alimentares e mobilidade reduzida, **quero** que o sistema analise a ementa de um restaurante a partir de uma foto ou ficheiro digital **para que** identifique alergenos, opcoes dieteticas e avalie a acessibilidade do formato da ementa.
 
 ### 6.2 Abordagem Tecnica
 
@@ -1276,10 +1240,7 @@ Escreve em portugues de Portugal. Se uma secao nao e visivel/legivel, indica "na
       "digital_version_available": "desconhecido",
       "qr_code_visible": false,
       "overall_readability_score": 0.75,
-      "recommendations": [
-        "Adicionar declaracao completa de alergenos segundo regulamento UE 1169/2011",
-        "Disponibilizar versao digital via QR code para leitores de ecra"
-      ]
+      "recommendations": ["Adicionar declaracao completa de alergenos segundo regulamento UE 1169/2011", "Disponibilizar versao digital via QR code para leitores de ecra"]
     }
   }
 }
@@ -1306,8 +1267,7 @@ Escreve em portugues de Portugal. Se uma secao nao e visivel/legivel, indica "na
 
 ### 7.1 Descricao e Historia de Utilizador
 
-**Como** dono de restaurante, **quero** receber um relatorio detalhado de acessibilidade do meu espaco **para que**
-compreenda o que esta bem, o que precisa de melhorar e qual o custo estimado das melhorias.
+**Como** dono de restaurante, **quero** receber um relatorio detalhado de acessibilidade do meu espaco **para que** compreenda o que esta bem, o que precisa de melhorar e qual o custo estimado das melhorias.
 
 ### 7.2 Abordagem Tecnica
 
@@ -1425,8 +1385,7 @@ RECOMENDACOES PRIORITARIAS:
 
 ### 8.1 Descricao e Historia de Utilizador
 
-**Como** turista estrangeiro com mobilidade reduzida a visitar o Porto, **quero** ler avaliacoes de acessibilidade na
-minha lingua **para que** consiga planear refeicoes em restaurantes acessiveis sem barreira linguistica.
+**Como** turista estrangeiro com mobilidade reduzida a visitar o Porto, **quero** ler avaliacoes de acessibilidade na minha lingua **para que** consiga planear refeicoes em restaurantes acessiveis sem barreira linguistica.
 
 ### 8.2 Abordagem Tecnica
 
@@ -1541,9 +1500,7 @@ async function getTranslation(contentHash: string, targetLang: string, originalC
 
 ### 9.1 Descricao e Historia de Utilizador
 
-**Como** developer a trabalhar no ecossistema Eat Out Adviser, **quero** um servidor MCP que exponha as funcionalidades
-da aplicacao **para que** ferramentas de IA (Claude Code, Claude Desktop, outros agentes) possam interagir directamente
-com os dados de acessibilidade.
+**Como** developer a trabalhar no ecossistema Eat Out Adviser, **quero** um servidor MCP que exponha as funcionalidades da aplicacao **para que** ferramentas de IA (Claude Code, Claude Desktop, outros agentes) possam interagir directamente com os dados de acessibilidade.
 
 ### 9.2 Abordagem Tecnica
 
@@ -1863,9 +1820,7 @@ await server.connect(transport);
 
 ### 10.1 Descricao e Historia de Utilizador
 
-**Como** sistema de backend, **preciso** de um pipeline robusto para gerar, armazenar e actualizar embeddings de
-restaurantes, perfis de utilizador e avaliacoes **para que** a busca semantica e o sistema de matching funcionem com
-alta qualidade.
+**Como** sistema de backend, **preciso** de um pipeline robusto para gerar, armazenar e actualizar embeddings de restaurantes, perfis de utilizador e avaliacoes **para que** a busca semantica e o sistema de matching funcionem com alta qualidade.
 
 ### 10.2 Abordagem Tecnica
 
@@ -1895,15 +1850,7 @@ Actualizacao incremental quando dados mudam
 ```typescript
 function buildRestaurantEmbeddingText(restaurant: Restaurant): string {
   // Prefixo especifico para busca (recomendado pelo nomic-embed-text-v2)
-  return (
-    `search_document: ${restaurant.name}. ${restaurant.description}. ` +
-    `Cozinha ${restaurant.cuisine}. ` +
-    `Localizado em ${restaurant.address}, ${restaurant.area}. ` +
-    `Acessibilidade: ${restaurant.accessibility_summary}. ` +
-    `Caracteristicas: ${restaurant.features.join(", ")}. ` +
-    `Preco: ${restaurant.price_range}. ` +
-    (restaurant.specialties ? `Especialidades: ${restaurant.specialties.join(", ")}.` : "")
-  );
+  return `search_document: ${restaurant.name}. ${restaurant.description}. ` + `Cozinha ${restaurant.cuisine}. ` + `Localizado em ${restaurant.address}, ${restaurant.area}. ` + `Acessibilidade: ${restaurant.accessibility_summary}. ` + `Caracteristicas: ${restaurant.features.join(", ")}. ` + `Preco: ${restaurant.price_range}. ` + (restaurant.specialties ? `Especialidades: ${restaurant.specialties.join(", ")}.` : "");
 }
 ```
 
@@ -1911,12 +1858,7 @@ function buildRestaurantEmbeddingText(restaurant: Restaurant): string {
 
 ```typescript
 function buildReviewEmbeddingText(review: Review): string {
-  return (
-    `search_document: Avaliacao de ${review.restaurant_name}. ` +
-    `${review.text}. ` +
-    `Classificacao: ${review.rating}/5. ` +
-    (review.mobility_type ? `Avaliador com ${review.mobility_type}.` : "")
-  );
+  return `search_document: Avaliacao de ${review.restaurant_name}. ` + `${review.text}. ` + `Classificacao: ${review.rating}/5. ` + (review.mobility_type ? `Avaliador com ${review.mobility_type}.` : "");
 }
 ```
 
@@ -1924,13 +1866,7 @@ function buildReviewEmbeddingText(review: Review): string {
 
 ```typescript
 function buildUserProfileEmbeddingText(user: UserProfile): string {
-  return (
-    `search_document: Utilizador com ${user.mobility_type}. ` +
-    `Necessita: ${user.accessibility_needs.join(", ")}. ` +
-    `Preferencias: cozinha ${user.preferred_cuisines.join(", ")}. ` +
-    `Zona: ${user.preferred_area}. ` +
-    `Restricoes alimentares: ${user.dietary_restrictions.join(", ") || "nenhuma"}.`
-  );
+  return `search_document: Utilizador com ${user.mobility_type}. ` + `Necessita: ${user.accessibility_needs.join(", ")}. ` + `Preferencias: cozinha ${user.preferred_cuisines.join(", ")}. ` + `Zona: ${user.preferred_area}. ` + `Restricoes alimentares: ${user.dietary_restrictions.join(", ") || "nenhuma"}.`;
 }
 ```
 
@@ -2141,9 +2077,7 @@ async function batchUpdateRestaurantEmbeddings(): Promise<void> {
 | Pipeline de embeddings        | $0 (Ollama local) | -                   | $0.00           |
 | **Total estimado**            |                   |                     | **~$53.35/mes** |
 
-**Nota:** Estes valores assumem utilizacao do Claude Sonnet 4.6 para a maioria das tarefas. Utilizacao de Opus 4.5 para
-tarefas criticas (relatorios detalhados, analise complexa) pode aumentar os custos em 3-5x para essas funcionalidades
-especificas. Com optimizacoes de cache e rate limiting, o custo real pode ser 30-50% inferior ao estimado.
+**Nota:** Estes valores assumem utilizacao do Claude Sonnet 4.6 para a maioria das tarefas. Utilizacao de Opus 4.5 para tarefas criticas (relatorios detalhados, analise complexa) pode aumentar os custos em 3-5x para essas funcionalidades especificas. Com optimizacoes de cache e rate limiting, o custo real pode ser 30-50% inferior ao estimado.
 
 ---
 

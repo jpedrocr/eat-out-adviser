@@ -1,8 +1,6 @@
 # Eat Out Adviser - Sistema de Classificacao de Acessibilidade
 
-**Versao:** 1.0 **Data:** 15 de Marco de 2026 **Estado:** Especificacao detalhada para implementacao **Normas de
-referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), DL 163/2006
-(Portugal)
+**Versao:** 1.0 **Data:** 15 de Marco de 2026 **Estado:** Especificacao detalhada para implementacao **Normas de referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (European Accessibility Act), DL 163/2006 (Portugal)
 
 ---
 
@@ -26,45 +24,30 @@ referencia:** ADA (Americans with Disabilities Act), ISO 21542:2021, EAA (Europe
 
 ### 1.1 Porque e necessaria uma classificacao de acessibilidade dedicada
 
-Uma classificacao generica de restaurante (comida, servico, ambiente) responde a pergunta "vale a pena ir?". Para uma
-pessoa com mobilidade reduzida, a pergunta anterior e mais fundamental: "consigo entrar?". E depois de entrar: "consigo
-sentar-me?", "consigo usar a casa de banho?", "consigo sair com dignidade?".
+Uma classificacao generica de restaurante (comida, servico, ambiente) responde a pergunta "vale a pena ir?". Para uma pessoa com mobilidade reduzida, a pergunta anterior e mais fundamental: "consigo entrar?". E depois de entrar: "consigo sentar-me?", "consigo usar a casa de banho?", "consigo sair com dignidade?".
 
-Estas perguntas nao tem resposta possivel num sistema de 1 a 5 estrelas. Uma estrela em "acessibilidade" pode significar
-coisas radicalmente diferentes: para quem usa bengala, pode significar "ha dois degraus na entrada"; para quem usa
-cadeira de rodas electrica, pode significar "a porta tem 70 cm e nao consigo passar".
+Estas perguntas nao tem resposta possivel num sistema de 1 a 5 estrelas. Uma estrela em "acessibilidade" pode significar coisas radicalmente diferentes: para quem usa bengala, pode significar "ha dois degraus na entrada"; para quem usa cadeira de rodas electrica, pode significar "a porta tem 70 cm e nao consigo passar".
 
 ### 1.2 Insuficiencia das classificacoes genericas
 
 Os sistemas de classificacao genericos falham na acessibilidade por quatro razoes:
 
-1. **Subjectividade nao-comparavel:** Uma estrela de acessibilidade atribuida por um utilizador de muletas nao e
-   equivalente a mesma estrela atribuida por um utilizador de cadeira electrica. As barreiras fisicas sao objectivas e
-   mensuraveis, e o impacto depende do perfil de cada pessoa.
+1. **Subjectividade nao-comparavel:** Uma estrela de acessibilidade atribuida por um utilizador de muletas nao e equivalente a mesma estrela atribuida por um utilizador de cadeira electrica. As barreiras fisicas sao objectivas e mensuraveis, e o impacto depende do perfil de cada pessoa.
 
-2. **Ausencia de granularidade:** Saber que um restaurante tem "3 estrelas em acessibilidade" nao responde a nenhuma das
-   perguntas praticas: a porta tem largura suficiente para a minha cadeira? Ha espaco de rotacao na casa de banho? A
-   rampa tem inclinacao aceitavel?
+2. **Ausencia de granularidade:** Saber que um restaurante tem "3 estrelas em acessibilidade" nao responde a nenhuma das perguntas praticas: a porta tem largura suficiente para a minha cadeira? Ha espaco de rotacao na casa de banho? A rampa tem inclinacao aceitavel?
 
-3. **Falsa equivalencia:** Num sistema generico, um restaurante com entrada perfeita mas casa de banho inacessivel pode
-   ter a mesma classificacao que um restaurante com entrada dificil mas casa de banho adaptada. Para o utilizador, estas
-   situacoes sao fundamentalmente diferentes.
+3. **Falsa equivalencia:** Num sistema generico, um restaurante com entrada perfeita mas casa de banho inacessivel pode ter a mesma classificacao que um restaurante com entrada dificil mas casa de banho adaptada. Para o utilizador, estas situacoes sao fundamentalmente diferentes.
 
-4. **Impossibilidade de personalizacao:** O que e acessivel para uma pessoa pode nao ser para outra. Uma porta de 75 cm
-   e suficiente para a maioria das cadeiras manuais (largura tipica 55-65 cm) mas insuficiente para muitas cadeiras
-   electricas (largura tipica 60-75 cm).
+4. **Impossibilidade de personalizacao:** O que e acessivel para uma pessoa pode nao ser para outra. Uma porta de 75 cm e suficiente para a maioria das cadeiras manuais (largura tipica 55-65 cm) mas insuficiente para muitas cadeiras electricas (largura tipica 60-75 cm).
 
 ### 1.3 Importancia da personalizacao
 
-O Eat Out Adviser parte do principio de que acessibilidade nao e binaria nem universal. E um espectro que depende da
-interseccao entre as caracteristicas fisicas do espaco e as necessidades especificas de cada utilizador.
+O Eat Out Adviser parte do principio de que acessibilidade nao e binaria nem universal. E um espectro que depende da interseccao entre as caracteristicas fisicas do espaco e as necessidades especificas de cada utilizador.
 
 Por isso, o sistema calcula duas pontuacoes distintas:
 
-- **Pontuacao global:** Avaliacao objectiva do espaco contra limiares normativos (util para proprietarios, verificadores
-  e comparacao geral)
-- **Pontuacao personalizada:** Avaliacao especifica para o perfil do utilizador (dimensoes do equipamento de mobilidade,
-  capacidades fisicas, preferencias)
+- **Pontuacao global:** Avaliacao objectiva do espaco contra limiares normativos (util para proprietarios, verificadores e comparacao geral)
+- **Pontuacao personalizada:** Avaliacao especifica para o perfil do utilizador (dimensoes do equipamento de mobilidade, capacidades fisicas, preferencias)
 
 ### 1.4 Enquadramento normativo
 
@@ -84,8 +67,7 @@ O sistema de pontuacao esta alinhado com as seguintes normas internacionais:
 
 ### 2.1 Categorias e Pesos Base
 
-A pontuacao global e uma media ponderada de seis categorias. Os pesos base reflectem a importancia relativa de cada zona
-para a acessibilidade geral do espaco.
+A pontuacao global e uma media ponderada de seis categorias. Os pesos base reflectem a importancia relativa de cada zona para a acessibilidade geral do espaco.
 
 | Categoria                   | Peso Base | Justificacao                                                               |
 | --------------------------- | --------- | -------------------------------------------------------------------------- |
@@ -98,14 +80,11 @@ para a acessibilidade geral do espaco.
 
 ### 2.2 Pesos por Tipo de Mobilidade
 
-Os pesos base sao ajustados consoante o tipo de mobilidade do utilizador. Cada perfil tem necessidades distintas que
-alteram a importancia relativa de cada categoria.
+Os pesos base sao ajustados consoante o tipo de mobilidade do utilizador. Cada perfil tem necessidades distintas que alteram a importancia relativa de cada categoria.
 
 #### Cadeira de rodas electrica
 
-A cadeira electrica e mais larga (60-75 cm), mais comprida (100-120 cm), mais pesada (80-150 kg com utilizador) e
-necessita de maior raio de viragem (150-180 cm). Estacionamento ganha peso porque o utilizador tipicamente conduz
-veiculo adaptado.
+A cadeira electrica e mais larga (60-75 cm), mais comprida (100-120 cm), mais pesada (80-150 kg com utilizador) e necessita de maior raio de viragem (150-180 cm). Estacionamento ganha peso porque o utilizador tipicamente conduz veiculo adaptado.
 
 | Categoria      | Peso | Delta vs base | Justificacao                         |
 | -------------- | ---- | ------------- | ------------------------------------ |
@@ -118,8 +97,7 @@ veiculo adaptado.
 
 #### Cadeira de rodas manual
 
-A cadeira manual e mais estreita (55-65 cm), mais leve e mais manobravel. O utilizador pode necessitar de ajuda para
-subir rampas ingremes.
+A cadeira manual e mais estreita (55-65 cm), mais leve e mais manobravel. O utilizador pode necessitar de ajuda para subir rampas ingremes.
 
 | Categoria      | Peso | Delta vs base | Justificacao                                |
 | -------------- | ---- | ------------- | ------------------------------------------- |
@@ -132,8 +110,7 @@ subir rampas ingremes.
 
 #### Scooter motorizado
 
-O scooter e longo (120-140 cm), com raio de viragem grande (200+ cm) e dificil de manobrar em espacos apertados.
-Estacionamento e muito relevante.
+O scooter e longo (120-140 cm), com raio de viragem grande (200+ cm) e dificil de manobrar em espacos apertados. Estacionamento e muito relevante.
 
 | Categoria      | Peso | Delta vs base | Justificacao                                |
 | -------------- | ---- | ------------- | ------------------------------------------- |
@@ -146,8 +123,7 @@ Estacionamento e muito relevante.
 
 #### Andarilho / Rollator
 
-O andarilho e compacto (55-65 cm de largura) mas o utilizador tem mobilidade limitada e necessita de superficies
-estaveis. Risco de queda e uma preocupacao central.
+O andarilho e compacto (55-65 cm de largura) mas o utilizador tem mobilidade limitada e necessita de superficies estaveis. Risco de queda e uma preocupacao central.
 
 | Categoria      | Peso | Delta vs base | Justificacao                                             |
 | -------------- | ---- | ------------- | -------------------------------------------------------- |
@@ -160,8 +136,7 @@ estaveis. Risco de queda e uma preocupacao central.
 
 #### Muletas
 
-O utilizador com muletas necessita de superficies estaveis, pouco desnivel e apoios. Largura de passagem e menos
-critica, mas degraus e superficies irregulares sao problemticos.
+O utilizador com muletas necessita de superficies estaveis, pouco desnivel e apoios. Largura de passagem e menos critica, mas degraus e superficies irregulares sao problemticos.
 
 | Categoria      | Peso | Delta vs base | Justificacao                               |
 | -------------- | ---- | ------------- | ------------------------------------------ |
@@ -202,8 +177,7 @@ Perfil generalista com sensibilidade a degraus, distancias e conforto.
 
 ## 3. Algoritmo de Calculo Detalhado
 
-Cada categoria e calculada como soma ponderada de subcritrios, cada um avaliado numa escala de 0 a 100. O score da
-categoria e a soma dos subcritrios multiplicados pelo seu peso relativo dentro da categoria.
+Cada categoria e calculada como soma ponderada de subcritrios, cada um avaliado numa escala de 0 a 100. O score da categoria e a soma dos subcritrios multiplicados pelo seu peso relativo dentro da categoria.
 
 ### 3.1 Entrada (Entrance Score)
 
@@ -232,8 +206,7 @@ Avaliacao booleana da existencia de uma entrada acessivel (ao nivel do chao ou c
 
 #### `door_width_score(door_width_cm, wheelchair_width_cm)`
 
-A largura de referencia depende do perfil do utilizador. Para a pontuacao global, usa-se a largura de referencia
-normativa de 80 cm (ISO 21542).
+A largura de referencia depende do perfil do utilizador. Para a pontuacao global, usa-se a largura de referencia normativa de 80 cm (ISO 21542).
 
 | Condicao                       | Pontuacao | Justificacao                            |
 | ------------------------------ | --------- | --------------------------------------- |
@@ -401,8 +374,7 @@ Para a pontuacao global, usa-se como referencia a largura normativa de 90 cm (AD
 | `uneven`      | 15   | +10 se `is_non_slip`                         |
 | `other`       | 40   | +15 se `is_non_slip`                         |
 
-Nota: Alcatifa (carpet) recebe pontuacao mais baixa porque dificulta a locomocao de cadeiras de rodas, apesar de ser
-anti-derrapante.
+Nota: Alcatifa (carpet) recebe pontuacao mais baixa porque dificulta a locomocao de cadeiras de rodas, apesar de ser anti-derrapante.
 
 #### `turning_space_score(turning_space_cm, user_turning_radius_cm)`
 
@@ -653,8 +625,7 @@ Score = min(100, soma dos formatos disponiveis). Se nenhum formato acessivel est
 | Anel de inducao   | `has_hearing_loop = true`                | 50                |
 | Espelho acessivel | `has_mirror_at_wheelchair_height = true` | 50                |
 
-Score total = soma (maximo 100). Nota: campo `has_hearing_loop` utilizado como proxy para investimento em comunicacao
-acessivel.
+Score total = soma (maximo 100). Nota: campo `has_hearing_loop` utilizado como proxy para investimento em comunicacao acessivel.
 
 ---
 
@@ -668,8 +639,7 @@ pontuacao_personalizada = Sigma(score_categoria_i x peso_personalizado_i) x mult
 
 Onde:
 
-- `score_categoria_i` = pontuacao da categoria i recalculada com as dimensoes do utilizador (ex: `door_width_score` usa
-  `user.wheelchair_width` em vez de 80 cm)
+- `score_categoria_i` = pontuacao da categoria i recalculada com as dimensoes do utilizador (ex: `door_width_score` usa `user.wheelchair_width` em vez de 80 cm)
 - `peso_personalizado_i` = peso da categoria ajustado ao tipo de mobilidade do utilizador (tabela da seccao 2.2)
 - `multiplicador_verificacao` = factor de confianca baseado na fonte dos dados e idade da verificacao
 
@@ -698,8 +668,7 @@ Antes de calcular a pontuacao, o sistema verifica condicoes eliminatorias que ge
 | `bathroom_turning_space < user.turning_radius_needed - 20`        | "Espaco de rotacao na casa de banho insuficiente"        |
 | `corridor_min_width < user.wheelchair_width + 10`                 | "Corredores demasiado estreitos"                         |
 
-Os avisos criticos sao apresentados independentemente da pontuacao numrica. Um restaurante pode ter pontuacao
-personalizada de 70/100 mas com um aviso critico na casa de banho.
+Os avisos criticos sao apresentados independentemente da pontuacao numrica. Um restaurante pode ter pontuacao personalizada de 70/100 mas com um aviso critico na casa de banho.
 
 ---
 
@@ -716,8 +685,7 @@ personalizada de 70/100 mas com um aviso critico na casa de banho.
 
 ### 5.2 Semaforo por categoria
 
-Cada categoria tem o seu proprio semaforo, utilizando os mesmos limiares. Isto permite ao utilizador identificar
-rapidamente onde estao os problemas.
+Cada categoria tem o seu proprio semaforo, utilizando os mesmos limiares. Isto permite ao utilizador identificar rapidamente onde estao os problemas.
 
 Exemplo de apresentacao:
 
@@ -732,8 +700,7 @@ Comunicacao:   [AMARELO] 55/100
 
 ### 5.3 Semaforo personalizado
 
-O semaforo personalizado usa a pontuacao personalizada e pode diferir do semaforo global. Um restaurante pode ser VERDE
-globalmente mas AMARELO ou VERMELHO para um perfil especifico.
+O semaforo personalizado usa a pontuacao personalizada e pode diferir do semaforo global. Um restaurante pode ser VERDE globalmente mas AMARELO ou VERMELHO para um perfil especifico.
 
 ### 5.4 Condicao "Cinzento" (dados insuficientes)
 
@@ -821,8 +788,7 @@ decay_factor = max(0.50, 1.0 - (months_since_verification / 48))
 effective_multiplier = base_multiplier × decay_factor
 ```
 
-Onde `months_since_verification` e o numero de meses desde a ultima verificacao e `base_multiplier` e o multiplicador da
-fonte de dados. O factor minimo e 0.50 (nunca desce abaixo de metade).
+Onde `months_since_verification` e o numero de meses desde a ultima verificacao e `base_multiplier` e o multiplicador da fonte de dados. O factor minimo e 0.50 (nunca desce abaixo de metade).
 
 ### 7.3 Eventos que activam re-verificacao
 
@@ -854,20 +820,16 @@ fonte de dados. O factor minimo e 0.50 (nunca desce abaixo de metade).
 **Dados do restaurante (Restaurante Exemplo):**
 
 - Entrada: porta 85 cm, sem degraus, entrada ao nivel, superficie lisa, boa iluminacao
-- Estacionamento: 1 lugar acessivel, 30 m de distancia, largura 300 cm, com corredor de acesso 130 cm, asfalto, sem zona
-  de largada
-- Interior: corredor 110 cm, piso em madeira anti-derrapante, espaco de rotacao 155 cm, balcao 95 cm sem balcao
-  rebaixado, sem degraus interiores
+- Estacionamento: 1 lugar acessivel, 30 m de distancia, largura 300 cm, com corredor de acesso 130 cm, asfalto, sem zona de largada
+- Interior: corredor 110 cm, piso em madeira anti-derrapante, espaco de rotacao 155 cm, balcao 95 cm sem balcao rebaixado, sem degraus interiores
 - Mesas: 3 mesas acessiveis, altura 75 cm, espaco livre 70 cm, espaco entre mesas 100 cm, com esplanada acessivel
-- Casa de banho: acessivel, porta 75 cm, espaco de rotacao 140 cm, barras de apoio do lado esquerdo, sanita 45 cm,
-  lavatorio 84 cm com espaco para joelhos, torneira de alavanca, mesmo piso, sem botao de emergencia
+- Casa de banho: acessivel, porta 75 cm, espaco de rotacao 140 cm, barras de apoio do lado esquerdo, sanita 45 cm, lavatorio 84 cm com espaco para joelhos, torneira de alavanca, mesmo piso, sem botao de emergencia
 - Comunicacao: menu digital, menu com fotografias, pessoal nao formado, sem anel de inducao
 - Verificacao: `community_verified`, ultima verificacao ha 4 meses
 
 ### 8.2 Calculo passo a passo
 
-**Pesos para cadeira electrica (seccao 2.2):** Entrada=0.25, Estacionamento=0.10, Interior=0.20, Mesas=0.10, WC=0.30,
-Comunicacao=0.05
+**Pesos para cadeira electrica (seccao 2.2):** Entrada=0.25, Estacionamento=0.10, Interior=0.20, Mesas=0.10, WC=0.30, Comunicacao=0.05
 
 #### Categoria: Entrada
 
@@ -975,8 +937,7 @@ score = entrance(100.0)  × 0.25 +
      = 80.275
 ```
 
-Multiplicador de verificacao: `community_verified` = 0.90, ha 4 meses = decay 1.00. Multiplicador efectivo = 0.90 x 1.00
-= 0.90.
+Multiplicador de verificacao: `community_verified` = 0.90, ha 4 meses = decay 1.00. Multiplicador efectivo = 0.90 x 1.00 = 0.90.
 
 ```plaintext
 pontuacao_final = 80.275 × 0.90 = 72.25
@@ -1104,16 +1065,7 @@ Componentes:
 ```typescript
 // src/lib/accessibility-scoring/types.ts
 
-export type MobilityType =
-  | "electric_wheelchair"
-  | "manual_wheelchair"
-  | "scooter"
-  | "walker"
-  | "crutches"
-  | "cane"
-  | "reduced_mobility"
-  | "none"
-  | "other";
+export type MobilityType = "electric_wheelchair" | "manual_wheelchair" | "scooter" | "walker" | "crutches" | "cane" | "reduced_mobility" | "none" | "other";
 
 export type VerificationStatus = "unverified" | "community_verified" | "professionally_verified";
 
@@ -1263,19 +1215,7 @@ export interface Warning {
 ```typescript
 // src/lib/accessibility-scoring/scoring.ts
 
-import type {
-  CategoryScore,
-  CategoryWeights,
-  DataSource,
-  MobilityType,
-  OverallScore,
-  RestaurantAccessibilityProfile,
-  ScoringCategory,
-  SubcriterionScore,
-  TrafficLight,
-  UserProfile,
-  Warning,
-} from "./types";
+import type { CategoryScore, CategoryWeights, DataSource, MobilityType, OverallScore, RestaurantAccessibilityProfile, ScoringCategory, SubcriterionScore, TrafficLight, UserProfile, Warning } from "./types";
 
 // --- Constantes ---
 
@@ -1380,12 +1320,7 @@ export function getTrafficLight(score: number): TrafficLight {
 
 // --- Multiplicador de verificacao ---
 
-export function applyVerificationMultiplier(
-  score: number,
-  verificationStatus: VerificationStatus,
-  dataSource: DataSource,
-  lastVerifiedAt?: Date,
-): number {
+export function applyVerificationMultiplier(score: number, verificationStatus: VerificationStatus, dataSource: DataSource, lastVerifiedAt?: Date): number {
   // Determinar multiplicador base
   let key: string;
   if (verificationStatus === "professionally_verified") {
@@ -1441,11 +1376,7 @@ function turningSpaceScore(space: number | undefined, refSpace: number): number 
 
 // --- Calculo por categoria ---
 
-export function calculateCategoryScore(
-  category: ScoringCategory,
-  restaurant: RestaurantAccessibilityProfile,
-  userProfile?: UserProfile,
-): CategoryScore {
+export function calculateCategoryScore(category: ScoringCategory, restaurant: RestaurantAccessibilityProfile, userProfile?: UserProfile): CategoryScore {
   switch (category) {
     case "entrance":
       return calculateEntranceScore(restaurant, userProfile);
@@ -1562,14 +1493,7 @@ function calculateEntranceScore(r: RestaurantAccessibilityProfile, user?: UserPr
   });
 
   const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
-  const filledFields = [
-    r.hasAccessibleEntrance,
-    r.entranceDoorWidth,
-    r.numberOfSteps,
-    r.exteriorSurfaceType,
-    r.hasRamp,
-    r.entranceLighting,
-  ].filter((f) => f != null).length;
+  const filledFields = [r.hasAccessibleEntrance, r.entranceDoorWidth, r.numberOfSteps, r.exteriorSurfaceType, r.hasRamp, r.entranceLighting].filter((f) => f != null).length;
 
   return {
     category: "entrance",
@@ -1668,14 +1592,7 @@ function calculateParkingScore(r: RestaurantAccessibilityProfile, _user?: UserPr
   });
 
   const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
-  const filledFields = [
-    r.hasAccessibleParking,
-    r.parkingDistanceToEntrance,
-    r.parkingSpaceWidth,
-    r.hasAdjacentAccessAisle,
-    r.parkingSurfaceType,
-    r.hasDropoffArea,
-  ].filter((f) => f != null).length;
+  const filledFields = [r.hasAccessibleParking, r.parkingDistanceToEntrance, r.parkingSpaceWidth, r.hasAdjacentAccessAisle, r.parkingSurfaceType, r.hasDropoffArea].filter((f) => f != null).length;
 
   return {
     category: "parking",
@@ -1779,19 +1696,9 @@ function calculateInteriorScore(r: RestaurantAccessibilityProfile, user?: UserPr
   // elevator_score
   let elevatorScore = 100; // default: piso unico
   if (r.hasInteriorSteps && (r.interiorStepCount ?? 0) >= 2) {
-    if (
-      r.hasElevator &&
-      (r.elevatorDoorWidth ?? 0) >= 91 &&
-      (r.elevatorCabinWidth ?? 0) >= 170 &&
-      (r.elevatorCabinDepth ?? 0) >= 137
-    ) {
+    if (r.hasElevator && (r.elevatorDoorWidth ?? 0) >= 91 && (r.elevatorCabinWidth ?? 0) >= 170 && (r.elevatorCabinDepth ?? 0) >= 137) {
       elevatorScore = 100;
-    } else if (
-      r.hasElevator &&
-      (r.elevatorDoorWidth ?? 0) >= 80 &&
-      (r.elevatorCabinWidth ?? 0) >= 140 &&
-      (r.elevatorCabinDepth ?? 0) >= 120
-    ) {
+    } else if (r.hasElevator && (r.elevatorDoorWidth ?? 0) >= 80 && (r.elevatorCabinWidth ?? 0) >= 140 && (r.elevatorCabinDepth ?? 0) >= 120) {
       elevatorScore = 70;
     } else if (r.hasElevator) {
       elevatorScore = 40;
@@ -1807,14 +1714,7 @@ function calculateInteriorScore(r: RestaurantAccessibilityProfile, user?: UserPr
   });
 
   const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
-  const filledFields = [
-    r.corridorMinWidth,
-    r.floorType,
-    r.turningSpaceAvailable,
-    r.counterHeight,
-    r.hasInteriorSteps,
-    r.hasElevator,
-  ].filter((f) => f != null).length;
+  const filledFields = [r.corridorMinWidth, r.floorType, r.turningSpaceAvailable, r.counterHeight, r.hasInteriorSteps, r.hasElevator].filter((f) => f != null).length;
 
   return {
     category: "interior",
@@ -1846,10 +1746,8 @@ function calculateSeatingScore(r: RestaurantAccessibilityProfile, _user?: UserPr
   let heightScore = 0;
   if (r.tableHeight != null) {
     if (r.tableHeight >= 71 && r.tableHeight <= 86) heightScore = 100;
-    else if ((r.tableHeight >= 68 && r.tableHeight < 71) || (r.tableHeight > 86 && r.tableHeight <= 90))
-      heightScore = 70;
-    else if ((r.tableHeight >= 65 && r.tableHeight < 68) || (r.tableHeight > 90 && r.tableHeight <= 95))
-      heightScore = 40;
+    else if ((r.tableHeight >= 68 && r.tableHeight < 71) || (r.tableHeight > 86 && r.tableHeight <= 90)) heightScore = 70;
+    else if ((r.tableHeight >= 65 && r.tableHeight < 68) || (r.tableHeight > 90 && r.tableHeight <= 95)) heightScore = 40;
     else heightScore = 10;
   }
   subcriteria.push({
@@ -1904,13 +1802,7 @@ function calculateSeatingScore(r: RestaurantAccessibilityProfile, _user?: UserPr
   });
 
   const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
-  const filledFields = [
-    r.hasAccessibleTables,
-    r.tableHeight,
-    r.underTableClearance,
-    r.spaceBetweenTables,
-    r.hasOutdoorSeating,
-  ].filter((f) => f != null).length;
+  const filledFields = [r.hasAccessibleTables, r.tableHeight, r.underTableClearance, r.spaceBetweenTables, r.hasOutdoorSeating].filter((f) => f != null).length;
 
   return {
     category: "seating",
@@ -1959,11 +1851,7 @@ function calculateBathroomScore(r: RestaurantAccessibilityProfile, user?: UserPr
   let grabScore = 0;
   if (r.hasGrabBars) {
     if (r.grabBarSide === "both") grabScore = 100;
-    else if (
-      user?.bathroomTransferSide &&
-      user.bathroomTransferSide !== "not_applicable" &&
-      r.grabBarSide === user.bathroomTransferSide
-    ) {
+    else if (user?.bathroomTransferSide && user.bathroomTransferSide !== "not_applicable" && r.grabBarSide === user.bathroomTransferSide) {
       grabScore = 90;
     } else if (user?.bathroomTransferSide && user.bathroomTransferSide !== "not_applicable") {
       grabScore = 50;
@@ -1982,16 +1870,8 @@ function calculateBathroomScore(r: RestaurantAccessibilityProfile, user?: UserPr
   let toiletScore = 0;
   if (r.toiletSeatHeight != null) {
     if (r.toiletSeatHeight >= 43 && r.toiletSeatHeight <= 48) toiletScore = 100;
-    else if (
-      (r.toiletSeatHeight >= 40 && r.toiletSeatHeight < 43) ||
-      (r.toiletSeatHeight > 48 && r.toiletSeatHeight <= 52)
-    )
-      toiletScore = 70;
-    else if (
-      (r.toiletSeatHeight >= 36 && r.toiletSeatHeight < 40) ||
-      (r.toiletSeatHeight > 52 && r.toiletSeatHeight <= 56)
-    )
-      toiletScore = 40;
+    else if ((r.toiletSeatHeight >= 40 && r.toiletSeatHeight < 43) || (r.toiletSeatHeight > 48 && r.toiletSeatHeight <= 52)) toiletScore = 70;
+    else if ((r.toiletSeatHeight >= 36 && r.toiletSeatHeight < 40) || (r.toiletSeatHeight > 52 && r.toiletSeatHeight <= 56)) toiletScore = 40;
     else toiletScore = 10;
   }
   subcriteria.push({
@@ -2041,16 +1921,7 @@ function calculateBathroomScore(r: RestaurantAccessibilityProfile, user?: UserPr
   });
 
   const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
-  const filledFields = [
-    r.hasAccessibleBathroom,
-    r.bathroomDoorWidth,
-    r.bathroomTurningSpace,
-    r.hasGrabBars,
-    r.toiletSeatHeight,
-    r.sinkHeight,
-    r.bathroomOnSameFloor,
-    r.hasEmergencyButton,
-  ].filter((f) => f != null).length;
+  const filledFields = [r.hasAccessibleBathroom, r.bathroomDoorWidth, r.bathroomTurningSpace, r.hasGrabBars, r.toiletSeatHeight, r.sinkHeight, r.bathroomOnSameFloor, r.hasEmergencyButton].filter((f) => f != null).length;
 
   return {
     category: "bathroom",
@@ -2099,9 +1970,7 @@ function calculateCommunicationScore(r: RestaurantAccessibilityProfile): Categor
   });
 
   const totalScore = subcriteria.reduce((sum, s) => sum + s.score * s.weight, 0);
-  const filledFields = [r.hasDigitalMenu ?? r.hasQRCodeMenu, r.staffTrainedInAccessibility, r.hasHearingLoop].filter(
-    (f) => f != null,
-  ).length;
+  const filledFields = [r.hasDigitalMenu ?? r.hasQRCodeMenu, r.staffTrainedInAccessibility, r.hasHearingLoop].filter((f) => f != null).length;
 
   return {
     category: "communication",
@@ -2114,11 +1983,7 @@ function calculateCommunicationScore(r: RestaurantAccessibilityProfile): Categor
 
 // --- Pontuacao global ---
 
-export function calculateOverallScore(
-  restaurant: RestaurantAccessibilityProfile,
-  userProfile?: UserProfile,
-  customWeights?: CategoryWeights,
-): OverallScore {
+export function calculateOverallScore(restaurant: RestaurantAccessibilityProfile, userProfile?: UserProfile, customWeights?: CategoryWeights): OverallScore {
   const categories: ScoringCategory[] = ["entrance", "parking", "interior", "seating", "bathroom", "communication"];
 
   // Calcular score por categoria
@@ -2134,16 +1999,13 @@ export function calculateOverallScore(
     communication: 0.05,
   };
 
-  const personalizedWeights =
-    customWeights ?? (userProfile ? getPersonalizedWeights(userProfile.mobilityType) : baseWeights);
+  const personalizedWeights = customWeights ?? (userProfile ? getPersonalizedWeights(userProfile.mobilityType) : baseWeights);
 
   // Pontuacao global (pesos base)
   const globalScore = categoryScores.reduce((sum, cs) => sum + cs.score * baseWeights[cs.category], 0);
 
   // Pontuacao personalizada (pesos ajustados)
-  const personalizedRawScore = userProfile
-    ? categoryScores.reduce((sum, cs) => sum + cs.score * personalizedWeights[cs.category], 0)
-    : undefined;
+  const personalizedRawScore = userProfile ? categoryScores.reduce((sum, cs) => sum + cs.score * personalizedWeights[cs.category], 0) : undefined;
 
   // Multiplicador de verificacao
   const verificationMultiplier = applyVerificationMultiplier(
@@ -2160,14 +2022,7 @@ export function calculateOverallScore(
   const warnings = generateWarnings(restaurant, userProfile);
 
   // Gerar explicacao
-  const explanation = generateScoreExplanation(
-    categoryScores,
-    userProfile,
-    finalGlobal,
-    finalPersonalized,
-    verificationMultiplier,
-    warnings,
-  );
+  const explanation = generateScoreExplanation(categoryScores, userProfile, finalGlobal, finalPersonalized, verificationMultiplier, warnings);
 
   return {
     globalScore: Math.round(finalGlobal * 100) / 100,
@@ -2232,11 +2087,7 @@ function generateWarnings(r: RestaurantAccessibilityProfile, user?: UserProfile)
   }
 
   // Espaco de rotacao na WC
-  if (
-    r.bathroomTurningSpace != null &&
-    user.turningRadiusNeeded != null &&
-    r.bathroomTurningSpace < user.turningRadiusNeeded - 20
-  ) {
+  if (r.bathroomTurningSpace != null && user.turningRadiusNeeded != null && r.bathroomTurningSpace < user.turningRadiusNeeded - 20) {
     warnings.push({
       severity: "critical",
       category: "bathroom",
@@ -2244,11 +2095,7 @@ function generateWarnings(r: RestaurantAccessibilityProfile, user?: UserProfile)
       actualValue: r.bathroomTurningSpace,
       requiredValue: user.turningRadiusNeeded,
     });
-  } else if (
-    r.bathroomTurningSpace != null &&
-    user.turningRadiusNeeded != null &&
-    r.bathroomTurningSpace < user.turningRadiusNeeded
-  ) {
+  } else if (r.bathroomTurningSpace != null && user.turningRadiusNeeded != null && r.bathroomTurningSpace < user.turningRadiusNeeded) {
     warnings.push({
       severity: "warning",
       category: "bathroom",
@@ -2274,26 +2121,15 @@ function generateWarnings(r: RestaurantAccessibilityProfile, user?: UserProfile)
 
 // --- Explicacao textual ---
 
-export function generateScoreExplanation(
-  categoryScores: CategoryScore[],
-  userProfile?: UserProfile,
-  globalScore?: number,
-  personalizedScore?: number,
-  verificationMultiplier?: number,
-  warnings?: Warning[],
-): string {
+export function generateScoreExplanation(categoryScores: CategoryScore[], userProfile?: UserProfile, globalScore?: number, personalizedScore?: number, verificationMultiplier?: number, warnings?: Warning[]): string {
   const lines: string[] = [];
 
   // Resumo
   if (globalScore != null) {
-    lines.push(
-      `Pontuacao global: ${Math.round(globalScore)}/100 (${getTrafficLightLabel(getTrafficLight(globalScore))}).`,
-    );
+    lines.push(`Pontuacao global: ${Math.round(globalScore)}/100 (${getTrafficLightLabel(getTrafficLight(globalScore))}).`);
   }
   if (personalizedScore != null && userProfile) {
-    lines.push(
-      `Pontuacao personalizada para ${getMobilityLabel(userProfile.mobilityType)}: ${Math.round(personalizedScore)}/100 (${getTrafficLightLabel(getTrafficLight(personalizedScore))}).`,
-    );
+    lines.push(`Pontuacao personalizada para ${getMobilityLabel(userProfile.mobilityType)}: ${Math.round(personalizedScore)}/100 (${getTrafficLightLabel(getTrafficLight(personalizedScore))}).`);
   }
 
   // Detalhe por categoria
@@ -2321,9 +2157,7 @@ export function generateScoreExplanation(
   // Verificacao
   if (verificationMultiplier != null && verificationMultiplier < 1.0) {
     lines.push("");
-    lines.push(
-      `Nota: Pontuacao ajustada por factor de confianca de ${(verificationMultiplier * 100).toFixed(0)}% (dados nao verificados profissionalmente ou com alguma antiguidade).`,
-    );
+    lines.push(`Nota: Pontuacao ajustada por factor de confianca de ${(verificationMultiplier * 100).toFixed(0)}% (dados nao verificados profissionalmente ou com alguma antiguidade).`);
   }
 
   return lines.join("\n");
@@ -2371,15 +2205,10 @@ function getMobilityLabel(mt: MobilityType): string {
 
 ## Notas Finais
 
-Este documento define a especificacao completa do sistema de classificacao de acessibilidade do Eat Out Adviser. A
-implementacao deve:
+Este documento define a especificacao completa do sistema de classificacao de acessibilidade do Eat Out Adviser. A implementacao deve:
 
-1. **Manter consistencia** com o modelo de dados definido em `DATA_MODEL.md`, nomeadamente as tabelas
-   `accessibility_profiles` e `accessibility_scores`
-2. **Recalcular scores** sempre que o `AccessibilityProfile` de um restaurante e actualizado (via trigger ou job
-   agendado)
-3. **Pre-calcular scores** para os perfis de mobilidade mais comuns e armazenar no campo `weighted_score_for_profile` da
-   tabela `accessibility_scores`
-4. **Calcular scores personalizados** em tempo real para perfis com dimensoes especificas (largura de cadeira, raio de
-   viragem)
+1. **Manter consistencia** com o modelo de dados definido em `DATA_MODEL.md`, nomeadamente as tabelas `accessibility_profiles` e `accessibility_scores`
+2. **Recalcular scores** sempre que o `AccessibilityProfile` de um restaurante e actualizado (via trigger ou job agendado)
+3. **Pre-calcular scores** para os perfis de mobilidade mais comuns e armazenar no campo `weighted_score_for_profile` da tabela `accessibility_scores`
+4. **Calcular scores personalizados** em tempo real para perfis com dimensoes especificas (largura de cadeira, raio de viragem)
 5. **Registar no AuditLog** qualquer alteracao em dados que afecte o calculo de scores

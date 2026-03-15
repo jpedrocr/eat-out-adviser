@@ -27,45 +27,27 @@
 
 ### 1.1 Visao
 
-O Eat Out Adviser e uma plataforma open source centrada em acessibilidade fisica que permite a pessoas com mobilidade
-reduzida encontrar, avaliar e reservar restaurantes com confianca. A aplicacao combina dados estruturados de
-acessibilidade, verificacao comunitaria e inteligencia artificial para oferecer recomendacoes verdadeiramente
-personalizadas ao perfil de cada utilizador.
+O Eat Out Adviser e uma plataforma open source centrada em acessibilidade fisica que permite a pessoas com mobilidade reduzida encontrar, avaliar e reservar restaurantes com confianca. A aplicacao combina dados estruturados de acessibilidade, verificacao comunitaria e inteligencia artificial para oferecer recomendacoes verdadeiramente personalizadas ao perfil de cada utilizador.
 
 ### 1.2 Missao
 
-Eliminar a incerteza e a ansiedade que uma pessoa com mobilidade reduzida sente ao escolher um restaurante,
-transformando informacao fragmentada e inconsistente numa experiencia de decisao simples, fiavel e dignificante.
+Eliminar a incerteza e a ansiedade que uma pessoa com mobilidade reduzida sente ao escolher um restaurante, transformando informacao fragmentada e inconsistente numa experiencia de decisao simples, fiavel e dignificante.
 
 ### 1.3 Declaracao do Problema
 
-**Problema pessoal:** Escolher um restaurante para almoco ou jantar -- uma actividade social trivial para a maioria das
-pessoas -- e um exercicio de frustracao e risco para quem utiliza cadeira de rodas electrica. A pergunta fundamental nao
-e "a comida e boa?" mas sim "consigo entrar?". E quando se consegue entrar, surgem dezenas de outras questoes: ha espaco
-para a cadeira entre as mesas? A casa de banho e acessivel? A mesa tem altura compativel?
+**Problema pessoal:** Escolher um restaurante para almoco ou jantar -- uma actividade social trivial para a maioria das pessoas -- e um exercicio de frustracao e risco para quem utiliza cadeira de rodas electrica. A pergunta fundamental nao e "a comida e boa?" mas sim "consigo entrar?". E quando se consegue entrar, surgem dezenas de outras questoes: ha espaco para a cadeira entre as mesas? A casa de banho e acessivel? A mesa tem altura compativel?
 
-**Problema de mercado:** Apesar de existirem 15+ plataformas internacionais com dados de acessibilidade (AccessNow,
-Wheelmap, AXS Map, Euan's Guide, entre outras), nenhuma oferece cobertura forte em Portugal. Os dados estao fragmentados
-entre multiplas plataformas, a verificacao e inconsistente, e nenhuma integra inteligencia artificial com dados
-estruturados de acessibilidade para oferecer recomendacoes personalizadas ao perfil especifico de cada utilizador.
+**Problema de mercado:** Apesar de existirem 15+ plataformas internacionais com dados de acessibilidade (AccessNow, Wheelmap, AXS Map, Euan's Guide, entre outras), nenhuma oferece cobertura forte em Portugal. Os dados estao fragmentados entre multiplas plataformas, a verificacao e inconsistente, e nenhuma integra inteligencia artificial com dados estruturados de acessibilidade para oferecer recomendacoes personalizadas ao perfil especifico de cada utilizador.
 
-**Problema regulamentar:** O European Accessibility Act (EAA), em vigor desde Junho de 2025, obriga prestadores de
-servicos na UE a cumprir requisitos de acessibilidade. Apesar disso, nao existe uma ferramenta que ajude restaurantes em
-Portugal a compreender, medir e comunicar o seu nivel de acessibilidade de forma estruturada.
+**Problema regulamentar:** O European Accessibility Act (EAA), em vigor desde Junho de 2025, obriga prestadores de servicos na UE a cumprir requisitos de acessibilidade. Apesar disso, nao existe uma ferramenta que ajude restaurantes em Portugal a compreender, medir e comunicar o seu nivel de acessibilidade de forma estruturada.
 
 ### 1.4 Porque Este Projecto Importa
 
-**Dimensao pessoal:** O Eat Out Adviser nasce de uma necessidade real e quotidiana. O seu criador, utilizador de cadeira
-de rodas electrica na area do Grande Porto, vive diariamente o problema que a aplicacao pretende resolver. Cada refeicao
-fora de casa envolve telefonemas prvios, pesquisas no Google sem resultados fiveis, e a aceitacao de que muitos
-restaurantes simplesmente nao sao uma opcao.
+**Dimensao pessoal:** O Eat Out Adviser nasce de uma necessidade real e quotidiana. O seu criador, utilizador de cadeira de rodas electrica na area do Grande Porto, vive diariamente o problema que a aplicacao pretende resolver. Cada refeicao fora de casa envolve telefonemas prvios, pesquisas no Google sem resultados fiveis, e a aceitacao de que muitos restaurantes simplesmente nao sao uma opcao.
 
-**Dimensao de mercado:** O turismo acessivel representa um mercado de 58 mil milhoes de dolares por ano a nivel global.
-Em Portugal, o turismo e um pilar da economia, mas a oferta de informacao de acessibilidade e praticamente inexistente.
-O Eat Out Adviser posiciona-se como a primeira plataforma dedicada com forte cobertura no territorio portugues.
+**Dimensao de mercado:** O turismo acessivel representa um mercado de 58 mil milhoes de dolares por ano a nivel global. Em Portugal, o turismo e um pilar da economia, mas a oferta de informacao de acessibilidade e praticamente inexistente. O Eat Out Adviser posiciona-se como a primeira plataforma dedicada com forte cobertura no territorio portugues.
 
-**Dimensao social:** Uma em cada seis pessoas na UE vive com alguma forma de deficiencia. A acessibilidade nao e uma
-funcionalidade de nicho -- e um requisito basico de cidadania e inclusao social.
+**Dimensao social:** Uma em cada seis pessoas na UE vive com alguma forma de deficiencia. A acessibilidade nao e uma funcionalidade de nicho -- e um requisito basico de cidadania e inclusao social.
 
 ---
 
@@ -102,16 +84,12 @@ Foram analisadas 15 plataformas que abordam acessibilidade fisica, divididas em 
 
 ### 2.2 Lacunas de Mercado Identificadas
 
-1. **Fragmentacao de dados:** Cada plataforma mantem a sua propria base de dados isolada; nao existe fonte unica e
-   fiavel
+1. **Fragmentacao de dados:** Cada plataforma mantem a sua propria base de dados isolada; nao existe fonte unica e fiavel
 2. **Cobertura fraca em Portugal:** Nenhuma plataforma dedicada tem cobertura significativa do territorio portugues
 3. **Verificacao inconsistente:** A maioria depende exclusivamente de crowdsourcing sem verificacao profissional
-4. **Foco predominante em cadeiras de rodas manuais:** Cadeiras de rodas electricas (mais largas, mais pesadas, raio de
-   viragem maior) sao sub-representadas
-5. **Ausencia de personalizacao:** Nenhuma plataforma adapta a classificacao ao perfil especifico do utilizador (largura
-   da cadeira, tolerancia a degraus, raio de viragem)
-6. **Sem integracao de IA avancada:** Apenas a AccessNow utiliza IA, e limitada a resumos -- nenhuma plataforma usa IA
-   para matching personalizado, analise de fotografias ou recomendacoes contextuais
+4. **Foco predominante em cadeiras de rodas manuais:** Cadeiras de rodas electricas (mais largas, mais pesadas, raio de viragem maior) sao sub-representadas
+5. **Ausencia de personalizacao:** Nenhuma plataforma adapta a classificacao ao perfil especifico do utilizador (largura da cadeira, tolerancia a degraus, raio de viragem)
+6. **Sem integracao de IA avancada:** Apenas a AccessNow utiliza IA, e limitada a resumos -- nenhuma plataforma usa IA para matching personalizado, analise de fotografias ou recomendacoes contextuais
 
 ### 2.3 Vantagens Competitivas do Eat Out Adviser
 
@@ -274,8 +252,7 @@ Contexto:    Organiza saidas para grupos de 4-8 pessoas, incluindo o Joao
 
 **Cenarios de uso:**
 
-- "Preciso de um restaurante para 6 pessoas no sabado, que tenha comida japonesa e onde o Joao consiga entrar e usar a
-  casa de banho"
+- "Preciso de um restaurante para 6 pessoas no sabado, que tenha comida japonesa e onde o Joao consiga entrar e usar a casa de banho"
 - Filtra por acessibilidade para cadeira de rodas electrica, selecciona 3 opcoes, partilha no grupo de WhatsApp
 
 **Requisitos criticos:**
@@ -482,8 +459,7 @@ Contexto:    Avalia acessibilidade de espacos como voluntaria; quer contribuir c
 
 #### RF-04: Pesquisa e Matching com IA
 
-**Descricao:** O utilizador pode pesquisar restaurantes usando linguagem natural ou filtros estruturados. A IA
-personaliza os resultados com base no perfil de acessibilidade do utilizador.
+**Descricao:** O utilizador pode pesquisar restaurantes usando linguagem natural ou filtros estruturados. A IA personaliza os resultados com base no perfil de acessibilidade do utilizador.
 
 **Tipos de pesquisa:**
 
@@ -509,8 +485,7 @@ personaliza os resultados com base no perfil de acessibilidade do utilizador.
 
 #### RF-05: Sistema de Avaliacoes e Classificacoes
 
-**Descricao:** Os utilizadores podem avaliar restaurantes em duas dimensoes independentes: acessibilidade e experiencia
-gastronomica.
+**Descricao:** Os utilizadores podem avaliar restaurantes em duas dimensoes independentes: acessibilidade e experiencia gastronomica.
 
 **Avaliacao de acessibilidade:**
 
@@ -898,8 +873,7 @@ Nivel 2: Verificado por auditor
 | Coolify + Traefik                  | 512 MB RAM        |
 | **Total**                          | **~5-8 GB RAM**   |
 
-**Conclusao:** Ambos os ambientes suportam confortavelmente a stack escolhida. O N5105 e o bottleneck e sera
-monitorizado; migracao para cloud e um plano de contingencia documentado.
+**Conclusao:** Ambos os ambientes suportam confortavelmente a stack escolhida. O N5105 e o bottleneck e sera monitorizado; migracao para cloud e um plano de contingencia documentado.
 
 ---
 
@@ -907,8 +881,7 @@ monitorizado; migracao para cloud e um plano de contingencia documentado.
 
 ### 6.1 Arquitectura da Pontuacao
 
-O sistema de classificacao combina uma pontuacao global numerica (0-100) com um sistema de semaforo visual e uma
-pontuacao personalizada por utilizador.
+O sistema de classificacao combina uma pontuacao global numerica (0-100) com um sistema de semaforo visual e uma pontuacao personalizada por utilizador.
 
 ```plaintext
 +------------------------------------------------------------------+
@@ -954,8 +927,7 @@ As categorias tem pesos diferenciados, reflectindo a importancia relativa para u
 
 **Peso dinamico por perfil:** Os pesos sao ajustados com base no perfil do utilizador. Exemplos:
 
-- Utilizador em cadeira de rodas electrica: Entrada sobe para 35%, Casa de Banho sobe para 25%, Estacionamento desce
-  para 5%
+- Utilizador em cadeira de rodas electrica: Entrada sobe para 35%, Casa de Banho sobe para 25%, Estacionamento desce para 5%
 - Utilizador idoso com andarilho: Entrada 25%, Interior 25%, Casa de Banho 20%, Estacionamento 15%
 - Utilizador com deficiencia visual: Comunicacao sobe para 30%, Menu sobe para 25%
 
@@ -986,8 +958,7 @@ Cada categoria e composta por sub-criterios com pontuacoes individuais.
 
 ### 6.5 Pontuacao Personalizada
 
-A pontuacao personalizada e o diferenciador principal do Eat Out Adviser. Para cada utilizador, a pontuacao e
-recalculada com base no seu perfil especifico.
+A pontuacao personalizada e o diferenciador principal do Eat Out Adviser. Para cada utilizador, a pontuacao e recalculada com base no seu perfil especifico.
 
 **Algoritmo simplificado:**
 
@@ -1051,8 +1022,7 @@ A pontuacao final e: `Pontuacao_raw * Multiplicador_confianca_medio`
 
 ### 7.1 Pesquisa em Linguagem Natural
 
-**Descricao:** O utilizador pode pesquisar restaurantes usando frases naturais em portugues ou ingles. A IA interpreta a
-intencao, extrai filtros implicitos e combina com o perfil de acessibilidade do utilizador.
+**Descricao:** O utilizador pode pesquisar restaurantes usando frases naturais em portugues ou ingles. A IA interpreta a intencao, extrai filtros implicitos e combina com o perfil de acessibilidade do utilizador.
 
 **Exemplos:**
 
@@ -1065,15 +1035,13 @@ intencao, extrai filtros implicitos e combina com o perfil de acessibilidade do 
 
 **Implementacao tecnica:**
 
-- Pipeline RAG: query do utilizador -> embedding -> busca vectorial em pgvector -> contexto enriquecido com dados
-  estruturados -> Claude API -> resposta natural
+- Pipeline RAG: query do utilizador -> embedding -> busca vectorial em pgvector -> contexto enriquecido com dados estruturados -> Claude API -> resposta natural
 - Busca hibrida: semantica (pgvector) + lexica (tsvector/tsquery do PostgreSQL)
 - Re-ranking com Claude dos top-20 resultados com base no contexto conversacional
 
 ### 7.2 Analise de Fotografias (Claude Vision)
 
-**Descricao:** A IA analisa fotografias submetidas por utilizadores ou restaurantes para extrair dados de acessibilidade
-automaticamente.
+**Descricao:** A IA analisa fotografias submetidas por utilizadores ou restaurantes para extrair dados de acessibilidade automaticamente.
 
 **Capacidades de analise:**
 
@@ -1109,22 +1077,17 @@ Utilizador confirma/corrige -> dados guardados como
 
 ### 7.3 Sumarizacao de Avaliacoes
 
-**Descricao:** A IA gera resumos automaticos das avaliacoes de um restaurante, separando aspectos de acessibilidade e
-aspectos gastronomicos.
+**Descricao:** A IA gera resumos automaticos das avaliacoes de um restaurante, separando aspectos de acessibilidade e aspectos gastronomicos.
 
 **Exemplo de resumo gerado:**
 
-> **Acessibilidade (baseado em 12 avaliacoes):** A maioria dos utilizadores de cadeira de rodas reporta boa experiencia.
-> A entrada tem rampa suave e porta larga. O interior tem espaco suficiente entre mesas. Ponto negativo: a casa de banho
-> acessivel fica no piso -1 e o elevador e pequeno.
+> **Acessibilidade (baseado em 12 avaliacoes):** A maioria dos utilizadores de cadeira de rodas reporta boa experiencia. A entrada tem rampa suave e porta larga. O interior tem espaco suficiente entre mesas. Ponto negativo: a casa de banho acessivel fica no piso -1 e o elevador e pequeno.
 >
-> **Experiencia gastronomica (baseado em 47 avaliacoes):** Elogiada a qualidade do peixe fresco e o servico atencioso.
-> Preco considerado justo para a qualidade. Tempo de espera pode ser longo ao fim-de-semana.
+> **Experiencia gastronomica (baseado em 47 avaliacoes):** Elogiada a qualidade do peixe fresco e o servico atencioso. Preco considerado justo para a qualidade. Tempo de espera pode ser longo ao fim-de-semana.
 
 ### 7.4 Recomendacoes Personalizadas
 
-**Descricao:** Sistema de recomendacao que combina perfil de acessibilidade, historico de visitas, preferencias
-gastronomicas e contexto temporal.
+**Descricao:** Sistema de recomendacao que combina perfil de acessibilidade, historico de visitas, preferencias gastronomicas e contexto temporal.
 
 **Sinais utilizados:**
 
@@ -1148,8 +1111,7 @@ gastronomicas e contexto temporal.
 
 ### 7.6 Geracao de Relatorio de Acessibilidade
 
-**Descricao:** Para restaurantes, a IA gera um relatorio completo de acessibilidade com recomendacoes de melhoria
-priorizadas por impacto e custo.
+**Descricao:** Para restaurantes, a IA gera um relatorio completo de acessibilidade com recomendacoes de melhoria priorizadas por impacto e custo.
 
 **Estrutura do relatorio:**
 
@@ -1568,8 +1530,7 @@ Utilizador: "restaurante italiano acessivel perto da Ribeira"
 
 ### 9.3 Stack Tecnica Completa
 
-Para detalhes completos sobre cada tecnologia, justificacoes e alternativas consideradas, consultar o documento
-[`TECH_STACK.md`](./TECH_STACK.md).
+Para detalhes completos sobre cada tecnologia, justificacoes e alternativas consideradas, consultar o documento [`TECH_STACK.md`](./TECH_STACK.md).
 
 **Resumo:**
 
@@ -1592,8 +1553,7 @@ Para detalhes completos sobre cada tecnologia, justificacoes e alternativas cons
 | Staging         | Docker no N5105 (Coolify) | Testes pre-producao   |
 | Producao        | Docker no N5105 (Coolify) | Utilizadores finais   |
 
-**Nota:** Staging e producao partilham o mesmo hardware inicialmente. A separacao sera feita via namespaces Docker e
-recursos alocados. Quando o volume justificar, producao migra para VPS cloud (Hetzner ARM64).
+**Nota:** Staging e producao partilham o mesmo hardware inicialmente. A separacao sera feita via namespaces Docker e recursos alocados. Quando o volume justificar, producao migra para VPS cloud (Hetzner ARM64).
 
 ---
 
@@ -1666,9 +1626,7 @@ messages/
 
 ### 11.1 Filosofia
 
-O Eat Out Adviser segue um modelo open source com nucleo gratuito e funcionalidades comerciais opcionais. O objectivo
-principal e impacto social, nao maximizacao de lucro. A sustentabilidade financeira e necessaria para manter e
-desenvolver a plataforma, mas nao a custa da missao de acessibilidade.
+O Eat Out Adviser segue um modelo open source com nucleo gratuito e funcionalidades comerciais opcionais. O objectivo principal e impacto social, nao maximizacao de lucro. A sustentabilidade financeira e necessaria para manter e desenvolver a plataforma, mas nao a custa da missao de acessibilidade.
 
 ### 11.2 Nucleo Open Source (Gratuito)
 
@@ -1741,14 +1699,11 @@ desenvolver a plataforma, mas nao a custa da missao de acessibilidade.
 
 **Fase 1 (0-6 meses):** Investimento pessoal, zero receita. Foco em construir o MVP e a base de utilizadores.
 
-**Fase 2 (6-12 meses):** Primeiras receitas de subscriacoes de restaurantes. Objectivo: cobrir custos de infraestrutura
-(dominio, APIs, eventuais VPS).
+**Fase 2 (6-12 meses):** Primeiras receitas de subscriacoes de restaurantes. Objectivo: cobrir custos de infraestrutura (dominio, APIs, eventuais VPS).
 
-**Fase 3 (12-24 meses):** Receitas diversificadas. Objectivo: cobrir custos de infraestrutura + tempo parcial de
-desenvolvimento.
+**Fase 3 (12-24 meses):** Receitas diversificadas. Objectivo: cobrir custos de infraestrutura + tempo parcial de desenvolvimento.
 
-**Longo prazo:** Candidatura a financiamento europeu (programas de acessibilidade e inclusao digital), parcerias com
-associacoes de deficiencia, possivel constituicao de cooperativa ou associacao.
+**Longo prazo:** Candidatura a financiamento europeu (programas de acessibilidade e inclusao digital), parcerias com associacoes de deficiencia, possivel constituicao de cooperativa ou associacao.
 
 ---
 
@@ -2018,5 +1973,4 @@ Impacto
 
 ---
 
-_Este documento e mantido como especificacao viva e sera actualizado conforme o projecto evolui. Ultima actualizacao: 15
-de Marco de 2026._
+_Este documento e mantido como especificacao viva e sera actualizado conforme o projecto evolui. Ultima actualizacao: 15 de Marco de 2026._

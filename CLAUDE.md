@@ -4,10 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Eat Out Adviser is a Portuguese-language accessibility-first restaurant recommendation platform. It's a pnpm monorepo
-(Turborepo) with planned workspaces: `apps/*` (Next.js 16 web app), `packages/*` (db, api, ai, scoring, shared), and
-`mcp` (Model Context Protocol server). The project is currently in the initialization phase — configuration and
-documentation are in place, application code is not yet scaffolded.
+Eat Out Adviser is a Portuguese-language accessibility-first restaurant recommendation platform. It's a pnpm monorepo (Turborepo) with planned workspaces: `apps/*` (Next.js 16 web app), `packages/*` (db, api, ai, scoring, shared), and `mcp` (Model Context Protocol server). The project is currently in the initialization phase — configuration and documentation are in place, application code is not yet scaffolded.
 
 ## Commands
 
@@ -56,8 +53,7 @@ pnpm docker:down            # Stop containers
 
 **Key technology decisions:**
 
-- **AI API: Google Gemini** — use `@google/genai` SDK (NOT `@anthropic-ai/sdk`, NOT the deprecated
-  `@google/generative-ai`). Models: Gemini 2.5 Pro/Flash (stable), Gemini 3.1 Pro Preview (frontier).
+- **AI API: Google Gemini** — use `@google/genai` SDK (NOT `@anthropic-ai/sdk`, NOT the deprecated `@google/generative-ai`). Models: Gemini 2.5 Pro/Flash (stable), Gemini 3.1 Pro Preview (frontier).
 - **Embeddings:** Gemini Embedding 2 (API) or Ollama + nomic-embed-text-v2 (local self-hosting)
 - **Database:** PostgreSQL 17 with pgvector extension for vector search + full-text search hybrid RAG
 - **Auth:** Better Auth (TypeScript-first, supports OAuth, 2FA, passkeys, RBAC)
@@ -65,9 +61,7 @@ pnpm docker:down            # Stop containers
 
 ## Code Conventions
 
-**Commit messages:** Conventional Commits enforced via commitlint. Types: `feat`, `fix`, `docs`, `style`, `refactor`,
-`perf`, `test`, `build`, `ci`, `chore`, `revert`, `a11y`. Scopes: `web`, `db`, `api`, `ai`, `scoring`, `shared`, `mcp`,
-`docker`, `ci`, `deps`. Subject max 72 chars.
+**Commit messages:** Conventional Commits enforced via commitlint. Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`, `a11y`. Scopes: `web`, `db`, `api`, `ai`, `scoring`, `shared`, `mcp`, `docker`, `ci`, `deps`. Subject max 72 chars.
 
 **TypeScript:** Strict mode with `noUncheckedIndexedAccess`. Base config in `tsconfig.base.json`, packages extend it.
 
@@ -75,15 +69,13 @@ pnpm docker:down            # Stop containers
 
 **Prettier:** Double quotes, semicolons, trailing commas, 100 char width (120 for Markdown), Tailwind CSS class sorting.
 
-**Naming:** Files in `kebab-case.tsx`, exports in `PascalCase`. Database tables in `snake_case` (plural), UUIDs v7 as
-primary keys.
+**Naming:** Files in `kebab-case.tsx`, exports in `PascalCase`. Database tables in `snake_case` (plural), UUIDs v7 as primary keys.
 
 **Language:** All documentation, comments, and UI text in Portuguese. Code identifiers in English.
 
 ## Critical Constraint: Accessibility First
 
-This project's core mission is physical accessibility for wheelchair users. Every UI component, test, and feature must
-prioritize accessibility:
+This project's core mission is physical accessibility for wheelchair users. Every UI component, test, and feature must prioritize accessibility:
 
 - jsx-a11y ESLint plugin runs in **strict** mode (not recommended)
 - E2E tests use Playwright accessibility selectors (`getByRole`, `getByLabel`)
@@ -93,6 +85,4 @@ prioritize accessibility:
 
 ## Documentation
 
-All specifications are in the repository root — see [INDEX.md](INDEX.md) for a complete guide. Key docs: SPEC.md
-(requirements), TECH_STACK.md (technology choices), PROJECT_STRUCTURE.md (directory layout), DATA_MODEL.md (database
-schema), API_SPEC.md (tRPC endpoints), AI_FEATURES.md (Gemini integration), ACCESSIBILITY_RATING.md (scoring algorithm).
+All specifications are in the repository root — see [INDEX.md](INDEX.md) for a complete guide. Key docs: SPEC.md (requirements), TECH_STACK.md (technology choices), PROJECT_STRUCTURE.md (directory layout), DATA_MODEL.md (database schema), API_SPEC.md (tRPC endpoints), AI_FEATURES.md (Gemini integration), ACCESSIBILITY_RATING.md (scoring algorithm).
