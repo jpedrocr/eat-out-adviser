@@ -9,14 +9,15 @@ import { users } from "./user";
 // =============================================================================
 // Estas tabelas sao criadas e mantidas pelo Better Auth e os seus plugins.
 // Definidas manualmente para manter as convencoes do projecto (snake_case,
-// timestamps helper, uuid PKs onde aplicavel).
+// timestamps helper). Os PKs usam text (nao uuid) porque o Better Auth
+// gera IDs alfanumericos de 32 caracteres, nao UUIDs.
 // =============================================================================
 
 // --- Tabela: sessions ---
 
 /** Sessoes activas dos utilizadores. Gerida pelo Better Auth. */
 export const sessions = pgTable("sessions", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: text("id").primaryKey(),
   userId: uuid("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -26,7 +27,7 @@ export const sessions = pgTable("sessions", {
   userAgent: text("user_agent"),
 
   // Campo do plugin admin (impersonacao)
-  impersonatedBy: uuid("impersonated_by"),
+  impersonatedBy: text("impersonated_by"),
 
   ...timestamps,
 });
@@ -35,7 +36,7 @@ export const sessions = pgTable("sessions", {
 
 /** Contas de autenticacao (email/password + OAuth providers). Gerida pelo Better Auth. */
 export const accounts = pgTable("accounts", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: text("id").primaryKey(),
   userId: uuid("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -60,7 +61,7 @@ export const accounts = pgTable("accounts", {
 
 /** Tokens de verificacao (email, password reset, etc.). Gerida pelo Better Auth. */
 export const verifications = pgTable("verifications", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: text("id").primaryKey(),
   identifier: varchar("identifier", { length: 255 }).notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
@@ -71,7 +72,7 @@ export const verifications = pgTable("verifications", {
 
 /** Configuracao 2FA por utilizador. Gerida pelo plugin twoFactor. */
 export const twoFactors = pgTable("two_factors", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: text("id").primaryKey(),
   userId: uuid("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),

@@ -29,20 +29,22 @@ export const auth = betterAuth({
     minPasswordLength: 8,
   },
 
-  // --- Providers OAuth ---
+  // --- Providers OAuth (activados apenas se ID e SECRET estiverem definidos) ---
   socialProviders: {
-    ...(process.env.GOOGLE_CLIENT_ID && {
-      google: {
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      },
-    }),
-    ...(process.env.APPLE_CLIENT_ID && {
-      apple: {
-        clientId: process.env.APPLE_CLIENT_ID,
-        clientSecret: process.env.APPLE_CLIENT_SECRET!,
-      },
-    }),
+    ...(process.env.GOOGLE_CLIENT_ID &&
+      process.env.GOOGLE_CLIENT_SECRET && {
+        google: {
+          clientId: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        },
+      }),
+    ...(process.env.APPLE_CLIENT_ID &&
+      process.env.APPLE_CLIENT_SECRET && {
+        apple: {
+          clientId: process.env.APPLE_CLIENT_ID,
+          clientSecret: process.env.APPLE_CLIENT_SECRET,
+        },
+      }),
   },
 
   // --- Mapeamento de campos ---
