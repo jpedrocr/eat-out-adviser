@@ -1,5 +1,14 @@
 import { relations } from "drizzle-orm";
-import { boolean, integer, pgTable, real, text, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  real,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 import { photos } from "./photo";
 import { reservations } from "./reservation";
@@ -17,6 +26,16 @@ export const users = pgTable("users", {
   locale: varchar("locale", { length: 10 }).notNull().default("pt"),
   avatarUrl: text("avatar_url"),
   emailVerified: boolean("email_verified").notNull().default(false),
+
+  // -- Campos do plugin admin (RBAC) --
+  role: varchar("role", { length: 50 }).notNull().default("user"),
+  banned: boolean("banned").notNull().default(false),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires", { withTimezone: true }),
+
+  // -- Campo do plugin twoFactor --
+  twoFactorEnabled: boolean("two_factor_enabled").notNull().default(false),
+
   ...timestamps,
 });
 
