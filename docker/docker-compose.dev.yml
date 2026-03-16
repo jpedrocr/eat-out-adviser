@@ -1,0 +1,38 @@
+# =============================================================================
+# Eat Out Adviser - Docker Compose Override (Desenvolvimento)
+# =============================================================================
+# Uso:
+#   pnpm docker:up:dev    # arrancar postgres para desenvolvimento
+#   pnpm docker:down      # parar
+#
+# Apenas levanta postgres. A app Next.js corre localmente com
+# `pnpm dev` para ter hot-reload via Turbopack.
+# Para Ollama, adicionar --profile ollama ao comando.
+# =============================================================================
+
+services:
+  # --- PostgreSQL com portas expostas e logs verbosos ---
+  postgres:
+    environment:
+      POSTGRES_DB: eat_out_adviser
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    # Configuracao optimizada para desenvolvimento
+    command:
+      - "postgres"
+      - "-c"
+      - "log_statement=all"
+      - "-c"
+      - "shared_preload_libraries=vector"
+
+  # --- Ollama com porta exposta (opcional, activar com --profile ollama) ---
+  ollama:
+    ports:
+      - "11434:11434"
+
+  # --- App desactivada em dev (corre localmente com pnpm dev) ---
+  app:
+    profiles:
+      - production

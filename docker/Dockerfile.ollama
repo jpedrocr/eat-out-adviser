@@ -1,0 +1,45 @@
+# =============================================================================
+# Eat Out Adviser - Ollama com nomic-embed-text-v2 pre-carregado
+# =============================================================================
+# Container para embeddings locais sem dependencia de API externa.
+# O modelo e descarregado no primeiro arranque e persistido no volume.
+# =============================================================================
+
+FROM ollama/ollama:latest
+
+# Script de arranque que descarrega o modelo se nao existir
+COPY <<'ENTRYPOINT' /entrypoint.sh
+#!/bin/sh
+set -e
+
+# Arrancar o servidor Ollama em background
+ollama serve &
+OLLAMA_PID=$!
+
+# Aguardar que o servidor esteja pronto
+echo "A aguardar servidor Ollama..."
+for i in $(seq 1 30); do
+  if ollama list >/dev/null 2>&1; then
+    break
+  fi
+  sleep 1
+done
+
+# Descarregar modelo de embeddings se nao existir
+if ! ollama list | grep -q "nomic-embed-text-v2"; then
+  echo "A descarregar nomic-embed-text-v2..."
+  ollama pull nomic-embed-text:v2
+  echo "Modelo descarregado com sucesso."
+else
+  echo "Modelo nomic-embed-text-v2 ja existe."
+fi
+
+# Manter o servidor em primeiro plano
+wait $OLLAMA_PID
+ENTRYPOINT
+
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 11434
+
+ENTRYPOINT ["/entrypoint.sh"]

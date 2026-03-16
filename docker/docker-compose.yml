@@ -1,0 +1,75 @@
+# =============================================================================
+# Eat Out Adviser - Docker Compose (Producao)
+# =============================================================================
+# Uso:
+#   pnpm docker:up       # arrancar todos os servicos
+#   pnpm docker:down     # parar todos os servicos
+# =============================================================================
+
+services:
+  # --- PostgreSQL 17 + pgvector ---
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: eoa-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: eat_out_adviser
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d eat_out_adviser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # --- Ollama (embeddings locais, opcional) ---
+  # Arrancar com: docker compose -f docker/docker-compose.yml --profile ollama up -d
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile.ollama
+    container_name: eoa-ollama
+    restart: unless-stopped
+    profiles:
+      - ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # --- Aplicacao Next.js ---
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.app
+    container_name: eoa-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/eat_out_adviser
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-ollama}
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text-v2}
+      NODE_ENV: production
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  ollama_data:

@@ -1,0 +1,15 @@
+node_modules
+.next
+.turbo
+dist
+coverage
+.git
+.env
+.env.local
+.env.production
+.env.development
+docker
+*.md
+!README.md
+.claude
+research
