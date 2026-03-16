@@ -1,9 +1,9 @@
 import { relations } from "drizzle-orm";
 import { integer, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
-import { restaurants } from "./restaurant.js";
-import { timestamps } from "./shared.js";
-import { users } from "./user.js";
+import { restaurants } from "./restaurant";
+import { timestamps } from "./shared";
+import { users } from "./user";
 
 // --- Tabela: reservations ---
 

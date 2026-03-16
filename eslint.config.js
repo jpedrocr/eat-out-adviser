@@ -64,6 +64,12 @@ export default tseslint.config(
     },
   },
 
+  // Ficheiros de configuracao em subdirectorios (sem type-checking)
+  {
+    files: ["packages/*/drizzle.config.ts"],
+    ...tseslint.configs.disableTypeChecked,
+  },
+
   // Desactivar regras que conflituam com Prettier
   prettier,
 );

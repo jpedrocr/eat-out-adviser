@@ -12,14 +12,14 @@ import {
   vector,
 } from "drizzle-orm/pg-core";
 
-import { accessibilityProfiles, accessibilityScores } from "./accessibility.js";
-import { menus } from "./menu.js";
-import { photos } from "./photo.js";
-import { reservations } from "./reservation.js";
-import { reviews } from "./review.js";
-import { priceRangeEnum, restaurantStatusEnum, timestamps } from "./shared.js";
-import { users } from "./user.js";
-import { verificationReports } from "./verification.js";
+import { accessibilityProfiles, accessibilityScores } from "./accessibility";
+import { menus } from "./menu";
+import { photos } from "./photo";
+import { reservations } from "./reservation";
+import { reviews } from "./review";
+import { priceRangeEnum, restaurantStatusEnum, timestamps } from "./shared";
+import { users } from "./user";
+import { verificationReports } from "./verification";
 
 // --- Tabela: restaurants ---
 

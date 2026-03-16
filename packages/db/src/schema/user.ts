@@ -1,11 +1,11 @@
 import { relations } from "drizzle-orm";
 import { boolean, integer, pgTable, real, text, uuid, varchar } from "drizzle-orm/pg-core";
 
-import { photos } from "./photo.js";
-import { reservations } from "./reservation.js";
-import { restaurants } from "./restaurant.js";
-import { reviews } from "./review.js";
-import { bathroomTransferSideEnum, mobilityTypeEnum, timestamps } from "./shared.js";
+import { photos } from "./photo";
+import { reservations } from "./reservation";
+import { restaurants } from "./restaurant";
+import { reviews } from "./review";
+import { bathroomTransferSideEnum, mobilityTypeEnum, timestamps } from "./shared";
 
 // --- Tabela: users ---
 

@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
 import { boolean, jsonb, pgTable, real, text, uuid, varchar, vector } from "drizzle-orm/pg-core";
 
-import { restaurants } from "./restaurant.js";
-import { timestamps } from "./shared.js";
+import { restaurants } from "./restaurant";
+import { timestamps } from "./shared";
 
 // --- Tabela: menus ---
 

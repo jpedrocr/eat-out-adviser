@@ -10,7 +10,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-import { restaurants } from "./restaurant.js";
+import { restaurants } from "./restaurant";
 import {
   dataSourceEnum,
   entranceTypeEnum,
@@ -22,8 +22,8 @@ import {
   surfaceTypeEnum,
   timestamps,
   verificationStatusEnum,
-} from "./shared.js";
-import { users } from "./user.js";
+} from "./shared";
+import { users } from "./user";
 
 // --- Tabela: accessibility_profiles ---
 

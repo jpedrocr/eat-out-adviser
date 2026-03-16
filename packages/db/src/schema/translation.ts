@@ -1,6 +1,6 @@
 import { boolean, index, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core";
 
-import { timestamps } from "./shared.js";
+import { timestamps } from "./shared";
 
 // --- Tabela: translations ---
 

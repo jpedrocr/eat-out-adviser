@@ -1,9 +1,9 @@
 import { relations } from "drizzle-orm";
 import { boolean, date, integer, pgTable, text, uuid, varchar, vector } from "drizzle-orm/pg-core";
 
-import { restaurants } from "./restaurant.js";
-import { timestamps } from "./shared.js";
-import { users } from "./user.js";
+import { restaurants } from "./restaurant";
+import { timestamps } from "./shared";
+import { users } from "./user";
 
 // --- Tabela: reviews ---
 

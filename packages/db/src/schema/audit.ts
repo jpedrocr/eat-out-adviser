@@ -1,7 +1,7 @@
 import { index, jsonb, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 
-import { timestamps } from "./shared.js";
-import { users } from "./user.js";
+import { timestamps } from "./shared";
+import { users } from "./user";
 
 // --- Tabela: audit_logs ---
 
