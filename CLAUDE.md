@@ -99,3 +99,8 @@ This project's core mission is physical accessibility for wheelchair users. Ever
 ## Documentation
 
 All specifications are in the repository root — see [INDEX.md](INDEX.md) for a complete guide. Key docs: SPEC.md (requirements), TECH_STACK.md (technology choices), PROJECT_STRUCTURE.md (directory layout), DATA_MODEL.md (database schema), API_SPEC.md (tRPC endpoints), AI_FEATURES.md (Gemini integration), ACCESSIBILITY_RATING.md (scoring algorithm).
+
+## Estado
+
+PAUSADO desde 2026-08-07 (triagem Fase 3). Sem próxima ação planeada — ver
+`~/workspace/TRIAGE_PLAN.md`. Retomar é decisão explícita, não deriva.
